@@ -14,13 +14,13 @@ export default class WelcomeScreen extends React.Component {
 
 
             <form action="#">
-              <div class="select-name">
+              {/*<div class="select-name">*/}
                 <select name="autorization" id="">
                   <option value="name-1">Miki</option>
                   <option value="name-2">V1sionary</option>
                   <option value="name-3">Mouse</option>
                 </select>
-              </div>
+              {/*</div>*/}
 
               <div class="buttons">
                 <input class="button green-button " type='submit' value="Continue"/>
