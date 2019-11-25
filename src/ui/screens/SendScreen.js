@@ -14,26 +14,27 @@ import MenuBlock from '../elements/MenuBlock';
 import TransactionsTab from '../elements/TransactionsTab';
 import IssueTab from '../elements/IssueTab';
 import SendTab from '../elements/SendTab';
+import Header from '../elements/Header';
+import Settings from '../elements/Settings';
 
 export default class SendScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      settingsOpen: false
+    };
+  }
+
+  toggleSettings() {
+    this.setState({settingsOpen: !this.state.settingsOpen});
+  }
+
   render() {
+    let settings = this.state.settingsOpen ? <Settings /> : '';
     return (
         <div className="container container-p">
           <div className="screen screen-transaction">
-            <div className="img-wrap">
-              <img src={homa} alt="homa"/>
-            </div>
-
-            <div className="menu">
-              <a href="#" className="menu-button">
-                <img src={menu_icon} alt="menu"/>
-                <img src={close_menu} alt="menu-active"/>
-              </a>
-              <a href="#" className="menu-button setting-button">
-                <img src={settings_icon} alt="set"/>
-                <img src={close_menu} alt="menu-active"/>
-              </a>
-            </div>
+            <Header />
 
             <div className="wrap-content">
               <div className="info-profile">
@@ -71,34 +72,10 @@ export default class SendScreen extends React.Component {
 
                 </div>
               </div>
-
               <MenuBlock/>
-              <div className="settings-block">
-                <h3 className="note menu-title">
-                  <a href="#" className='back'><img src={back_menu} alt="back"/></a>Settings
-                </h3>
-
-                <div className="set-link">
-                  <ul>
-                    <li><a href="#"><img src={backup} alt=""/>Backup</a></li>
-                    <li><a href="#"><img src={del} alt=""/>Delete account</a></li>
-                    <li><a href="#"><img src={logout} alt=""/>Log out</a></li>
-                  </ul>
-
-                  <div className="agree-del modal">
-                    <a href="#" className="close-modal"><img src={close_modal} alt=""/></a>
-                    <h3 className="note menu-title">
-                      Are you sure?
-                    </h3>
-                    <p className="text-modal">Delete your account?</p>
-                    <a href="#" className="delete">Delete</a>
-                  </div>
-                </div>
-
-
-              </div>
-
+              {settings}
             </div>
+
           </div>
         </div>
     );

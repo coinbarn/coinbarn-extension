@@ -20,11 +20,9 @@ export default class Header extends React.Component {
   render() {
     let settings = this.state.settingsAreOpen ?  settings = <Settings /> : '';
     return (
-      <div class='screen'>
-        <div class='screen-transaction'>
-          <div class='img-wrap'>
-            <img src={homaImg} alt='logo' />
-          </div>
+      <div>
+        <div class='img-wrap'>
+          <img src={homaImg} alt='logo' />
         </div>
         <div class='menu'>
           <a href='#' class='menu-button'>
@@ -36,7 +34,6 @@ export default class Header extends React.Component {
             <img src={closeImg} alt='menu-active' />
           </a>
         </div>
-        {settings}
       </div>
     );
   }
