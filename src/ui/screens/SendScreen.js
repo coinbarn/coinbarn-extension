@@ -31,10 +31,11 @@ export default class SendScreen extends React.Component {
 
   render() {
     let settings = this.state.settingsOpen ? <Settings /> : '';
+
     return (
         <div className="container container-p">
           <div className="screen screen-transaction">
-            <Header />
+            <Header toggleSettings={this.toggleSettings.bind(this)}/>
 
             <div className="wrap-content">
               <div className="info-profile">
