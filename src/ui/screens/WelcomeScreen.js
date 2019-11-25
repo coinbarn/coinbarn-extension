@@ -1,5 +1,5 @@
 import React from 'react';
-import homaImg from './img/1screen/homa3.png';
+import homaImg from '../../img/1screen/homa3.png';
 
 export default class WelcomeScreen extends React.Component {
   render() {

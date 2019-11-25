@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './normalize.css';
 import './style.css';
-import WelcomeScreen from './WelcomeScreen.js';
+import WelcomeScreen from './ui/screens/WelcomeScreen';
 
 class App extends React.Component {
   render () {
