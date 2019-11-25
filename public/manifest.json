@@ -11,5 +11,10 @@
     "default_title": "Coinbarn"
   },
   "content_security_policy": "script-src 'self' 'sha256-X801sDQwGmffMaQfjsOEBFpRYK8Vhboaqd71QxqstJY='; object-src 'self'",
+  "icons": {
+    "16": "img/logos/fav_clear.png",
+    "64": "img/logos/fav_clear@4x.png",
+    "128": "img/logos/fav_clear@8x.png"
+  },
   "manifest_version": 2
 }
