@@ -6,7 +6,7 @@ export default class MenuBlock extends React.Component {
     return (
       <div className="menu-block active">
         <h3 className="note menu-title">
-          <a href="#" className='back'><img src={back_menu} alt="back"/></a>About
+          <a href="#" className='back'><img src={back_menu} alt="back" onClick={this.props.toggle} /></a>About
         </h3>
         <p>
           HamStar Version

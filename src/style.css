@@ -15,7 +15,7 @@
 body {
   font-family: 'Nunito', sans-serif;
   position: relative;
-  min-width: 400px;
+  min-width: 360px;
 }
 * {
   -webkit-box-sizing: border-box;

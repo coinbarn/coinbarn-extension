@@ -24,8 +24,8 @@ export default class SendScreen extends React.Component {
   }
 
   render() {
-    let settings = this.state.settingsOn ? <Settings /> : '';
-    let menuBlock = this.state.menuBlockOn ? <MenuBlock /> : '';
+    let settings = this.state.settingsOn ? <Settings toggle={this.toggleSettings.bind(this)} /> : '';
+    let menuBlock = this.state.menuBlockOn ? <MenuBlock toggle={this.toggleMenuBlock.bind(this)} /> : '';
 
     return (
         <div className="container container-p">
