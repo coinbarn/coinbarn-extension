@@ -21,21 +21,26 @@ export default class SendScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      settingsOpen: false
+      settingsOn: false,
+      menuBlockOn: false
     };
   }
 
   toggleSettings() {
-    this.setState({settingsOpen: !this.state.settingsOpen});
+    this.setState({settingsOn: !this.state.settingsOn});
+  }
+  toggleMenuBlock() {
+    this.setState({menuBlockOn: !this.state.menuBlockOn});
   }
 
   render() {
-    let settings = this.state.settingsOpen ? <Settings /> : '';
+    let settings = this.state.settingsOn ? <Settings /> : '';
+    let menuBlock = this.state.menuBlockOn ? <MenuBlock /> : '';
 
     return (
         <div className="container container-p">
           <div className="screen screen-transaction">
-            <Header toggleSettings={this.toggleSettings.bind(this)}/>
+            <Header toggleSettings={this.toggleSettings.bind(this)} toggleMenuBlock={this.toggleMenuBlock.bind(this)}/>
 
             <div className="wrap-content">
               <div className="info-profile">
@@ -73,7 +78,7 @@ export default class SendScreen extends React.Component {
 
                 </div>
               </div>
-              <MenuBlock/>
+              {menuBlock}
               {settings}
             </div>
 
