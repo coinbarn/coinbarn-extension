@@ -1,6 +1,7 @@
 import React from 'react';
 import homaImg from '../../img/1screen/homa3.png';
 import CoinbarnStorage from "../../CoinbarnStorage";
+import Dropdown from '../elements/Dropdown';
 
 export default class WelcomeScreen extends React.Component {
 
@@ -30,9 +31,7 @@ export default class WelcomeScreen extends React.Component {
 
             <form action="#">
               {/*<div class="select-name">*/}
-                <select name="autorization" id="">
-                  {this.accountItems()}
-                </select>
+              <Dropdown list={this.accountItems()} />
               {/*</div>*/}
 
               <div className="buttons">

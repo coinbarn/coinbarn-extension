@@ -1,4 +1,7 @@
 .dd-wrapper {
+  color: #81827F;
+  text-align: left;
+  vertical-align: middle;
   position: relative;
   width: 100%;
   cursor: pointer;
@@ -12,14 +15,28 @@
   background: white;
 }
 
+.dd-header-title{
+  padding: 0 20px 0 10px;
+  height: 25px;
+  line-height: 25px;
+}
+
 .dd-list-item {
   position: relative;
+  min-height: 18px;
+  padding: 5px 10px 6px;
+  line-height: 16px;
 }
 
 .dd-list-item:after,
 .dd-header-title:after {
   content: "";
   position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: url(./img/ui/select_underline-big.png);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -27,7 +44,22 @@
 .dd-trigger {
   position: absolute;
   transition: 0.2s;
+  right: 12px;
+  width: 14px;
+  height: 8px;
+  top: 8px;
+  color: #333;
+  transform: scaleX(-1), rotateX(180deg);
+  background: url("./img/ui/select-arrow-g.png");
+  background-size: contain;
 }
+
+.dd-header-expanded .dd-trigger {
+  transform: rotateX(180deg);
+  background: url("./img/ui/select-arrow-g.png");
+  background-size: contain;
+}
+
 
 .info-profile .dd-wrapper {
   font-family: 'Nunito', sans-serif;
@@ -87,49 +119,26 @@
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
   font-size: 14px;
-  color: #81827F;
-  text-align: left;
   max-width: 185px;
+}
+
+.welcome .dd-wrapper {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #81827F;
+  width: 100%;
+  margin: 0 auto 32px;
   vertical-align: middle;
 }
 
-.more-info-send .dd-header-title {
-  padding: 0 20px 0 10px;
-  height: 25px;
-  line-height: 25px;
+.welcome .dd-list-item:hover {
+  background: rgba(143, 178, 62, 0.2);
 }
 
-.more-info-send .dd-list-item {
-  min-height: 18px;
-  padding: 5px 10px 6px;
-  line-height: 16px;
-}
-
-.more-info-send .dd-header-title:after,
-.more-info-send .dd-list-item:after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: url(./img/ui/select_underline-big.png);
+.welcome .dd-list-item:after,
+.welcome .dd-header-title:after {
+  background: url(./img/ui/select-line.png);
   background-size: contain;
+  background-repeat: no-repeat;
 }
-
-.more-info-send .dd-trigger {
-  right: 12px;
-  width: 14px;
-  height: 8px;
-  top: 8px;
-  color: #333;
-  transform: scaleX(-1), rotateX(180deg);
-  background: url("./img/ui/select-arrow-g.png");
-  background-size: contain;
-}
-
-.more-info-send .dd-header-expanded .dd-trigger {
-  transform: rotateX(180deg);
-  background: url("./img/ui/select-arrow-g.png");
-  background-size: contain;
-}
-
