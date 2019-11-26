@@ -1,6 +1,7 @@
 import React from 'react';
 import './normalize.css';
 import './style.css';
+import './dropdown.css';
 import WelcomeScreen from './ui/screens/WelcomeScreen';
 import SendScreen from './ui/screens/SendScreen';
 import RegistrationScreen from "./ui/screens/RegistrationScreen";

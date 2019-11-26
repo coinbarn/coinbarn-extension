@@ -1,6 +1,7 @@
 import React from 'react';
 import avatar from '../../img/14screen/avatar.png';
 import edit from '../../img/ui/edit.png';
+import Dropdown from'./Dropdown';
 
 class AddressBar extends React.Component {
   copyToClipboard(){
@@ -36,10 +37,7 @@ export default class InfoProfile extends React.Component {
         </div>
         <div className="right-part">
           <h5>Account balance: </h5>
-          <select name="select" id="">
-            <option value="val1">0.111 ERGS</option>
-            <option value="val2">0.111 ERGS</option>
-          </select>
+          <Dropdown list={['0.111 ERGS','0.112 ERGS','0.113 ERGS']} />
         </div>
       </div>
     );
