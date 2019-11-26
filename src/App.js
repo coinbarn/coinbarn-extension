@@ -27,7 +27,7 @@ export default class App extends React.Component {
         }
         break;
       case 'send':
-        curScreen = <SendScreen/>;
+        curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary' />
         break;
     }
 

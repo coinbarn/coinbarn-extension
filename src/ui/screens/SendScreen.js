@@ -30,7 +30,7 @@ export default class SendScreen extends React.Component {
           <div className="screen screen-transaction">
             <Header toggleSettings={this.toggleSettings.bind(this)} toggleMenuBlock={this.toggleMenuBlock.bind(this)}/>
             <div className="wrap-content">
-              <InfoProfile />
+              <InfoProfile address={this.props.address} name={this.props.name} />
               <Tabs />
               {menuBlock}
               {settings}

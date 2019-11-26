@@ -21,7 +21,7 @@ export default class Tabs extends React.Component {
             {this.tabs[0]}
           </div>
           <div className="tab-transaction tab-link">
-            <input type="radio" name="tab" id="tab-transaction"/>
+            <input type="radio" name="tab" checked id="tab-transaction"/>
             <label htmlFor="tab-transaction">Transactions</label>
             {this.tabs[1]}
           </div>
