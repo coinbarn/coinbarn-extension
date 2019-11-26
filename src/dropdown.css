@@ -1,12 +1,6 @@
-.dd-wrapper, .dd-wrapper-expanded {
-  font-family: 'Nunito', sans-serif;
-  font-weight: bold;
-  font-size: 14px;
-  color: #81827F;
+.dd-wrapper {
   position: relative;
-  max-width: 120px;
   width: 100%;
-  vertical-align: middle;
   cursor: pointer;
   display: inline-block;
   z-index: 10;
@@ -18,55 +12,124 @@
   background: white;
 }
 
-.dd-header-title {
-  padding: 0 20px 0 10px;
-  height: 25px;
-  line-height: 25px;
-  color: #FFFFFF;
-}
-
-.dd-header-expanded .dd-header-title {
-  color: #81827F;
-  background: linear-gradient(0deg, #eff1ee 0%, #eff1ee 5%, #ffffff 15%, #ffffff 85%, #eff1ee 95%, #eff1ee 100%);
-}
-
 .dd-list-item {
-  min-height: 18px;
-  padding: 5px 10px 6px;
-  line-height: 16px;
   position: relative;
-  background: linear-gradient(0deg, #eff1ee 0%, #eff1ee 5%, #ffffff 15%, #ffffff 85%, #eff1ee 95%, #eff1ee 100%);
 }
 
-.dd-header-expanded .dd-header-title:after,
-.dd-list-item:after {
+.dd-list-item:after,
+.dd-header-title:after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: -2px;
-  width: 103%;
-  height: 2px;
-  background: url(./img/ui/select_underline.png);
   background-size: contain;
   background-repeat: no-repeat;
 }
 
 .dd-trigger {
   position: absolute;
+  transition: 0.2s;
+}
+
+.info-profile .dd-wrapper {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #81827F;
+  max-width: 120px;
+  vertical-align: middle;
+}
+
+.info-profile .dd-header-title {
+  padding: 0 20px 0 10px;
+  height: 25px;
+  line-height: 25px;
+  color: #FFFFFF;
+}
+
+.info-profile .dd-header-expanded .dd-header-title {
+  color: #81827F;
+  background: linear-gradient(0deg, #eff1ee 0%, #eff1ee 5%, #ffffff 15%, #ffffff 85%, #eff1ee 95%, #eff1ee 100%);
+}
+
+.info-profile .dd-list-item {
+  min-height: 18px;
+  padding: 5px 10px 6px;
+  line-height: 16px;
+  background: linear-gradient(0deg, #eff1ee 0%, #eff1ee 5%, #ffffff 15%, #ffffff 85%, #eff1ee 95%, #eff1ee 100%);
+}
+
+.info-profile .dd-header-expanded .dd-header-title:after,
+.info-profile .dd-list-item:after {
+  bottom: 0;
+  left: -2px;
+  width: 103%;
+  height: 2px;
+  background: url(./img/ui/select_underline.png);
+}
+
+.info-profile .dd-trigger {
   right: 12px;
   width: 14px;
   height: 8px;
   top: 8px;
   color: #333;
   transform: scaleX(-1), rotateX(180deg);
-  transition: 0.2s;
   background: url("./img/ui/select-arrow-w.png");
   background-size: contain;
 }
 
-.dd-header-expanded .dd-trigger {
+.info-profile .dd-header-expanded .dd-trigger {
   transform: rotateX(180deg);
   background: url("./img/ui/select-arrow.png");
+  background-size: contain;
+}
+
+.more-info-send .dd-wrapper {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #81827F;
+  text-align: left;
+  max-width: 185px;
+  vertical-align: middle;
+}
+
+.more-info-send .dd-header-title {
+  padding: 0 20px 0 10px;
+  height: 25px;
+  line-height: 25px;
+}
+
+.more-info-send .dd-list-item {
+  min-height: 18px;
+  padding: 5px 10px 6px;
+  line-height: 16px;
+}
+
+.more-info-send .dd-header-title:after,
+.more-info-send .dd-list-item:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: url(./img/ui/select_underline-big.png);
+  background-size: contain;
+}
+
+.more-info-send .dd-trigger {
+  right: 12px;
+  width: 14px;
+  height: 8px;
+  top: 8px;
+  color: #333;
+  transform: scaleX(-1), rotateX(180deg);
+  background: url("./img/ui/select-arrow-g.png");
+  background-size: contain;
+}
+
+.more-info-send .dd-header-expanded .dd-trigger {
+  transform: rotateX(180deg);
+  background: url("./img/ui/select-arrow-g.png");
   background-size: contain;
 }
 

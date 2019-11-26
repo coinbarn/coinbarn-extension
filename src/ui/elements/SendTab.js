@@ -1,4 +1,5 @@
 import React from 'react';
+import Dropdown from './Dropdown';
 
 export default class SendTab extends React.Component {
   render() {
@@ -7,11 +8,7 @@ export default class SendTab extends React.Component {
         <form action="#">
           <label htmlFor="" className="select-field">
             <span>You send:</span>
-            <select name="select2" id="">
-              <option value="val-1">ERGS</option>
-              <option value="val-2">Token</option>
-              <option value="val-3">Tiken</option>
-            </select>
+            <Dropdown list={['ERGS','Token','Tiken']} />
           </label>
 
           <label htmlFor="">
