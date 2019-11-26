@@ -20,7 +20,7 @@ export default class Dropdown extends React.Component {
     const {expanded, currentIndex} = this.state;
     return(
       <div className="dd-wrapper">
-        <div className="dd-header" onClick={this.toggleList.bind(this)}>
+        <div className={expanded ? "dd-header-expanded" : "dd-header"}  onClick={this.toggleList.bind(this)}>
           <div className="dd-header-title">{list[currentIndex]}</div>
           <div className="dd-trigger"></div>
         </div>
