@@ -1,8 +1,6 @@
 import React from 'react';
 import MenuBlock from '../elements/MenuBlock';
-import TransactionsTab from '../elements/TransactionsTab';
-import IssueTab from '../elements/IssueTab';
-import SendTab from '../elements/SendTab';
+import Tabs from '../elements/Tabs';
 import Header from '../elements/Header';
 import Settings from '../elements/Settings';
 import InfoProfile from '../elements/InfoProfile';
@@ -33,13 +31,7 @@ export default class SendScreen extends React.Component {
             <Header toggleSettings={this.toggleSettings.bind(this)} toggleMenuBlock={this.toggleMenuBlock.bind(this)}/>
             <div className="wrap-content">
               <InfoProfile />
-              <div className="wrap-main">
-                <div className="tabs">
-                  <SendTab/>
-                  <TransactionsTab/>
-                  <IssueTab/>
-                </div>
-              </div>
+              <Tabs />
               {menuBlock}
               {settings}
             </div>

@@ -3,9 +3,6 @@ import React from 'react';
 export default class IssueTab extends React.Component {
   render() {
     return (
-        <div className="tab-issue tab-link">
-          <input type="radio" name="tab" id="tab-issue"/>
-          <label htmlFor="tab-issue">Issue</label>
           <div className="issue-block more-info">
             <form action="#">
               <h5 className="tab-title">Create your token on ERGO Platform</h5>
@@ -35,7 +32,6 @@ export default class IssueTab extends React.Component {
               </p>
             </form>
           </div>
-        </div>
     );
   }
 }

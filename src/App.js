@@ -30,6 +30,7 @@ export default class App extends React.Component {
         curScreen = <SendScreen/>;
         break;
     }
+    curScreen = <SendScreen/>;
 
     return (
         <div>
