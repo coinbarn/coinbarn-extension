@@ -3,9 +3,12 @@ import './normalize.css';
 import './style.css';
 import WelcomeScreen from './ui/screens/WelcomeScreen';
 import SendScreen from './ui/screens/SendScreen';
+import RegistrationScreen from "./ui/screens/RegistrationScreen";
+import CoinbarnStorage from "./CoinbarnStorage";
 
 
 export default class App extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +20,11 @@ export default class App extends React.Component {
     let curScreen;
     switch (this.state.screen) {
       case 'welcome':
-        curScreen = <WelcomeScreen/>;
+        if (CoinbarnStorage.getAccountNames().length !== 0) {
+          curScreen = <WelcomeScreen/>;
+        } else {
+          curScreen = <RegistrationScreen/>;
+        }
         break;
       case 'send':
         curScreen = <SendScreen/>;

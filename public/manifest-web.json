@@ -1,0 +1,22 @@
+{
+  "name": "Coinbarn Ergo wallet",
+  "version": "0.0.1",
+  "description": "Coinbarn wallet for Ergo platform",
+  "permissions": [
+    "clipboardWrite",
+    "storage"
+  ],
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Coinbarn"
+  },
+  "content_security_policy": "script-src 'self' 'sha256-X801sDQwGmffMaQfjsOEBFpRYK8Vhboaqd71QxqstJY='; object-src 'self'",
+  "icons": [
+    {
+      "src": "img/logos/fav_clear.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ],
+  "manifest_version": 2
+}
