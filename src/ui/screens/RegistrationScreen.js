@@ -24,7 +24,6 @@ export default class RegistrationScreen extends React.Component {
     } else {
       value = e.target.checked;
     }
-    console.log(`${name} -> ${value} | ${e.target.checked}`);
     this.setState({[name]: value},
         () => {
           this.validateField(name, value)
@@ -75,6 +74,12 @@ export default class RegistrationScreen extends React.Component {
     return this.state.formErrors[name] === '' ? "valid" : "wrong";
   }
 
+  submitForm() {
+    if (this.state.formValid) {
+      this.props.changeScreen('seed');
+    }
+  }
+
   render() {
     return (
         <div className="container">
@@ -116,6 +121,7 @@ export default class RegistrationScreen extends React.Component {
 
               <div className="buttons">
                 <input type="submit" disabled={!this.state.formValid} value="Continue"
+                       onClick={this.submitForm.bind(this)}
                        className="button green-button continue"/>
                 <a href="#" className="back"><img src={back} alt=""/><img src={back_dark} alt=""/>Back</a>
               </div>
