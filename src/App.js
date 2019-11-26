@@ -4,6 +4,7 @@ import './style.css';
 import './dropdown.css';
 import WelcomeScreen from './ui/screens/WelcomeScreen';
 import SendScreen from './ui/screens/SendScreen';
+import SeedScreen from './ui/screens/SeedScreen';
 import RegistrationScreen from "./ui/screens/RegistrationScreen";
 import CoinbarnStorage from "./CoinbarnStorage";
 
@@ -13,7 +14,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: 'welcome'
+      // screen: 'welcome'
+      screen: 'send'
     };
   }
 
@@ -24,8 +26,11 @@ export default class App extends React.Component {
         if (CoinbarnStorage.getAccountNames().length !== 0) {
           curScreen = <WelcomeScreen/>;
         } else {
-          curScreen = <RegistrationScreen/>;
+          curScreen = <RegistrationScreen changeScreen={(screenName) => this.setState({screen: screenName})}/>;
         }
+        break;
+      case 'seed':
+        curScreen = <SeedScreen/>;
         break;
       case 'send':
         curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary' />
