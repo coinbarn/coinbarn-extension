@@ -1,0 +1,112 @@
+.dd-wrapper {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #81827F;
+  position: relative;
+  width: 100%;
+  outline: none;
+  vertical-align: middle;
+  cursor: pointer;
+  display: inline-block;
+  box-sizing: border-box;
+  outline: none;
+  z-index: 10;
+}
+
+.dd-list {
+  position: absolute;
+  width: 100%;
+  background: white;
+  max-width: 120px;
+}
+
+.dd-header-title {
+  -webkit-box-direction: normal;
+  cursor: pointer;
+  box-sizing: border-box;
+  outline: none;
+  position: relative;
+  font: 14px/32px Arial, sans-serif;
+  color: #333;
+  border-radius: 0;
+  border: 0;
+  text-shadow: none;
+  font-family: 'Nunito', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  padding: 0 20px 0 10px;
+  color: #81827F;
+  height: 25px;
+  line-height: 25px;
+  box-shadow: none;
+  max-width: 120px;
+  background: linear-gradient(0deg, #eff1ee 0%, #eff1ee 5%, #ffffff 15%, #ffffff 85%, #eff1ee 95%, #eff1ee 100%);
+}
+
+.dd-list-item {
+  -webkit-box-direction: normal;
+  cursor: pointer;
+  font: 14px/18px Arial, sans-serif;
+  box-sizing: border-box;
+  outline: none;
+  list-style: none;
+  margin: 0;
+  user-select: none;
+  white-space: nowrap;
+  min-height: 18px;
+  padding: 5px 10px 6px;
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #81827F;
+  position: relative;
+  background: linear-gradient(0deg, #eff1ee 0%, #eff1ee 5%, #ffffff 15%, #ffffff 85%, #eff1ee 95%, #eff1ee 100%);
+}
+
+.dd-header-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -2px;
+  width: 103%;
+  height: 2px;
+  background: url(./img/ui/select_underline.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.dd-list-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -2px;
+  width: 103%;
+  height: 2px;
+  background: url(./img/ui/select_underline.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.dd-trigger {
+  -webkit-box-direction: normal;
+  cursor: pointer;
+  font: 14px/32px Arial, sans-serif;
+  color: #333;
+  text-shadow: none;
+  font-family: 'Nunito', sans-serif;
+  line-height: 25px;
+  box-sizing: border-box;
+  outline: none;
+  position: absolute;
+  right: 12px;
+  width: 14px;
+  height: 8px;
+  top: 8px;
+  border: 0;
+  background: url("./img/ui/select-arrow.png");
+  background-size: contain;
+  transition: 0.2s;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import './normalize.css';
 import './style.css';
+import './dropdown.css';
 import WelcomeScreen from './ui/screens/WelcomeScreen';
 import SendScreen from './ui/screens/SendScreen';
 import SeedScreen from './ui/screens/SeedScreen';
@@ -32,7 +33,7 @@ export default class App extends React.Component {
         curScreen = <SeedScreen/>;
         break;
       case 'send':
-        curScreen = <SendScreen/>;
+        curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary' />
         break;
     }
 
