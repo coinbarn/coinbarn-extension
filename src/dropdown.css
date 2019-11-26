@@ -89,3 +89,24 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+.dd-trigger {
+  -webkit-box-direction: normal;
+  cursor: pointer;
+  font: 14px/32px Arial, sans-serif;
+  color: #333;
+  text-shadow: none;
+  font-family: 'Nunito', sans-serif;
+  line-height: 25px;
+  box-sizing: border-box;
+  outline: none;
+  position: absolute;
+  right: 12px;
+  width: 14px;
+  height: 8px;
+  top: 8px;
+  border: 0;
+  background: url("./img/ui/select-arrow.png");
+  background-size: contain;
+  transition: 0.2s;
+}

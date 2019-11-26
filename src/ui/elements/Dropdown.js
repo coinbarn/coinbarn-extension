@@ -22,6 +22,7 @@ export default class Dropdown extends React.Component {
       <div className="dd-wrapper">
         <div className="dd-header" onClick={this.toggleList.bind(this)}>
           <div className="dd-header-title">{list[currentIndex]}</div>
+          <div className="dd-trigger"></div>
         </div>
         {
           expanded ? <ul className="dd-list">
