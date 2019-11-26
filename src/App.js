@@ -13,13 +13,13 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: 'welcome'
+      // screen: 'welcome'
+      screen: 'send'
     };
   }
 
   render() {
     let curScreen;
-    console.log(`!! ${this.state.screen}`);
     switch (this.state.screen) {
       case 'welcome':
         if (CoinbarnStorage.getAccountNames().length !== 0) {
