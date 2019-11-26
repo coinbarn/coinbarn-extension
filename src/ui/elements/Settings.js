@@ -10,7 +10,7 @@ export default class Settings extends React.Component {
     return (
       <div class='settings-block active'>
         <h3 class='note menu-title'>
-          <a href="#" class='back'><img src={backImg} alt='back'/></a>Settings
+          <a href="#" class='back'><img src={backImg} alt='back' onClick={this.props.toggle} /></a>Settings
         </h3>
 
         <div class='set-link'>

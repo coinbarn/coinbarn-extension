@@ -5,7 +5,27 @@ import closeImg from '../../img/ui/close_menu.png';
 import settingsImg from '../../img/ui/settings_icon.png';
 
 export default class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      settingsOn: false,
+      menuBlockOn: false
+    };
+  }
+
+  toggleSettings() {
+    this.props.toggleSettings();
+    this.setState({settingsOn: !this.state.settingsOn});
+  }
+
+  toggleMenuBlock() {
+    this.props.toggleMenuBlock();
+    this.setState({menuBlockOn: !this.state.menuBlockOn});
+  }
+
   render() {
+    let rightImg = this.state.settingsOn ? closeImg : settingsImg;
+    let leftImg = this.state.menuBlockOn ? closeImg : menuImg;
     return (
       <div>
         <div class='img-wrap'>
@@ -13,12 +33,10 @@ export default class Header extends React.Component {
         </div>
         <div class='menu'>
           <a href='#' class='menu-button'>
-            <img src={menuImg} alt='menu' />
-            <img src={closeImg} alt='menu-active' />
+            <img src={leftImg} alt='menu' onClick={this.toggleMenuBlock.bind(this)} />
           </a>
           <a href='#' class='menu-button setting-button'>
-            <img src={settingsImg} alt='set' onClick={this.props.toggleSettings} />
-            <img src={closeImg} alt='menu-active' />
+            <img src={rightImg} alt='set' onClick={this.toggleSettings.bind(this)} />
           </a>
         </div>
       </div>
