@@ -55,7 +55,7 @@ export default class CoinbarnStorage {
     const encoder = new TextEncoder('utf-8');
     const baseKey = await window.crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveKey']);
     const aesKeyGenParams = {name: 'AES-GCM', length: 256};
-    return await window.crypto.subtle.deriveKey(pbkdf2params, baseKey, aesKeyGenParams, false, ['encrypt']);
+    return await window.crypto.subtle.deriveKey(pbkdf2params, baseKey, aesKeyGenParams, false, ['encrypt', 'decrypt']);
   }
 
   static seedToSk(seed, path = "m/44'/429'/0'/0/0") {
