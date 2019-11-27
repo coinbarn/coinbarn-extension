@@ -4,8 +4,8 @@ import './style.css';
 import './dropdown.css';
 import WelcomeScreen from './ui/screens/WelcomeScreen';
 import SendScreen from './ui/screens/SendScreen';
-import SeedScreen from './ui/screens/SeedScreen';
 import RegistrationScreen from "./ui/screens/RegistrationScreen";
+import PublicAccount from "./PublicAccount";
 import CoinbarnStorage from "./CoinbarnStorage";
 
 
@@ -14,26 +14,43 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // screen: 'welcome'
-      screen: 'seed'
+      account: new PublicAccount('', '', ''),
+      screen: 'welcome'
+      // screen: 'seed'
     };
   }
 
   render() {
+
+
+    // todo test code
+    localStorage.clear();
+    const name = 'MyAcc3';
+    const pass = '123';
+
+    async function f() {
+      await CoinbarnStorage.saveAccount(name, pass, 'mnemon' + name);
+      console.log(`Account ${name} saved: ${localStorage.getItem(name)}`);
+      console.log(`!! ${await CoinbarnStorage.getMnemonic(name, pass)}`);
+    }
+    f();
+
+    // end of test code
+
+
+
     let curScreen;
     switch (this.state.screen) {
       case 'welcome':
         if (CoinbarnStorage.getAccountNames().length !== 0) {
           curScreen = <WelcomeScreen/>;
         } else {
-          curScreen = <RegistrationScreen changeScreen={(screenName) => this.setState({screen: screenName})}/>;
+          curScreen = <RegistrationScreen changeScreen={(screenName) => this.setState({screen: screenName})}
+                                          setAccState={(newState) => this.setState({account: newState})}/>;
         }
         break;
-      case 'seed':
-        curScreen = <SeedScreen changeScreen={(screenName) => this.setState({screen: screenName})}/>;
-        break;
       case 'send':
-        curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary' />
+        curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary'/>
         break;
     }
 

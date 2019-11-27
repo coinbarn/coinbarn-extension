@@ -10,10 +10,6 @@ export default class WelcomeScreen extends React.Component {
     console.log(CoinbarnStorage.getAccountNames());
     for (let acc of CoinbarnStorage.getAccountNames()) {
       items.push(<option key={acc} value={acc}>{acc}</option>);
-
-      {/*<option value="name-1">Miki</option>*/}
-      {/*<option value="name-2">V1sionary</option>*/}
-      {/*<option value="name-3">Mouse</option>*/}
     }
     return items;
   }

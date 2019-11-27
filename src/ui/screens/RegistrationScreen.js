@@ -3,6 +3,11 @@ import React from 'react';
 import logo from '../../img/2screen/logo.jpg';
 import back from '../../img/ui/back.png';
 import back_dark from '../../img/ui/back_dark.png';
+import PublicAccount from "../../PublicAccount";
+import refresh from "../../img/ui/refresh.png";
+import copy from "../../img/ui/copy.png";
+import CoinbarnStorage from "../../CoinbarnStorage";
+import {generateMnemonic} from "bip39";
 
 export default class RegistrationScreen extends React.Component {
   constructor(props) {
@@ -11,8 +16,13 @@ export default class RegistrationScreen extends React.Component {
       AccName: '',
       pass: '',
       confPass: '',
+      screen: 'password',
       formErrors: {AccName: 'Account name is too short', pass: 'Passwords is too weak', confPass: '', checkbox: ''},
-      formValid: false
+      formValid: false,
+      seedFormValid: true,
+      repeatPhase: false,
+      mnemonic: generateMnemonic(128),
+      mnemonicBack: ''
     }
   }
 
@@ -35,6 +45,7 @@ export default class RegistrationScreen extends React.Component {
 
     if (name === 'pass') {
       const strength = zxcvbn(value);
+      // todo strength.score < 4 for production
       if (strength.score < 1) {
         fieldValidationErrors.pass = 'Passwords is too weak';
       } else {
@@ -74,15 +85,13 @@ export default class RegistrationScreen extends React.Component {
     return this.state.formErrors[name] === '' ? "valid" : "wrong";
   }
 
-  submitForm() {
+  submitForm = () => {
     if (this.state.formValid) {
-       this.props.navigation.navigate('Details')
-
-      this.props.changeScreen('seed');
+      this.setState({screen: 'seed'})
     }
-  }
+  };
 
-  render() {
+  passwordScreen() {
     return (
         <div className="container">
           <div className="screen screen-2">
@@ -132,6 +141,128 @@ export default class RegistrationScreen extends React.Component {
         </div>
 
 
+    );
+  }
+
+
+  address() {
+    return CoinbarnStorage.mnemonicToAddress(this.state.mnemonic)
+  }
+
+  handleSeedUserInput(e) {
+    const name = e.target.id;
+    if (name === 'phrase') {
+      const value = e.target.value;
+      this.setState({mnemonicBack: value}, this.validateSeedForm)
+    }
+  }
+
+  validateSeedForm() {
+    const valid = this.state.mnemonic === this.state.mnemonicBack;
+    this.setState({seedFormValid: valid});
+  }
+
+
+  refreshMnemonic = () => {
+    this.setState({mnemonic: generateMnemonic(128)})
+  };
+
+  copyToClipboard = () => {
+    navigator.clipboard.writeText(this.state.mnemonic);
+  };
+
+  submit = async () => {
+    if (this.state.repeatPhase === false) {
+      this.setState({repeatPhase: true, seedFormValid: false});
+    } else {
+      const newState = new PublicAccount(this.state.AccName, this.address());
+      this.props.setAccState(newState);
+      await CoinbarnStorage.saveAccount(this.state.AccName, this.state.pass, this.state.mnemonic);
+      console.log(CoinbarnStorage.getAccountNames());
+      this.props.changeScreen('send');
+    }
+  };
+
+
+  message() {
+    if (this.state.repeatPhase) {
+      return <p>
+        Confirm the Secret Backup Phrase.<br/> Type it below in the correct order
+      </p>
+    } else {
+      return <p>
+        Be sure to save <span className="green-note">Secret Backup Phrase.</span><br/> You can copy or write it
+        on a
+        piece of paper. Keep it in a safe place.
+      </p>
+
+    }
+  }
+
+  textarea() {
+    if (this.state.repeatPhase) {
+      return <textarea name="phrase" id="phrase" className="text-phrase" value={this.state.mnemonicBack}
+                       onChange={this.handleSeedUserInput.bind(this)}/>;
+    } else {
+      return <textarea name="phrase" id="phrase" className="text-phrase" readOnly={true} value={this.state.mnemonic}/>;
+    }
+  }
+
+  seedScreen() {
+    return (
+        <div className="container">
+
+          <div className="screen screen-5">
+            <div className="img-wrap">
+              <img src={logo} alt="" className="logo"/>
+            </div>
+
+
+            <form action="#">
+              <h4 className="subtitle">
+                Secret Backup Phrase
+              </h4>
+
+              {this.message()}
+
+              <div className="buttons-area">
+                <a href="#" className="refresh" onClick={this.refreshMnemonic}><img src={refresh} alt="refresh"/></a>
+                <a href="#" className="copy" onClick={this.copyToClipboard}><img src={copy} alt="copy"/></a>
+              </div>
+
+              {this.textarea()}
+
+              <strong>Your address:</strong>
+              <button className="link">{this.address()}</button>
+
+              <div className="buttons">
+                <input value="Continue" readOnly={true} disabled={!this.state.seedFormValid}
+                       className="button green-button continue"
+                       onClick={this.submit}/>
+                <a href="#" className="back"><img src={back} alt="back"/>Back</a>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+    );
+
+  }
+
+  render() {
+    let screen;
+    if (this.state.screen === 'password') {
+      screen = this.passwordScreen();
+    } else {
+      screen = this.seedScreen();
+    }
+
+    return (
+        <div className="container">
+          {screen}
+        </div>
     );
   }
 }
