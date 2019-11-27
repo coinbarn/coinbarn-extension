@@ -1,8 +1,6 @@
 import zxcvbn from 'zxcvbn';
 import React from 'react';
 import logo from '../../img/2screen/logo.jpg';
-import back from '../../img/ui/back.png';
-import back_dark from '../../img/ui/back_dark.png';
 import PublicAccount from "../../PublicAccount";
 import refresh from "../../img/ui/refresh.png";
 import copy from "../../img/ui/copy.png";
@@ -14,6 +12,7 @@ export default class RegistrationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      registeredAccounts: CoinbarnStorage.getAccountNames(),
       AccName: '',
       pass: '',
       confPass: '',
@@ -62,6 +61,8 @@ export default class RegistrationScreen extends React.Component {
     } else if (name === 'AccName') {
       if (value.length < 3) {
         fieldValidationErrors.AccName = 'Account name is too short';
+      } else if (this.state.registeredAccounts.includes(value)) {
+        fieldValidationErrors.AccName = 'Account already registered';
       } else {
         fieldValidationErrors.AccName = '';
       }
