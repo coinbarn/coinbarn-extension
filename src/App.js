@@ -31,7 +31,8 @@ export default class App extends React.Component {
     async function f() {
       await CoinbarnStorage.saveAccount(name, pass, 'mnemon' + name);
       console.log(`Account ${name} saved: ${localStorage.getItem(name)}`);
-      console.log(`!! ${await CoinbarnStorage.getMnemonic(name, pass)}`);
+      const res = await CoinbarnStorage.getMnemonic(name, pass);
+      console.log(`Decrypted value: ${res}`);
     }
     f();
 

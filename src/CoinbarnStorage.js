@@ -17,13 +17,17 @@ export default class CoinbarnStorage {
   }
 
   static async saveAccount(name, password, mnemonic) {
-    const ct = await CoinbarnStorage.encrypt(mnemonic, password);
-    localStorage.setItem(name, ct);
+    const enc = new TextEncoder('utf-8');
+    const bytesToEncrypt = enc.encode(mnemonic);
+    const ct = await this.encrypt(bytesToEncrypt, password);
+    localStorage.setItem(name, this.arrayBufferToBase64(ct));
   }
 
   static async getMnemonic(name, password) {
     const item = localStorage.getItem(name);
-    return CoinbarnStorage.decrypt(item, password);
+    const decryptedBytes = await this.decrypt(this.base64ToArrayBuffer(item), password);
+    const dec = new TextDecoder('utf-8');
+    return dec.decode(decryptedBytes);
   }
 
   static async getAccount(name, password) {
@@ -35,9 +39,7 @@ export default class CoinbarnStorage {
     const key = await CoinbarnStorage.deriveKey(password, salt);
     const iv =  Buffer.from(await window.crypto.getRandomValues(new Uint8Array(12)));
     const aesGcmParams = {name: 'AES-GCM', iv: iv};
-    const encoder = new TextEncoder();
-    const dataToEncrypt = encoder.encode(plaintext);
-    const cipherText = await window.crypto.subtle.encrypt(aesGcmParams, key, dataToEncrypt);
+    const cipherText = await window.crypto.subtle.encrypt(aesGcmParams, key, plaintext);
     return Buffer.concat([Buffer.from(salt), Buffer.from(iv), Buffer.from(cipherText)]);
   }
 
@@ -68,5 +70,24 @@ export default class CoinbarnStorage {
     return Address.fromSk(sk).address
   }
 
+  static arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i += 1) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  }
+
+  static base64ToArrayBuffer(base64) {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i += 1) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+  }
 
 }
