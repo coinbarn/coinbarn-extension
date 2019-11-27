@@ -35,7 +35,7 @@ export default class RegistrationScreen extends React.Component {
 
     if (name === 'pass') {
       const strength = zxcvbn(value);
-      if (strength.score < 3) {
+      if (strength.score < 1) {
         fieldValidationErrors.pass = 'Passwords is too weak';
       } else {
         fieldValidationErrors.pass = ``;
@@ -76,6 +76,8 @@ export default class RegistrationScreen extends React.Component {
 
   submitForm() {
     if (this.state.formValid) {
+       this.props.navigation.navigate('Details')
+
       this.props.changeScreen('seed');
     }
   }

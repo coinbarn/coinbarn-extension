@@ -15,7 +15,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       // screen: 'welcome'
-      screen: 'send'
+      screen: 'seed'
     };
   }
 
@@ -30,7 +30,7 @@ export default class App extends React.Component {
         }
         break;
       case 'seed':
-        curScreen = <SeedScreen/>;
+        curScreen = <SeedScreen changeScreen={(screenName) => this.setState({screen: screenName})}/>;
         break;
       case 'send':
         curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary' />
