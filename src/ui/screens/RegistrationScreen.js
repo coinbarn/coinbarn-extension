@@ -93,53 +93,50 @@ export default class RegistrationScreen extends React.Component {
 
   passwordScreen() {
     return (
-        <div className="container">
-          <div className="screen screen-2">
-            <div className="img-wrap">
-              <img src={logo} alt="" className="logo"/>
+        <div className="screen screen-2">
+          <div className="img-wrap">
+            <img src={logo} alt="" className="logo"/>
+          </div>
+
+
+          <form action="#">
+            <div className="field">
+              <strong>Create an account name</strong>
+              <input type="text" id="AccName" className={this.errorClass('AccName')}
+                     value={this.state.AccName} onChange={this.handleUserInput.bind(this)}/>
+              <p className="error">{this.state.formErrors['AccName']}</p>
+
+            </div>
+            <div className="field">
+              <strong>Create a password</strong>
+              <input type="password" id="pass" className={this.errorClass('pass')} value={this.state.pass}
+                     onChange={this.handleUserInput.bind(this)}/>
+              <p className="error">{this.state.formErrors['pass']}</p>
+
+            </div>
+            <div className="field">
+              <strong>Confirm password</strong>
+              <input type="password" id="confPass" className={this.errorClass('confPass')} value={this.state.confPass}
+                     onChange={this.handleUserInput.bind(this)}/>
+              <p className="error">{this.state.formErrors['confPass']}</p>
+
             </div>
 
+            <div className="agree">
+              <input type="checkbox" id="checkbox" onChange={this.handleUserInput.bind(this)}/>
+              <label htmlFor="checkbox">
+                I have read and agree<br/> to the <a href="#">Terms of Use</a>
+              </label>
+            </div>
 
-            <form action="#">
-              <div className="field">
-                <strong>Create an account name</strong>
-                <input type="text" id="AccName" className={this.errorClass('AccName')}
-                       value={this.state.AccName} onChange={this.handleUserInput.bind(this)}/>
-                <p className="error">{this.state.formErrors['AccName']}</p>
-
-              </div>
-              <div className="field">
-                <strong>Create a password</strong>
-                <input type="password" id="pass" className={this.errorClass('pass')} value={this.state.pass}
-                       onChange={this.handleUserInput.bind(this)}/>
-                <p className="error">{this.state.formErrors['pass']}</p>
-
-              </div>
-              <div className="field">
-                <strong>Confirm password</strong>
-                <input type="password" id="confPass" className={this.errorClass('confPass')} value={this.state.confPass}
-                       onChange={this.handleUserInput.bind(this)}/>
-                <p className="error">{this.state.formErrors['confPass']}</p>
-
-              </div>
-
-              <div className="agree">
-                <input type="checkbox" id="checkbox" onChange={this.handleUserInput.bind(this)}/>
-                <label htmlFor="checkbox">
-                  I have read and agree<br/> to the <a href="#">Terms of Use</a>
-                </label>
-              </div>
-
-              <div className="buttons">
-                <input type="submit" disabled={!this.state.formValid} value="Continue"
-                       onClick={this.submitForm.bind(this)}
-                       className="button green-button continue"/>
-                <a href="#" className="back"><img src={back} alt=""/><img src={back_dark} alt=""/>Back</a>
-              </div>
-            </form>
-          </div>
+            <div className="buttons">
+              <input type="submit" disabled={!this.state.formValid} value="Continue"
+                     onClick={this.submitForm.bind(this)}
+                     className="button green-button continue"/>
+              <a href="#" className="back"><img src={back} alt=""/><img src={back_dark} alt=""/>Back</a>
+            </div>
+          </form>
         </div>
-
 
     );
   }
@@ -210,43 +207,39 @@ export default class RegistrationScreen extends React.Component {
 
   seedScreen() {
     return (
-        <div className="container">
+        <div className="screen screen-5">
+          <div className="img-wrap">
+            <img src={logo} alt="" className="logo"/>
+          </div>
 
-          <div className="screen screen-5">
-            <div className="img-wrap">
-              <img src={logo} alt="" className="logo"/>
+
+          <form action="#">
+            <h4 className="subtitle">
+              Secret Backup Phrase
+            </h4>
+
+            {this.message()}
+
+            <div className="buttons-area">
+              <a href="#" className="refresh" onClick={this.refreshMnemonic}><img src={refresh} alt="refresh"/></a>
+              <a href="#" className="copy" onClick={this.copyToClipboard}><img src={copy} alt="copy"/></a>
             </div>
 
+            {this.textarea()}
 
-            <form action="#">
-              <h4 className="subtitle">
-                Secret Backup Phrase
-              </h4>
+            <strong>Your address:</strong>
+            <button className="link">{this.address()}</button>
 
-              {this.message()}
+            <div className="buttons">
+              <input value="Continue" readOnly={true} disabled={!this.state.seedFormValid}
+                     className="button green-button continue"
+                     onClick={this.submit}/>
+              <a href="#" className="back"><img src={back} alt="back"/>Back</a>
+            </div>
 
-              <div className="buttons-area">
-                <a href="#" className="refresh" onClick={this.refreshMnemonic}><img src={refresh} alt="refresh"/></a>
-                <a href="#" className="copy" onClick={this.copyToClipboard}><img src={copy} alt="copy"/></a>
-              </div>
+          </form>
 
-              {this.textarea()}
-
-              <strong>Your address:</strong>
-              <button className="link">{this.address()}</button>
-
-              <div className="buttons">
-                <input value="Continue" readOnly={true} disabled={!this.state.seedFormValid}
-                       className="button green-button continue"
-                       onClick={this.submit}/>
-                <a href="#" className="back"><img src={back} alt="back"/>Back</a>
-              </div>
-
-            </form>
-
-          </div>
         </div>
-
     );
 
   }

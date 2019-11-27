@@ -16,41 +16,29 @@ export default class App extends React.Component {
     this.state = {
       account: new PublicAccount('', '', ''),
       screen: 'welcome'
-      // screen: 'seed'
+      // screen: 'send'
     };
   }
 
   render() {
 
-
-    // todo test code
-    localStorage.clear();
-    const name = 'MyAcc3';
-    const pass = '123';
-
-    async function f() {
-      await CoinbarnStorage.saveAccount(name, pass, 'mnemon' + name);
-      console.log(`Account ${name} saved: ${localStorage.getItem(name)}`);
-      console.log(`!! ${await CoinbarnStorage.getMnemonic(name, pass)}`);
-    }
-    f();
-
-    // end of test code
-
-
-
-    let curScreen;
+    let curScreen = `Unknown screen ${this.state.screen}`;
     switch (this.state.screen) {
       case 'welcome':
         if (CoinbarnStorage.getAccountNames().length !== 0) {
-          curScreen = <WelcomeScreen/>;
+          curScreen = <WelcomeScreen changeScreen={(screenName) => this.setState({screen: screenName})}
+                                     setAccState={(newState) => this.setState({account: newState})}/>
         } else {
           curScreen = <RegistrationScreen changeScreen={(screenName) => this.setState({screen: screenName})}
                                           setAccState={(newState) => this.setState({account: newState})}/>;
         }
         break;
+      case 'register':
+        curScreen = <RegistrationScreen changeScreen={(screenName) => this.setState({screen: screenName})}
+                                        setAccState={(newState) => this.setState({account: newState})}/>;
+        break;
       case 'send':
-        curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary'/>
+        curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary'/>;
         break;
     }
 

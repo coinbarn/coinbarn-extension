@@ -8,25 +8,25 @@ import closeImg from '../../img/ui/close-modal.png';
 export default class Settings extends React.Component {
   render() {
     return (
-      <div class='settings-block active'>
-        <h3 class='note menu-title'>
-          <a href="#" class='back'><img src={backImg} alt='back' onClick={this.props.toggle} /></a>Settings
+      <div className='settings-block active'>
+        <h3 className='note menu-title'>
+          <a href="#" className='back'><img src={backImg} alt='back' onClick={this.props.toggle} /></a>Settings
         </h3>
 
-        <div class='set-link'>
+        <div className='set-link'>
           <ul>
             <li><a href='#'><img src={backupImg} alt='' />Backup</a></li>
             <li><a href='#'><img src={deleteImg} alt='' />Delete account</a></li>
             <li><a href='#'><img src={logoutImg} alt='' />Log out</a></li>
           </ul>
 
-          <div class='agree-del modal'>
-            <a href='#' class='close-modal'><img src={closeImg} alt=''/></a>
-            <h3 class='note menu-title'>
+          <div className='agree-del modal'>
+            <a href='#' className='close-modal'><img src={closeImg} alt=''/></a>
+            <h3 className='note menu-title'>
               Are you sure?
             </h3>
-            <p class='text-modal'>Delete your account?</p>
-            <a href='#' class='delete'>Delete</a>
+            <p className='text-modal'>Delete your account?</p>
+            <a href='#' className='delete'>Delete</a>
           </div>
         </div>
       </div>

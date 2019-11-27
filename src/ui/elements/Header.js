@@ -28,14 +28,14 @@ export default class Header extends React.Component {
     let leftImg = this.state.menuBlockOn ? closeImg : menuImg;
     return (
       <div>
-        <div class='img-wrap'>
+        <div className='img-wrap'>
           <img src={homaImg} alt='logo' />
         </div>
-        <div class='menu'>
-          <a href='#' class='menu-button'>
+        <div className='menu'>
+          <a href='#' className='menu-button'>
             <img src={leftImg} alt='menu' onClick={this.toggleMenuBlock.bind(this)} />
           </a>
-          <a href='#' class='menu-button setting-button'>
+          <a href='#' className='menu-button setting-button'>
             <img src={rightImg} alt='set' onClick={this.toggleSettings.bind(this)} />
           </a>
         </div>

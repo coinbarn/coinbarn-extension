@@ -7,7 +7,6 @@ export default class WelcomeScreen extends React.Component {
 
   accountItems() {
     let items = [];
-    console.log(CoinbarnStorage.getAccountNames());
     for (let acc of CoinbarnStorage.getAccountNames()) {
       items.push(<option key={acc} value={acc}>{acc}</option>);
     }
@@ -37,7 +36,7 @@ export default class WelcomeScreen extends React.Component {
 
             <div className="account-links">
               <p>
-                <a href="#">Create New Account</a>
+                <a href="#" onClick={() => this.props.changeScreen('register')}>Create New Account</a>
               </p>
               <p>
                 <a href="#">Import Account</a>
