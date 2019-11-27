@@ -27,11 +27,11 @@ export default class Dropdown extends React.Component {
         {
           expanded ? <ul className="dd-list">
             {list.map((item, index) => (
-              <li className="dd-list-item" onClick={() => {
+              <li key={item} className="dd-list-item" onClick={() => {
                 this.setState({currentIndex: index});
                 this.toggleList();
               }}>{item}</li>
-            ))} 
+            ))}
           </ul> : ''
         }
       </div>

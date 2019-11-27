@@ -6,7 +6,6 @@ import WelcomeScreen from './ui/screens/WelcomeScreen';
 import SendScreen from './ui/screens/SendScreen';
 import RegistrationScreen from "./ui/screens/RegistrationScreen";
 import PublicAccount from "./PublicAccount";
-import CoinbarnStorage from "./CoinbarnStorage";
 
 
 export default class App extends React.Component {
@@ -25,13 +24,8 @@ export default class App extends React.Component {
     let curScreen = `Unknown screen ${this.state.screen}`;
     switch (this.state.screen) {
       case 'welcome':
-        if (CoinbarnStorage.getAccountNames().length !== 0) {
-          curScreen = <WelcomeScreen changeScreen={(screenName) => this.setState({screen: screenName})}
-                                     setAccState={(newState) => this.setState({account: newState})}/>
-        } else {
-          curScreen = <RegistrationScreen changeScreen={(screenName) => this.setState({screen: screenName})}
-                                          setAccState={(newState) => this.setState({account: newState})}/>;
-        }
+        curScreen = <WelcomeScreen changeScreen={(screenName) => this.setState({screen: screenName})}
+                                   setAccState={(newState) => this.setState({account: newState})}/>;
         break;
       case 'register':
         curScreen = <RegistrationScreen changeScreen={(screenName) => this.setState({screen: screenName})}

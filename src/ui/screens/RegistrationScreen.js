@@ -7,6 +7,7 @@ import PublicAccount from "../../PublicAccount";
 import refresh from "../../img/ui/refresh.png";
 import copy from "../../img/ui/copy.png";
 import CoinbarnStorage from "../../CoinbarnStorage";
+import ContinueBackButtons from "../elements/ContinueBackButtons";
 import {generateMnemonic} from "bip39";
 
 export default class RegistrationScreen extends React.Component {
@@ -18,6 +19,7 @@ export default class RegistrationScreen extends React.Component {
       confPass: '',
       screen: 'password',
       formErrors: {AccName: 'Account name is too short', pass: 'Passwords is too weak', confPass: '', checkbox: ''},
+      checkbox: false,
       formValid: false,
       seedFormValid: true,
       repeatPhase: false,
@@ -76,20 +78,14 @@ export default class RegistrationScreen extends React.Component {
   }
 
   validateForm() {
-    let valid = this.state.checkbox &&
+    let isValid = this.state.checkbox &&
         Object.values(this.state.formErrors).every((e, i, a) => e === '');
-    this.setState({formValid: valid});
+    this.setState({formValid: isValid});
   }
 
   errorClass(name) {
     return this.state.formErrors[name] === '' ? "valid" : "wrong";
   }
-
-  submitForm = () => {
-    if (this.state.formValid) {
-      this.setState({screen: 'seed'})
-    }
-  };
 
   passwordScreen() {
     return (
@@ -129,21 +125,13 @@ export default class RegistrationScreen extends React.Component {
               </label>
             </div>
 
-            <div className="buttons">
-              <input type="submit" disabled={!this.state.formValid} value="Continue"
-                     onClick={this.submitForm.bind(this)}
-                     className="button green-button continue"/>
-              <a href="#" className="back"><img src={back} alt=""/><img src={back_dark} alt=""/>Back</a>
-            </div>
+            <ContinueBackButtons formValid={this.state.formValid}
+                                 onSubmit={this.submitPass}
+                                 onBack={this.goBack}/>
           </form>
         </div>
 
     );
-  }
-
-
-  address() {
-    return CoinbarnStorage.mnemonicToAddress(this.state.mnemonic)
   }
 
   handleSeedUserInput(e) {
@@ -167,19 +155,6 @@ export default class RegistrationScreen extends React.Component {
   copyToClipboard = () => {
     navigator.clipboard.writeText(this.state.mnemonic);
   };
-
-  submit = async () => {
-    if (this.state.repeatPhase === false) {
-      this.setState({repeatPhase: true, seedFormValid: false});
-    } else {
-      const newState = new PublicAccount(this.state.AccName, this.address());
-      this.props.setAccState(newState);
-      await CoinbarnStorage.saveAccount(this.state.AccName, this.state.pass, this.state.mnemonic);
-      console.log(CoinbarnStorage.getAccountNames());
-      this.props.changeScreen('send');
-    }
-  };
-
 
   message() {
     if (this.state.repeatPhase) {
@@ -228,14 +203,12 @@ export default class RegistrationScreen extends React.Component {
             {this.textarea()}
 
             <strong>Your address:</strong>
-            <button className="link">{this.address()}</button>
+            <button className="link">{CoinbarnStorage.mnemonicToAddress(this.state.mnemonic)}</button>
 
-            <div className="buttons">
-              <input value="Continue" readOnly={true} disabled={!this.state.seedFormValid}
-                     className="button green-button continue"
-                     onClick={this.submit}/>
-              <a href="#" className="back"><img src={back} alt="back"/>Back</a>
-            </div>
+            <ContinueBackButtons formValid={this.state.seedFormValid}
+                                 onSubmit={this.submitSeed}
+                                 onBack={this.goBack}/>
+
 
           </form>
 
@@ -258,5 +231,37 @@ export default class RegistrationScreen extends React.Component {
         </div>
     );
   }
+
+  goBack = () => {
+    console.log('Go back');
+    if (this.state.screen === 'password') {
+      this.props.changeScreen('welcome');
+    } else if (!this.state.repeatPhase) {
+      this.setState({screen: 'password'});
+    } else {
+      this.setState({repeatPhase: false, seedFormValid: true});
+    }
+  };
+
+
+  submitPass = () => {
+    if (this.state.formValid) {
+      this.setState({screen: 'seed'})
+    }
+  };
+
+  submitSeed = async () => {
+    if (this.state.repeatPhase === false) {
+      this.setState({repeatPhase: true, seedFormValid: false});
+    } else {
+      const address = CoinbarnStorage.mnemonicToAddress(this.state.mnemonic);
+      const newState = new PublicAccount(this.state.AccName, address);
+      this.props.setAccState(newState);
+      await CoinbarnStorage.saveAccount(this.state.AccName, this.state.pass, this.state.mnemonic);
+      console.log(CoinbarnStorage.getAccountNames());
+      this.props.changeScreen('send');
+    }
+  };
+
 }
 
