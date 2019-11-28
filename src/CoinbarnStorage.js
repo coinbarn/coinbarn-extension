@@ -1,9 +1,6 @@
 /*global localStorage*/
 
 import PublicAccount from "./PublicAccount";
-import {Address} from "@coinbarn/ergo-ts";
-import {fromSeed} from "bip32";
-import {mnemonicToSeedSync} from "bip39";
 
 export default class CoinbarnStorage {
 
@@ -31,13 +28,14 @@ export default class CoinbarnStorage {
   }
 
   static async getAccount(name, password) {
-    return new PublicAccount(name, Address.fromSk(CoinbarnStorage.seedToSk(CoinbarnStorage.getMnemonic(name, password))));
+    const mnemonic = CoinbarnStorage.getMnemonic(name, password);
+    return PublicAccount.fromMnemonic(name, mnemonic);
   }
 
   static async encrypt(plaintext, password) {
     const salt = Buffer.from(await window.crypto.getRandomValues(new Uint8Array(12)));
     const key = await CoinbarnStorage.deriveKey(password, salt);
-    const iv =  Buffer.from(await window.crypto.getRandomValues(new Uint8Array(12)));
+    const iv = Buffer.from(await window.crypto.getRandomValues(new Uint8Array(12)));
     const aesGcmParams = {name: 'AES-GCM', iv: iv};
     const cipherText = await window.crypto.subtle.encrypt(aesGcmParams, key, plaintext);
     return Buffer.concat([Buffer.from(salt), Buffer.from(iv), Buffer.from(cipherText)]);
@@ -58,16 +56,6 @@ export default class CoinbarnStorage {
     const baseKey = await window.crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveKey']);
     const aesKeyGenParams = {name: 'AES-GCM', length: 256};
     return await window.crypto.subtle.deriveKey(pbkdf2params, baseKey, aesKeyGenParams, false, ['encrypt', 'decrypt']);
-  }
-
-  static seedToSk(seed, path = "m/44'/429'/0'/0/0") {
-    return fromSeed(Buffer.from(seed)).derivePath(path).privateKey.toString('hex');
-  }
-
-  static mnemonicToAddress(mnemonic) {
-    const seed = mnemonicToSeedSync(mnemonic);
-    const sk = CoinbarnStorage.seedToSk(seed);
-    return Address.fromSk(sk).address
   }
 
   static arrayBufferToBase64(buffer) {

@@ -204,7 +204,7 @@ export default class RegistrationScreen extends React.Component {
             {this.textarea()}
 
             <strong>Your address:</strong>
-            <button className="link">{CoinbarnStorage.mnemonicToAddress(this.state.mnemonic)}</button>
+            <button className="link">{PublicAccount.mnemonicToAddress(this.state.mnemonic)}</button>
 
             <ContinueBackButtons formValid={this.state.seedFormValid}
                                  onSubmit={this.submitSeed}
@@ -234,7 +234,6 @@ export default class RegistrationScreen extends React.Component {
   }
 
   goBack = () => {
-    console.log('Go back');
     if (this.state.screen === 'password') {
       this.props.changeScreen('welcome');
     } else if (!this.state.repeatPhase) {
@@ -255,7 +254,7 @@ export default class RegistrationScreen extends React.Component {
     if (this.state.repeatPhase === false) {
       this.setState({repeatPhase: true, seedFormValid: false});
     } else {
-      const address = CoinbarnStorage.mnemonicToAddress(this.state.mnemonic);
+      const address = PublicAccount.mnemonicToAddress(this.state.mnemonic);
       const newState = new PublicAccount(this.state.AccName, address);
       this.props.setAccState(newState);
       await CoinbarnStorage.saveAccount(this.state.AccName, this.state.pass, this.state.mnemonic);

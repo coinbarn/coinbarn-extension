@@ -7,17 +7,19 @@ import SendScreen from './ui/screens/SendScreen';
 import RegistrationScreen from "./ui/screens/RegistrationScreen";
 import PublicAccount from "./PublicAccount";
 import PasswordScreen from "./ui/screens/PasswordScreen";
+import StartScreen from "./ui/screens/StartScreen";
 
 
 interface AppProps {
 }
 
-interface AppState {
+export interface AppState {
   account: PublicAccount
   screen: string
 }
 
 export default class App extends React.Component<AppProps, AppState> {
+
 
   constructor(props: AppProps) {
     super(props);
@@ -28,13 +30,15 @@ export default class App extends React.Component<AppProps, AppState> {
     };
   }
 
-  render() {
+  updateState = (s: AppState) => {
+    this.setState(s)
+  };
 
+  render() {
     let curScreen = <div>Unknown screen ${this.state.screen}</div>;
     switch (this.state.screen) {
       case 'welcome':
-        curScreen = <WelcomeScreen changeScreen={(screenName: string) => this.setState({screen: screenName})}
-                                   setAccState={(newState: PublicAccount) => this.setState({account: newState})}/>;
+        curScreen = <WelcomeScreen updateState={this.updateState}/>;
         break;
       case 'register':
         curScreen =
@@ -43,7 +47,10 @@ export default class App extends React.Component<AppProps, AppState> {
         break;
       case 'password':
         curScreen = <PasswordScreen account={this.state.account}
-                                    setAccState={(newState: PublicAccount) => this.setState({account: newState})}/>;
+                                    updateState={this.updateState}/>;
+        break;
+      case 'start':
+        curScreen = <StartScreen updateState={this.updateState}/>;
         break;
       case 'send':
         curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary'/>;

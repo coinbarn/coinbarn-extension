@@ -2,9 +2,19 @@ import React from 'react';
 import homaImg from '../../img/1screen/homa3.png';
 import CoinbarnStorage from "../../CoinbarnStorage";
 import Dropdown from '../elements/Dropdown';
+import Continue from '../elements/Continue';
 import PublicAccount from '../../PublicAccount';
 
 export default class WelcomeScreen extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      account: props.account
+    };
+    this.dropdownElement = React.createRef();
+  }
+
 
   accountItems() {
     let items = [];
@@ -15,16 +25,17 @@ export default class WelcomeScreen extends React.Component {
   }
 
   submit = () => {
-    const name = '????';
-    console.log();
-    this.props.setAccState(new PublicAccount(name, ''));
-    this.props.changeScreen('password')
+    const name = this.dropdownElement.current.state.currentValue;
+    const newState = {
+      account: new PublicAccount(name, ''),
+      screen: 'password'
+    };
+    this.props.updateState(newState);
   };
 
   render() {
     return (
         <div className="container">
-
           <div className="screen screen-1 welcome">
             <div className="img-wrap">
               <img src={homaImg} alt="homa"/>
@@ -34,17 +45,17 @@ export default class WelcomeScreen extends React.Component {
 
             <form action="#">
               {/*<div class="select-name">*/}
-              <Dropdown list={this.accountItems()}/>
+              <Dropdown list={this.accountItems()} ref={this.dropdownElement}/>
               {/*</div>*/}
 
               <div className="buttons">
-                <input className="button green-button " type='submit' value="Continue" onClick={this.submit}/>
+                <Continue disabled={false} submit={this.submit}/>
               </div>
             </form>
 
             <div className="account-links">
               <p>
-                <a href="#" onClick={() => this.props.changeScreen('register')}>Create New Account</a>
+                <a href="#" onClick={() => this.props.updateState({screen: 'register'})}>Create New Account</a>
               </p>
               <p>
                 <a href="#">Import Account</a>

@@ -5,7 +5,8 @@ export default class Dropdown extends React.Component {
     super(props);
     this.state = {
       expanded: false,
-      currentIndex: 0
+      currentIndex: 0,
+      currentValue: this.props.list[0],
     };
   }
 
@@ -28,7 +29,7 @@ export default class Dropdown extends React.Component {
           expanded ? <ul className="dd-list">
             {list.map((item, index) => (
               <li key={item} className="dd-list-item" onClick={() => {
-                this.setState({currentIndex: index});
+                this.setState({currentIndex: index, currentValue: item});
                 this.toggleList();
               }}>{item}</li>
             ))}
