@@ -6,9 +6,11 @@ import WelcomeScreen from './ui/screens/WelcomeScreen';
 import SendScreen from './ui/screens/SendScreen';
 import RegistrationScreen from "./ui/screens/RegistrationScreen";
 import PublicAccount from "./PublicAccount";
+import PasswordScreen from "./ui/screens/PasswordScreen";
 
 
-interface AppProps {}
+interface AppProps {
+}
 
 interface AppState {
   account: PublicAccount
@@ -17,7 +19,7 @@ interface AppState {
 
 export default class App extends React.Component<AppProps, AppState> {
 
-  constructor(props:AppProps) {
+  constructor(props: AppProps) {
     super(props);
     this.state = {
       account: new PublicAccount('', ''),
@@ -28,15 +30,20 @@ export default class App extends React.Component<AppProps, AppState> {
 
   render() {
 
-      let curScreen = <div>Unknown screen ${this.state.screen}</div>;
+    let curScreen = <div>Unknown screen ${this.state.screen}</div>;
     switch (this.state.screen) {
       case 'welcome':
         curScreen = <WelcomeScreen changeScreen={(screenName: string) => this.setState({screen: screenName})}
                                    setAccState={(newState: PublicAccount) => this.setState({account: newState})}/>;
         break;
       case 'register':
-        curScreen = <RegistrationScreen changeScreen={(screenName: string) => this.setState({screen: screenName})}
-                                        setAccState={(newState:PublicAccount) => this.setState({account: newState})}/>;
+        curScreen =
+          <RegistrationScreen changeScreen={(screenName: string) => this.setState({screen: screenName})}
+                              setAccState={(newState: PublicAccount) => this.setState({account: newState})}/>;
+        break;
+      case 'password':
+        curScreen = <PasswordScreen account={this.state.account}
+                                    setAccState={(newState: PublicAccount) => this.setState({account: newState})}/>;
         break;
       case 'send':
         curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary'/>;
@@ -44,9 +51,10 @@ export default class App extends React.Component<AppProps, AppState> {
     }
 
     return (
-        <div>
-          {curScreen}
-        </div>
-    );
+      <div>
+        {curScreen}
+      </div>
+    )
+      ;
   }
 }

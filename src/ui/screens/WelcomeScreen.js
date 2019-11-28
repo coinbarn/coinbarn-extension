@@ -2,6 +2,7 @@ import React from 'react';
 import homaImg from '../../img/1screen/homa3.png';
 import CoinbarnStorage from "../../CoinbarnStorage";
 import Dropdown from '../elements/Dropdown';
+import PublicAccount from '../../PublicAccount';
 
 export default class WelcomeScreen extends React.Component {
 
@@ -12,6 +13,13 @@ export default class WelcomeScreen extends React.Component {
     }
     return items;
   }
+
+  submit = () => {
+    const name = '????';
+    console.log();
+    this.props.setAccState(new PublicAccount(name, ''));
+    this.props.changeScreen('password')
+  };
 
   render() {
     return (
@@ -26,11 +34,11 @@ export default class WelcomeScreen extends React.Component {
 
             <form action="#">
               {/*<div class="select-name">*/}
-              <Dropdown list={this.accountItems()} />
+              <Dropdown list={this.accountItems()}/>
               {/*</div>*/}
 
               <div className="buttons">
-                <input className="button green-button " type='submit' value="Continue"/>
+                <input className="button green-button " type='submit' value="Continue" onClick={this.submit}/>
               </div>
             </form>
 
