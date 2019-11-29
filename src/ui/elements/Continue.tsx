@@ -10,7 +10,7 @@ export default class Continue extends React.Component<ContinueProps, {}> {
 
   render() {
     return (
-      <input className="button green-button continue" disabled={this.props.disabled} type='submit' value="Continue"
+      <input className="button green-button continue" disabled={this.props.disabled} type='button' value="Continue"
              onClick={this.props.submit}/>
     );
   }

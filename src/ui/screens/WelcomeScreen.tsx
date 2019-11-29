@@ -22,7 +22,7 @@ export default class WelcomeScreen extends React.Component<WelcomeProps, {}> {
   accountItems() {
     let items: Element[] = [];
     for (let acc of CoinbarnStorage.getAccountNames()) {
-      items.push(<option key={acc} value={acc}>{acc}</option>);
+      items.push(acc);
     }
     return items;
   }
@@ -46,7 +46,7 @@ export default class WelcomeScreen extends React.Component<WelcomeProps, {}> {
             <h2 className="note">Welcome back!</h2>
 
 
-            <form action="#">
+            <form>
               {/*<div class="select-name">*/}
               <Dropdown list={this.accountItems()} ref={this.dropdownElement}/>
               {/*</div>*/}

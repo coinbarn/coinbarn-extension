@@ -33,7 +33,7 @@ export default class PasswordScreen extends React.Component<PasswordProps, Passw
       const mnemonic = await CoinbarnStorage.getMnemonic(this.state.account.name, this.state.pass);
       if (validateMnemonic(mnemonic)) {
         const newAcc = PublicAccount.fromMnemonic(this.state.account.name, mnemonic);
-        this.props.updateState({account: newAcc, screen: 'send'});
+        this.props.updateState({account: newAcc, screen: 'start'});
       } else {
         console.log("Mnemoic is incorrect than should never happen")
       }
@@ -58,7 +58,7 @@ export default class PasswordScreen extends React.Component<PasswordProps, Passw
           <h2 className="enter-name">{this.state.account.name}</h2>
 
           <div className="enter-pass">
-            <form action="#">
+            <form>
               <label htmlFor="">
                 <strong>
                   Password

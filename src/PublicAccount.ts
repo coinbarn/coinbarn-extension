@@ -13,9 +13,8 @@ export default class PublicAccount {
   }
 
   static fromMnemonic(name: string, mnemonic: string): PublicAccount {
-    const sk = PublicAccount.seedToSk(mnemonic);
-    const address = Address.fromSk(sk);
-    return new PublicAccount(name, address.address);
+    const address = PublicAccount.mnemonicToAddress(mnemonic);
+    return new PublicAccount(name, address);
   }
 
   set address(newAd: string) {
