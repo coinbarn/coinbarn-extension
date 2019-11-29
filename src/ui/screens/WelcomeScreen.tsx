@@ -5,19 +5,22 @@ import Dropdown from '../elements/Dropdown';
 import Continue from '../elements/Continue';
 import PublicAccount from '../../PublicAccount';
 
-export default class WelcomeScreen extends React.Component {
+interface WelcomeProps {
+  updateState: (a: any) => void
+}
+
+export default class WelcomeScreen extends React.Component<WelcomeProps, {}> {
+
+  dropdownElement: any;
 
   constructor(props) {
     super(props);
-    this.state = {
-      account: props.account
-    };
     this.dropdownElement = React.createRef();
   }
 
 
   accountItems() {
-    let items = [];
+    let items: Element[] = [];
     for (let acc of CoinbarnStorage.getAccountNames()) {
       items.push(<option key={acc} value={acc}>{acc}</option>);
     }
