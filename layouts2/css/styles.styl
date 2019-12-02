@@ -1,0 +1,52 @@
+@require 'fonts'
+
+*
+  background-repeat: no-repeat
+  background-size: contain
+
+body 
+  fts()
+  color: #81827F
+  width: 360px
+  height: 600px
+  position: absolute
+  left: 0
+  right: 0
+  margin: 0 auto
+  border: 1px solid
+  border-color: #CCCCCC
+
+a
+  color: #8FB23E
+
+.greeting
+  fgt()
+
+.emptyDiv
+  flex-grow: 1
+
+screen()
+  padding-left: 64px
+  padding-right: 64px
+  height: 100%
+  box-sizing: border-box
+  display: flex
+  align-items: center
+  flex-direction: column
+  justify-content: flex-start
+  margin: 0 auto
+
+shadow(dy, width, color) 
+  filter: drop-shadow(0 dy width color)
+  -webkit-filter: drop-shadow(0 dy width color)
+
+tab()
+  background: url('../img/bg_tab.svg')
+  background-size: cover
+  shadow(5px, 3px, #CCCCCC)
+  width: 100%
+  flex-grow: 1
+  padding: 16px
+  box-sizing: border-box
+  display: flex
+  flex-direction: column

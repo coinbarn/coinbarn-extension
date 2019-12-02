@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>About</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+</head>
+
+
+<body>
+  <div class='homeScreen'>
+    <div class='homeHeader'>
+      <button class='closeBtn'></button>
+      <button class='settingsBtn'></button>
+    </div>
+    <div class='profileInfo'>
+      <div class='avatarDiv'>
+        <img src='./img/avatar_small.svg'/>
+      </div>
+      <div class='accountDiv'>
+        <div class='accountNameDiv f2'>
+          V1sionary
+          <img src='./img/edit.svg'/>
+        </div>
+        <button class='smallAddressBtn'>
+          9fMBpufpMEEr2GoHbmPTHAfd6j3Ew1QbcxWjr7LobQKzChETLYW
+        </button>
+        <span class='copiedSpan'>Copied</span>
+      </div>
+      <div class='spacerDiv'>
+      </div>
+      <div class='balanceDiv'>
+        <div class='balanceText ffn'>
+          Account balance:
+        </div>
+        <div class='dd-wrapper'>
+        </div>
+      </div>
+    </div>
+    <div class='tabSelector'>
+      <input id='tab0' type='radio' name='currTab'>
+      <label for='tab0'><h3>Send</h3></label>
+      <input id='tab1' type='radio' name='currTab'>
+      <label for='tab1'><h3>Transactions</h3></label>
+      <input id='tab2' type='radio' name='currTab' checked>
+      <label for='tab2'><h3>Issue</h3></label>
+    </div>
+    <div class='issueTab'>
+      <h3> Create your token on ERGO Platform </h3>
+      <div class='validateInputLarge invalidInput'>
+        <div class='inputLabel ffn'>Asset name</div>
+        <input />
+        <div class='errorDiv'>Invalid name</div>
+      </div>
+      <div class='validateInputLarge invalidInput'>
+        <div class='inputLabel ffn'>Net amount</div>
+        <input />
+        <div class='errorDiv'>Invalid amount</div>
+      </div>
+      <div class='validateInputLarge invalidInput'>
+        <div class='inputLabel ffn'>Decimal places</div>
+        <input />
+        <div class='errorDiv'>Invalid number of decimal places</div>
+      </div>
+      <div class='inputLabel ffn'>Brief description</div>
+      <textarea> </textarea>
+      <button class='mediumBtn'>Issue</button>
+    </div>
+  </div>
+
+  <div class='menu'>
+    <button class='backBtnWhite'></button>
+    <div class='greeting'>About</div>
+    <h1>CoinBarn Version</h1>
+    <h1>0.0.1</h1>
+    <h1 class='documents'>Documents</h1>
+    <ul>
+      <li><h3> <a href=#>Privacy policy</a></h3> </li>
+      <li><h3> <a href=#>Terms of use</a>  </h3> </li>
+      <li><h3> <a href=#>Attributions</a>  </h3> </li>
+    </ul>
+    <div class='footer'>
+      <ul>
+        <li><h3><a href=#>Support</a></h3></li>
+        <li><h3><a href=#>Site</a></h3></li>
+        <li><h3><a href=#>Email us!</a></h3></li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

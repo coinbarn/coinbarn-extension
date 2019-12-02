@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Registration</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+</head>
+
+
+<body>
+  <div class='registerScreen'>
+    <div class='imgWrap'>
+      <img src='./img/homa_register.svg' />
+    </div>
+
+    <div class='validateInput'>
+      <div class='inputLabel ffn'>Create an account name</div>
+      <input class='fts'/>
+      <div class='errorDiv'>Name already exists</div>
+    </div>
+
+    <div class='validateInput validInput'>
+      <div class='inputLabel ffn'>Create a password</div>
+      <input type='password' />
+      <div class='errorDiv'>Password is too weak</div>
+    </div>
+
+    <div class='validateInput invalidInput'>
+      <div class='inputLabel ffn'>Confirm password</div>
+      <input type='password'/>
+      <div class='errorDiv'>Passwords don't match</div>
+    </div>
+    <div class='checkboxDiv'>
+      <input type='checkbox' id='checkbox'/> 
+      <label for='checkbox'> 
+        I have read and agree <br/>to the <a href='#'>Terms of Use</a>
+      </label>
+    </div>
+
+    <div class='registrationControls'>
+      <button class='largeBtn'>Continue</button>
+      <button class='backBtn'>Back</button>
+    </div>
+
+  </div>
+</body>
+
+</html>

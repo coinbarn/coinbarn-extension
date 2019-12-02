@@ -1,0 +1,31 @@
+@require 'fonts'
+
+.tabSelector
+  width: 100%
+  display: flex
+  justify-content: space-evenly
+  label
+    &>h3
+      cursor: pointer
+      color: #81827F
+      text-align: center
+      height: 22px
+      padding: 0
+      margin: 0
+    background-image: url('../img/tab_button_gray.svg')
+    background-position: 0 31px
+    width: 32%
+    &:before 
+      display: block
+      content: ' '
+      padding-top: 11px
+  input
+    position: absolute
+    opacity: 0
+    cursor: pointer
+    height: 0
+    width: 0
+    &[type="radio"]:checked+label
+      color: #8FB23E
+      background-image: url('../img/tab_button_green.svg')
+      background-position: 0 31px
