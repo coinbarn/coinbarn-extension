@@ -47,10 +47,16 @@
     .avatarDiv
       padding-right: 16px
     .accountDiv
+      margin-top: -15px
       color: #ffffff
       width: 114px
       display: flex
       flex-direction: column
+      .nameInUseSpan
+        color: #a73132
+        fa()
+        visibility: hidden
+
       .accountNameDiv
         display: flex
         flex-direction: row
@@ -58,6 +64,8 @@
         align-items: baseline
         padding-right: 8px
         margin-bottom: 3px
+    .accountDiv.invalidInput .nameInUseSpan
+      visibility: visible
     .spacerDiv
       content: ''
       width: 2px
