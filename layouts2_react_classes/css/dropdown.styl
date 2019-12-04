@@ -1,0 +1,44 @@
+.dd-wrapper
+  color: #81827F
+  text-align: left
+  vertical-align: middle
+  position: relative
+  width: 100%
+  cursor: pointer
+  z-index: 10
+
+.dd-list 
+  position: absolute
+  width: 100%
+  padding: 0
+  margin: 0
+  list-style-type: none
+
+.dd-list-item 
+  position: relative
+
+.dd-header, .dd-header-expanded
+  display: flex
+
+.dd-trigger 
+  content: ' '
+  transform: scaleY(-1) rotateX(180deg)
+  transition: 0.2s
+  background: url("../img/arrow_down_gray.svg")
+  background-size: 13px 7px
+  background-repeat: no-repeat
+  background-position: center
+
+.dd-header-expanded .dd-trigger 
+  transform: rotateX(180deg)
+  transition: 0.2s
+  background-size: 13px 7px
+  background-repeat: no-repeat
+  background-position: center
+  background: url("../img/arrow_down_gray.svg")
+
+.dd-header-title
+  box-sizing: border-box
+  height: 100%
+  width: 100%
+  cursor: pointer

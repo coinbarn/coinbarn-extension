@@ -1,0 +1,25 @@
+.checkboxDiv
+  box-sizing: border-box
+  width: 232px
+  margin: 24px
+  flex-grow:1
+  input[type="checkbox"] 
+    opacity: 0;
+    content: none;
+    width: 0
+    height: 0
+  label
+    cursor: pointer
+    position: relative
+    display: inline-block
+    padding-left: 40px
+    &::before
+      cursor: pointer
+      content: ''
+      height: 24px
+      width: 24px
+      background: url('../img/checkbox_unchecked.svg')
+      position: absolute
+      left: 0
+  input[type="checkbox"]:checked + label::before 
+    background: url('../img/checkbox_checked.svg')

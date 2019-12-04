@@ -1,0 +1,96 @@
+@require 'fonts'
+
+input
+  fa()
+  box-sizing: border-box
+  color: #81827F
+  width: 100%
+  height: 40px
+  background-image: url('../img/input_gray.svg')
+  background-size: contain
+  background-repeat: no-repeat
+  outline: none
+  border: none
+  margin: 0
+  padding-left: 1em
+
+.validateInput.validInput input
+  background-image: url('../img/input_green.svg')
+  
+input[type=password]
+  font-size: 16px
+
+.errorDiv
+  visibility: hidden
+
+.validateInputLarge input, .inputMax input
+  padding-left: 16px
+  background-image: url('../img/input_large_gray.svg')
+
+.validateInputLarge.validInput input, .validateInputMax.validInput input
+  background-image: url('../img/input_large_green.svg')
+
+.validateInputLarge.invalidInput input, .validateInputMax.invalidInput input
+  color: #E17373
+  background-image: url('../img/input_large_red.svg')
+
+.validateInput.invalidInput input
+  color: #E17373
+  background-image: url('../img/input_red.svg')
+
+.invalidInput .errorDiv
+  visibility: visible
+
+.validateInput, .validateInputLarge, .validateInputMax
+  width: 100%
+
+.inputLabel
+  color: #8FB23E
+
+.errorDiv
+  text-align: right
+  color: #E17373
+
+textarea
+  border: 0
+  outline: none
+  resize: none
+  overflow: hidden
+  box-sizing: border-box
+  color: #81827F
+  width: 100%
+  background-size: contain
+  background-repeat: no-repeat
+
+.registerScreen textarea
+  ffn()
+  padding: 18px 12px
+  text-align: center
+  height: 80px
+  background: url('../img/textarea.svg')
+
+.issueTab textarea
+  fa()
+  padding: 12px 44px 15px 16px
+  text-align: left
+  height: 72px
+  background: url('../img/textarea_wide.svg')
+  margin-bottom: 16px
+
+.issueTab textarea.validInput
+  background: url('../img/textarea_wide_green.svg')
+
+.inputMax .smallBtn
+  position: absolute
+  margin: 8px 24px 8px 8px
+  padding: 0
+  right: 0
+
+.addressInputSmall
+  color: #FFFFFF
+  padding: 0
+  height: 18px
+  background: none
+
+.invalidInput .addressInputSmall
+  color: #A73132

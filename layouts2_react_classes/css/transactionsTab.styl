@@ -1,0 +1,96 @@
+@require 'fonts'
+@require 'styles'
+
+.transactionsTab
+  background: url('../img/bg_tab.svg')
+  background-size: cover
+  shadow(5px, 3px, #CCCCCC)
+  width: 100%
+  flex-grow: 1
+  padding: 8px 2px 8px 16px
+  box-sizing: border-box
+  display: flex
+  flex-direction: column
+
+.transactionsListTop
+  content: ''
+  height: 42px
+  max-height: 42px
+
+.transactionsListDiv
+  padding: 0 8px 0 0
+  max-height: 410px
+  overflow: auto
+  margin-right: 2px
+  &::-webkit-scrollbar 
+    width: 2px
+  &::-webkit-scrollbar-track 
+    background: #ECECEA
+  &::-webkit-scrollbar-thumb 
+    background: #8FB23E
+  h3
+    width: 100%
+    margin-bottom: 7px
+
+.transactionDiv
+  padding-top: 12px
+  height: 98px
+  width: 296px
+  background: url('../img/tx_separator.svg')
+  background-repeat: no-repeat
+  background-size: contain
+  box-sizing: border-box
+
+.dummyTransactionDiv
+  fts()
+  padding-top: 47px
+  height: 70px
+  width: 296px
+  background: url('../img/tx_separator.svg')
+  background-repeat: no-repeat
+  background-size: contain
+  box-sizing: border-box
+  text-align: center
+
+.txColumnsDiv
+  display: flex
+  flex-direction: columns
+  justify-content: space-between
+
+
+.txDate, .txDetails a
+  ffnm()
+  text-decoration: none
+  color: #81827F
+
+.txType, .txAmount
+  margin-top: 7px
+  margin-bottom: 7px
+
+.txType
+  color: #8FB23E
+
+.txAmount, .txDetails
+  text-align: right
+
+.txConfirmed, .txUnconfirmed
+  &::after
+    ftt()
+    text-align: center
+    padding-top: 2px
+    background-size: 88px 16px;
+    display: inline-block;
+    width: 88px
+    height: 16px
+
+.txConfirmed::after
+  content: 'Confirmed'
+  color: #6AAFCD
+  background: url('../img/tx_confirmed.svg')
+  background-repeat: no-repeat
+
+.txUnconfirmed::after
+  content: 'Unconfirmed'
+  color: #F3BE35
+  background: url('../img/tx_unconfirmed.svg')
+  background-repeat: no-repeat
