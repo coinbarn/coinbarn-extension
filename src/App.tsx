@@ -12,6 +12,7 @@ import PasswordScreen from "./ui/PasswordScreen";
 import SeedScreen from "./ui/SeedScreen";
 import PublicAccount from "./PublicAccount";
 import CoinbarnStorage from "./CoinbarnStorage";
+
 //import StartScreen from "./ui/screens/StartScreen";
 
 interface AppProps {
@@ -39,14 +40,19 @@ export default class App extends React.Component<AppProps, AppState> {
   };
 
   render() {
+    const registeredAccounts = CoinbarnStorage.getAccountNames();
     let curScreen = <div>Unknown screen {this.state.screen}</div>;
     switch (this.state.screen) {
       case 'welcome':
-        curScreen = <WelcomeScreen updateState={this.updateState}/>;
+        if (registeredAccounts.length === 0) {
+          curScreen = <WelcomeScreen updateState={this.updateState}/>;
+        } else {
+          curScreen = <WelcomeBackScreen updateState={this.updateState} registeredAccounts={registeredAccounts}/>;
+        }
         break;
       case 'register':
         curScreen =
-          <RegistrationScreen updateState={this.updateState} registeredAccounts={CoinbarnStorage.getAccountNames()}/>;
+          <RegistrationScreen updateState={this.updateState} registeredAccounts={registeredAccounts}/>;
         break;
       /*
             case 'password':
