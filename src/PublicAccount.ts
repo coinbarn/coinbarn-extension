@@ -1,28 +1,24 @@
 import {mnemonicToSeedSync} from "bip39";
-import {Address} from "@coinbarn/ergo-ts";
+import {Address, ErgoBox, Explorer} from "@coinbarn/ergo-ts";
 import {fromSeed} from "bip32";
+import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 
 export default class PublicAccount {
 
   name: string;
-  private _address: string;
+  boxes: ErgoBox[] | undefined = undefined;
+  address: string;
+  private explorer: Explorer = Explorer.mainnet;
 
   constructor(name: string, address: string) {
     this.name = name;
-    this._address = address;
+    this.address = address;
+    this.refreshBoxes();
   }
 
   static fromMnemonic(name: string, mnemonic: string): PublicAccount {
     const address = PublicAccount.mnemonicToAddress(mnemonic);
     return new PublicAccount(name, address);
-  }
-
-  set address(newAd: string) {
-    this._address = newAd;
-  }
-
-  get address() {
-    return this._address;
   }
 
   static mnemonicToAddress(mnemonic: string): string {
@@ -41,5 +37,22 @@ export default class PublicAccount {
     }
   }
 
+  async refreshBoxes() {
+    this.boxes = await this.explorer.getUnspentOutputs(new Address(this.address));
+    console.log(`refreshed balance ${this.boxes}`);
+  }
+
+  balances() {
+    if (this.boxes === undefined) {
+      return [];
+    } else {
+      const assets = ErgoBox.extractAssets(this.boxes);
+      const ergBalance = this.boxes.reduce((sum, {value}) => sum + value, 0) / unitsInOneErgo;
+      console.log(`Boxes: ${this.boxes.length}`);
+      console.log(`ergBalance: ${ergBalance}`);
+      assets.push({tokenId: 'ERG', amount: ergBalance});
+      return assets
+    }
+  }
 
 }

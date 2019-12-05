@@ -8,6 +8,7 @@ import CoinbarnStorage from "./CoinbarnStorage";
 import PasswordScreen from "./ui/PasswordScreen";
 import SeedScreen from "./ui/SeedScreen";
 import BarnScreen from "./ui/BarnScreen";
+import HomeScreen from "./ui/HomeScreen";
 
 interface AppProps {
 }
@@ -23,8 +24,10 @@ export default class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      account: new PublicAccount('', ''),
-      screen: 'welcome',
+      // account: new PublicAccount('', ''),
+      // screen: 'welcome',
+      account: new PublicAccount('testa', '9ggm43XYvHgqp2DfAuqdPoFJ9UgG33Y3fDrk9ydkH9h9k15eGwK'),
+      screen: 'home',
       screenData: ''
     };
   }
@@ -61,12 +64,10 @@ export default class App extends React.Component<AppProps, AppState> {
       case 'start':
         curScreen = <BarnScreen updateState={this.updateState}/>;
         break;
-
-      /*
-            case 'send':
-              curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary'/>;
-              break;
-      */
+      case 'home':
+        curScreen = <HomeScreen account={this.state.account}
+                                updateState={this.updateState}/>;
+        break;
     }
 
     return (

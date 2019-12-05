@@ -42,8 +42,12 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
     this.setState({mnemonic: generateMnemonic(128)})
   };
 
-  copyToClipboard = () => {
+  copyMnemonic = () => {
     navigator.clipboard.writeText(this.state.mnemonic);
+  };
+
+  copyAddress = () => {
+    navigator.clipboard.writeText(PublicAccount.mnemonicToAddress(this.state.mnemonic));
   };
 
   handleSeedUserInput(e) {
@@ -57,9 +61,8 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
     } else {
       const address = PublicAccount.mnemonicToAddress(this.state.mnemonic);
       const newAcc = new PublicAccount(this.props.account.name, address);
-      console.log(`!! Save account with name ${this.props.account.name} and password ${this.props.screenData}`);
       await CoinbarnStorage.saveAccount(this.props.account.name, this.props.screenData, this.state.mnemonic);
-      this.props.updateState({account: newAcc, screen: 'start'});
+      this.props.updateState({account: newAcc, screen: 'start', screenData: ''});
     }
   };
 
@@ -92,7 +95,7 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
     return (
       <div className='registerScreen'>
         <div className='imgWrap'>
-          <img src={homaImg}/>
+          <img src={homaImg} alt='Homa'/>
         </div>
 
         <h1>Secret Backup Phrase</h1>
@@ -101,14 +104,14 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
 
         <div id='textButtons'>
           <button className='refreshSeedBtn' onClick={this.refreshMnemonic}/>
-          <button className='copySeedBtn' onClick={this.copyToClipboard}/>
+          <button className='copySeedBtn' onClick={this.copyMnemonic}/>
         </div>
 
         {textarea}
 
         <div className='addressParams'>
           <strong>Your address:</strong>
-          <button className='fullAddressBtn'>
+          <button className='fullAddressBtn' onClick={this.copyAddress}>
             {PublicAccount.mnemonicToAddress(this.state.mnemonic)}
           </button>
         </div>

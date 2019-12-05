@@ -4,7 +4,7 @@ import InputBlock from './InputBlock'
 export default class InputBlockMax extends InputBlock {
   render() {
     let className = 'validateInputMax';
-    if( this.props.valid != undefined ){
+    if( this.props.valid !== undefined ){
       if( this.props.valid ){
         className = className.concat(' validInput');
       } else {

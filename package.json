@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@coinbarn/ergo-ts": "^0.1.8",
+    "@coinbarn/ergo-ts": "^0.1.9",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
     "bip32": "^2.0.4",

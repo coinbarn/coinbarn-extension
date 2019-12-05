@@ -47,7 +47,7 @@ export default class InputBlockF extends React.Component<InputBlockProps, InputB
 
   render() {
     let className = this.props.large ? 'validateInputLarge' : 'validateInput';
-    if (this.state.value != '') {
+    if (this.state.value !== '') {
       if (this.state.isValid) {
         className = className.concat(' validInput');
       } else {

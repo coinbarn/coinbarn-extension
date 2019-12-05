@@ -19,7 +19,7 @@ export default class InputBlock extends React.Component<InputBlockProps> {
 
   render() {
     let className = this.props.large ? 'validateInputLarge' : 'validateInput';
-    if( this.props.valid != undefined ){
+    if( this.props.valid !== undefined ){
       if( this.props.valid ){
         className = className.concat(' validInput');
       } else {

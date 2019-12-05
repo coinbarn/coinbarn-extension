@@ -47,7 +47,7 @@ export default class PasswordScreen extends React.Component<PasswordProps, Passw
     return (
       <div className='registerScreen'>
         <div className='imgWrap'>
-          <img src={avaImg}/>
+          <img src={avaImg} alt='Homa avatar'/>
         </div>
         <h1 id='accountName'> {this.state.account.name} </h1>
         <div id='requestDiv' className='ffn'> Password</div>
