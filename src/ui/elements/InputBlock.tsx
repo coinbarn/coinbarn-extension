@@ -2,12 +2,13 @@ import React from 'react';
 
 interface InputBlockProps {
   name: string,
-  error: string,
   isPassword: boolean,
   large: boolean,
+  error: string,
   valid?: boolean
 }
 
+// use InputBlockF
 export default class InputBlock extends React.Component<InputBlockProps> {
   static defaultProps = {
     name: 'name',

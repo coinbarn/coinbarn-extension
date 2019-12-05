@@ -11,6 +11,7 @@ import RegistrationScreen from "./ui/RegistrationScreen";
 import PasswordScreen from "./ui/PasswordScreen";
 import SeedScreen from "./ui/SeedScreen";
 import PublicAccount from "./PublicAccount";
+import CoinbarnStorage from "./CoinbarnStorage";
 //import StartScreen from "./ui/screens/StartScreen";
 
 interface AppProps {
@@ -43,22 +44,22 @@ export default class App extends React.Component<AppProps, AppState> {
       case 'welcome':
         curScreen = <WelcomeScreen updateState={this.updateState}/>;
         break;
-/*
       case 'register':
         curScreen =
-          <RegistrationScreen updateState={this.updateState}/>;
+          <RegistrationScreen updateState={this.updateState} registeredAccounts={CoinbarnStorage.getAccountNames()}/>;
         break;
-      case 'password':
-        curScreen = <PasswordScreen account={this.state.account}
-                                    updateState={this.updateState}/>;
-        break;
-      case 'start':
-        curScreen = <StartScreen updateState={this.updateState}/>;
-        break;
-      case 'send':
-        curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary'/>;
-        break;
-*/
+      /*
+            case 'password':
+              curScreen = <PasswordScreen account={this.state.account}
+                                          updateState={this.updateState}/>;
+              break;
+            case 'start':
+              curScreen = <StartScreen updateState={this.updateState}/>;
+              break;
+            case 'send':
+              curScreen = <SendScreen address='Dx39FuAa6VniKwPvPq7gRJYTyKLXULX14Na1yPTMdHVj' name='V1sionary'/>;
+              break;
+      */
     }
 
     return (
