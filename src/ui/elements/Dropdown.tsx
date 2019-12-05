@@ -7,29 +7,31 @@ interface DropdownProps {
 interface DropdownState {
   expanded: boolean,
   currentIndex: keyof Array<string>
+  currentValue: string
 }
 
 export default class Dropdown extends React.Component<DropdownProps, DropdownState> {
   constructor(props) {
-    super(props)
-    this.state={
+    super(props);
+    this.state = {
       expanded: false,
+      currentValue: this.props.list[0],
       currentIndex: 0
     };
   }
 
-  toggleList(){
+  toggleList() {
     this.setState({
-      expanded: ! this.state.expanded
+      expanded: !this.state.expanded
     });
   }
 
-  render(){
+  render() {
     const list = this.props.list;
     const {expanded, currentIndex} = this.state;
-    return(
+    return (
       <div className="dd-wrapper">
-        <div className={expanded ? "dd-header-expanded" : "dd-header"}  onClick={this.toggleList.bind(this)}>
+        <div className={expanded ? "dd-header-expanded" : "dd-header"} onClick={this.toggleList.bind(this)}>
           <div className="dd-header-title">{list[currentIndex]}</div>
           <div className="dd-trigger"></div>
         </div>
@@ -37,9 +39,11 @@ export default class Dropdown extends React.Component<DropdownProps, DropdownSta
           expanded ? <ul className="dd-list">
             {list.map((item, index) => (
               <li key={item} className="dd-list-item" onClick={() => {
-                this.setState({currentIndex: index});
+                this.setState({currentIndex: index, currentValue: item});
                 this.toggleList();
-              }}><div className='dd-background-div'>{item}</div></li>
+              }}>
+                <div className='dd-background-div'>{item}</div>
+              </li>
             ))}
           </ul> : ''
         }

@@ -1,38 +1,121 @@
 import React from 'react';
 import homaImg from '../img/homa_register.svg';
+import PublicAccount from "../PublicAccount";
+import {generateMnemonic} from "bip39";
+import CoinbarnStorage from "../CoinbarnStorage";
 
-export default class SeedScreen0 extends React.Component {
+declare const navigator;
+
+interface SeedProps {
+  account: PublicAccount
+  updateState: (a: any) => void
+  screenData: string
+}
+
+interface SeedState {
+  mnemonic: string
+  mnemonicBack: string
+  seedFormValid: boolean
+  repeatPhase: boolean
+}
+
+export default class SeedScreen extends React.Component<SeedProps, SeedState> {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      mnemonic: generateMnemonic(128),
+      mnemonicBack: '',
+      seedFormValid: false,
+      repeatPhase: false
+    };
+  }
+
+
+  validateSeedForm() {
+    const valid = this.state.mnemonic === this.state.mnemonicBack;
+    this.setState({seedFormValid: valid});
+  }
+
+
+  refreshMnemonic = () => {
+    this.setState({mnemonic: generateMnemonic(128)})
+  };
+
+  copyToClipboard = () => {
+    navigator.clipboard.writeText(this.state.mnemonic);
+  };
+
+  handleSeedUserInput(e) {
+    this.setState({mnemonicBack: e.target.value}, this.validateSeedForm)
+  }
+
+
+  submitSeed = async () => {
+    if (this.state.repeatPhase === false) {
+      this.setState({repeatPhase: true, seedFormValid: false});
+    } else {
+      const address = PublicAccount.mnemonicToAddress(this.state.mnemonic);
+      const newAcc = new PublicAccount(this.props.account.name, address);
+      console.log(`!! Save account with name ${this.props.account.name} and password ${this.props.screenData}`);
+      await CoinbarnStorage.saveAccount(this.props.account.name, this.props.screenData, this.state.mnemonic);
+      this.props.updateState({account: newAcc, screen: 'start'});
+    }
+  };
+
+  onBack = async () => {
+    if (!this.state.repeatPhase) {
+      this.props.updateState({screen: 'register'})
+    } else {
+      this.setState({repeatPhase: false, seedFormValid: true});
+    }
+  };
+
   render() {
+    let message;
+    let textarea;
+    if (!this.state.repeatPhase) {
+      message = <div id='descriptionDiv'>
+        Be sure to save <strong>Secret Backup Phrase</strong>. <br/>
+        You can copy or write it on a piece of paper. <br/>
+        Keep it in a safe place.
+      </div>;
+      textarea = <textarea className='ffn' readOnly={true} value={this.state.mnemonic}/>;
+    } else {
+      message = <div id='descriptionDiv'>
+        Confirm the Secret Backup Phrase.<br/> Type it below in the correct order
+      </div>;
+      textarea =
+        <textarea className='ffn' value={this.state.mnemonicBack} onChange={this.handleSeedUserInput.bind(this)}/>;
+    }
+
     return (
       <div className='registerScreen'>
         <div className='imgWrap'>
-          <img src={homaImg} />
+          <img src={homaImg}/>
         </div>
 
         <h1>Secret Backup Phrase</h1>
 
-        <div id='descriptionDiv'>
-          Be sure to save <strong>Secret Backup Phrase</strong>. <br />
-          You can copy or write it on a piece of paper. <br />
-          Keep it in a safe place.
-        </div>
+        {message}
 
         <div id='textButtons'>
-          <button className='refreshSeedBtn'></button>
-          <button className='copySeedBtn'></button>
+          <button className='refreshSeedBtn' onClick={this.refreshMnemonic}/>
+          <button className='copySeedBtn' onClick={this.copyToClipboard}/>
         </div>
-        <textarea className='ffn'> </textarea>
+
+        {textarea}
 
         <div className='addressParams'>
           <strong>Your address:</strong>
           <button className='fullAddressBtn'>
-            9fMBpufpMEEr2GoHbmPTHAfd6j3Ew1QbcxWjr7LobQKzChETLYW
+            {PublicAccount.mnemonicToAddress(this.state.mnemonic)}
           </button>
         </div>
 
         <div className='registrationControls'>
-          <button className='largeBtn'>Continue</button>
-          <button className='backBtn'>Back</button>
+          <button className='largeBtn' onClick={this.submitSeed}>Continue</button>
+          <button className='backBtn' onClick={this.onBack}>Back</button>
         </div>
 
       </div>

@@ -1,7 +1,11 @@
 import React from 'react';
 import barnImg from '../img/barn.svg';
 
-export default class BarnScreen extends React.Component {
+interface BarnProps {
+  updateState: (a: any) => void
+}
+
+export default class BarnScreen extends React.Component<BarnProps, {}> {
   render() {
     return (
       <div className='registerScreen'>
