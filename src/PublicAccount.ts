@@ -1,19 +1,28 @@
 import {mnemonicToSeedSync} from "bip39";
-import {Address, ErgoBox, Explorer} from "@coinbarn/ergo-ts";
+import {Address, ErgoBox, Explorer, Serializer} from "@coinbarn/ergo-ts";
 import {fromSeed} from "bip32";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
+import {ITokens} from "@coinbarn/ergo-ts/dist/models/ITokens";
+
+interface AccountToken extends ITokens {
+  tokenInfo: ErgoBox | null
+  name: string
+  decimals: number
+  amountInt: number
+}
 
 export default class PublicAccount {
 
   name: string;
-  boxes: ErgoBox[] | undefined = undefined;
   address: string;
+  private boxes: ErgoBox[] | undefined = undefined;
+  private tokenInfos: any = {};
   private explorer: Explorer = Explorer.mainnet;
 
   constructor(name: string, address: string) {
     this.name = name;
     this.address = address;
-    this.refreshBoxes();
+    this.refresh();
   }
 
   static fromMnemonic(name: string, mnemonic: string): PublicAccount {
@@ -37,21 +46,51 @@ export default class PublicAccount {
     }
   }
 
-  async refreshBoxes() {
+  async refresh() {
+    // refresh boxes
     this.boxes = await this.explorer.getUnspentOutputs(new Address(this.address));
+
+    // refresh token infos
+    const tokens = ErgoBox.extractAssets(this.boxes);
+    tokens.forEach(a => {
+      if (this.tokenInfos[a.tokenId] === undefined) {
+        this.tokenInfos[a.tokenId] = this.explorer.getTokenInfo(a.tokenId);
+      }
+    });
     console.log(`refreshed balance ${this.boxes}`);
   }
 
-  balances() {
+  balances(): AccountToken[] {
     if (this.boxes === undefined) {
       return [];
     } else {
       const assets = ErgoBox.extractAssets(this.boxes);
-      const ergBalance = this.boxes.reduce((sum, {value}) => sum + value, 0) / unitsInOneErgo;
-      console.log(`Boxes: ${this.boxes.length}`);
-      console.log(`ergBalance: ${ergBalance}`);
-      assets.push({tokenId: 'ERG', amount: ergBalance});
-      return assets
+      const accountTokens: AccountToken[] = assets.map(a => {
+        const box = this.tokenInfos[a.tokenId];
+        const decimals = Number(Serializer.stringFromHex(box.additionalRegisters['R6'].slice(4, box.additionalRegisters['R6'].length)));
+        const name = Serializer.stringFromHex(box.additionalRegisters['R4'].slice(4, box.additionalRegisters['R4'].length));
+        const factor = Math.pow(10, decimals);
+        return {
+          tokenInfo: box,
+          name: name,
+          decimals: decimals,
+          amountInt: a.amount,
+          amount: a.amount / factor,
+          tokenId: a.tokenId
+        }
+      });
+      const ergoIntAmount = this.boxes.reduce((sum, {value}) => sum + value, 0);
+      console.log(`!! ergoIntAmount == ${ergoIntAmount}, amount = ${(ergoIntAmount / unitsInOneErgo)}`);
+      const ergToken: AccountToken = {
+        tokenInfo: null,
+        name: 'ERG',
+        decimals: 9,
+        amountInt: ergoIntAmount,
+        amount: (ergoIntAmount / unitsInOneErgo),
+        tokenId: 'ERG'
+      };
+      accountTokens.push(ergToken);
+      return accountTokens
     }
   }
 

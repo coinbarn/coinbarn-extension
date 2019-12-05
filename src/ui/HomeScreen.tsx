@@ -18,31 +18,33 @@ interface HomeScreenState {
 }
 
 export default class HomeScreen extends React.Component<HomeScreenProps, HomeScreenState> {
-  tabs: Array<object>;
-  _asyncRequest: any;
+  infoProfileElement: any;
+  interval: any;
 
   constructor(props) {
     super(props);
-    this.tabs = [<SendTab/>, <TransactionsTab/>, <IssueTab/>];
     this.state = {
       account: this.props.account,
       currTabIndex: 0
-    }
+    };
+    this.infoProfileElement = React.createRef();
+  }
+
+  refresh() {
+    this.state.account.refresh().then(
+      e => {
+        this.setState({account: this.state.account});
+      }
+    )
   }
 
   componentDidMount() {
-    this._asyncRequest = this.state.account.refreshBoxes().then(
-      e => {
-        this._asyncRequest = null;
-        this.setState({account: this.state.account});
-      }
-    );
+    this.refresh();
+    this.interval = setInterval(() => this.refresh(), 10000);
   }
 
   componentWillUnmount() {
-    if (this._asyncRequest) {
-      this._asyncRequest.cancel();
-    }
+    clearInterval(this.interval);
   }
 
   setCurrTab(currTabIndex) {
@@ -50,12 +52,14 @@ export default class HomeScreen extends React.Component<HomeScreenProps, HomeScr
   }
 
   render() {
+    const tabs = [<SendTab account={this.state.account}/>, <TransactionsTab/>, <IssueTab/>];
+
     return (
       <div className='homeScreen'>
         <HomeHeader/>
-        <InfoProfile account={this.props.account}/>
+        <InfoProfile account={this.state.account}/>
         <TabSelector setCurrTab={this.setCurrTab.bind(this)}/>
-        {this.tabs[this.state.currTabIndex]}
+        {tabs[this.state.currTabIndex]}
       </div>
     );
   }

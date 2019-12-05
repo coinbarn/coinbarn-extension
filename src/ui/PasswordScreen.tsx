@@ -56,8 +56,6 @@ export default class PasswordScreen extends React.Component<PasswordProps, Passw
                      isPassword={true}
                      validate={() => {
                        return '';
-                     }}
-                     onUpdate={() => {
                      }}/>
         <button className='largeBtn' onClick={this.onSubmit}>Continue</button>
         <div className='emptyDiv'></div>

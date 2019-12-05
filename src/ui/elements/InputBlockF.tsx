@@ -27,17 +27,12 @@ export default class InputBlockF extends React.Component<InputBlockProps, InputB
   static defaultProps = {
     name: 'name',
     isPassword: false,
-    large: false
+    large: false,
+    onUpdate: () => {}
   };
 
   handleUserInput(e) {
-    const name = e.target.id;
-    let value = '';
-    if (name !== 'checkbox') {
-      value = e.target.value;
-    } else {
-      value = e.target.checked;
-    }
+    const value = e.target.value;
     const error = this.props.validate(value);
     const isValid = error === '';
     this.setState({value: value, error: error, isValid: isValid},

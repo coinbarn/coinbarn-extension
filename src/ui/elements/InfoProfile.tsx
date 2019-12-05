@@ -28,8 +28,7 @@ export default class InfoProfile extends React.Component<InfoProps, InfoState> {
 
   render() {
     const balances = this.props.account.balances();
-    console.log(`!! ${balances}`);
-    const balanceList: string[] = balances.map(a => `${a['amount']} ${a['tokenId']}`);
+    const balanceList: string[] = balances.map(a => `${a.amount} ${a.name}`);
     return (
       <div className='profileInfo'>
         <div className='avatarDiv'>
@@ -38,7 +37,7 @@ export default class InfoProfile extends React.Component<InfoProps, InfoState> {
         <div className='accountDiv'>
           <span className='nameInUseSpan'>Name is already in use</span>
           <div className='accountNameDiv'>
-            <input className='addressInputSmall f2' value={this.state.account.name}/>
+            <input className='addressInputSmall f2' defaultValue={this.state.account.name}/>
             <button className='editBtn'></button>
           </div>
           <button className='smallAddressBtn' onClick={this.copyAddress}>
