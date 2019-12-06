@@ -1,32 +1,32 @@
 import React from 'react';
 
-interface DropdownProps {
-  list: Array<string>
+interface IDropdownProps {
+  list: string[]
 }
 
-interface DropdownState {
+interface IDropdownState {
   expanded: boolean,
-  currentIndex: keyof Array<string>
+  currentIndex: keyof string[]
   currentValue: string
 }
 
-export default class Dropdown extends React.Component<DropdownProps, DropdownState> {
+export default class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false,
+      currentIndex: 0,
       currentValue: this.props.list[0],
-      currentIndex: 0
+      expanded: false,
     };
   }
 
-  toggleList() {
+  public toggleList() {
     this.setState({
       expanded: !this.state.expanded
     });
   }
 
-  render() {
+  public render() {
     const list = this.props.list;
     const {expanded, currentIndex} = this.state;
     return (

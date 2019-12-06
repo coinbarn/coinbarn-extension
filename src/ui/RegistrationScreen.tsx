@@ -1,24 +1,24 @@
 import React from 'react';
-import regImg from '../img/homa_register.svg';
-import InputBlockF from "./elements/InputBlockF";
 import zxcvbn from 'zxcvbn';
 import Account from "../Account";
+import regImg from '../img/homa_register.svg';
+import InputBlockF from "./elements/InputBlockF";
 
-interface RegProps {
+interface IRegProps {
   updateState: (a: any) => void
   registeredAccounts: string[]
 }
 
-interface RegState {
+interface IRegState {
   checkbox: boolean
   formValid: boolean
 }
 
-export default class RegistrationScreen extends React.Component<RegProps, RegState> {
+export default class RegistrationScreen extends React.Component<IRegProps, IRegState> {
 
-  accNameElement: any;
-  passElement: any;
-  pass2Element: any;
+  public accNameElement: any;
+  public passElement: any;
+  public pass2Element: any;
 
   constructor(props) {
     super(props);
@@ -32,7 +32,7 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
   }
 
 
-  validateAccName = accName => {
+  public validateAccName = accName => {
     if (accName.length < 3) {
       return 'Account name is too short';
     } else if (this.props.registeredAccounts.includes(accName)) {
@@ -42,7 +42,7 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
     }
   };
 
-  validatePass = pass => {
+  public validatePass = pass => {
     const strength = zxcvbn(pass);
     // todo strength.score < 4 for production
     // todo change validity of pass2 ?
@@ -53,7 +53,7 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
     }
   };
 
-  validatePass2 = pass2 => {
+  public validatePass2 = pass2 => {
     const pass = this.passElement.current.state.value;
     if (pass !== pass2) {
       return 'Passwords do not match'
@@ -62,7 +62,7 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
     }
   };
 
-  onUpdate = () => {
+  public onUpdate = () => {
     const accIsValid = this.accNameElement.current.state.isValid;
     const passIsValid = this.passElement.current.state.isValid;
     const passRepeatIsValid = this.pass2Element.current.state.isValid;
@@ -74,12 +74,12 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
     }
   };
 
-  clickCheckbox(e) {
+  public clickCheckbox(e) {
     const value = e.target.checked;
     this.setState({checkbox: value}, this.onUpdate);
   }
 
-  submit = () => {
+  public submit = () => {
     const newState = {
       account: new Account(this.accNameElement.current.state.value, ''),
       screen: 'seed',
@@ -88,11 +88,11 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
     this.props.updateState(newState);
   };
 
-  render() {
+  public render() {
     return (
       <div className='registerScreen'>
         <div className='imgWrap'>
-          <img src={regImg}/>
+          <img src={regImg} alt='Homa'/>
         </div>
         <InputBlockF ref={this.accNameElement}
                      name='Create an account name'
@@ -111,7 +111,7 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
         <div className='checkboxDiv'>
           <input type='checkbox' id='checkbox' onChange={this.clickCheckbox.bind(this)}/>
           <label htmlFor='checkbox'>
-            I have read and agree <br/>to the <a href='#'>Terms of Use</a>
+            I have read and agree <br/>to the <a href='https://coinhive.app/terms.html'>Terms of Use</a>
           </label>
         </div>
         <div className='registrationControls'>

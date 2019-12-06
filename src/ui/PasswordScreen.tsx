@@ -1,23 +1,23 @@
-import React from 'react';
-import avaImg from '../img/avatar.svg';
-import Account from "../Account";
 import {validateMnemonic} from "bip39";
+import React from 'react';
+import Account from "../Account";
 import CoinbarnStorage from "../CoinbarnStorage";
+import avaImg from '../img/avatar.svg';
 import InputBlockF from "./elements/InputBlockF";
 
-interface PasswordProps {
+interface IPasswordProps {
   account: Account
   updateState: (a: any) => void
 }
 
-interface PasswordState {
+interface IPasswordState {
   account: Account
 }
 
-export default class PasswordScreen extends React.Component<PasswordProps, PasswordState> {
-  passElement: any;
+export default class PasswordScreen extends React.Component<IPasswordProps, IPasswordState> {
+  public passElement: any;
 
-  constructor(props: PasswordProps) {
+  constructor(props: IPasswordProps) {
     super(props);
     this.state = {
       account: props.account
@@ -25,7 +25,7 @@ export default class PasswordScreen extends React.Component<PasswordProps, Passw
     this.passElement = React.createRef();
   }
 
-  onSubmit = async () => {
+  public onSubmit = async () => {
     const pass = this.passElement.current.state.value;
     try {
       const newAcc = await CoinbarnStorage.getAccount(this.state.account.name, pass);
@@ -41,7 +41,7 @@ export default class PasswordScreen extends React.Component<PasswordProps, Passw
     }
   };
 
-  render() {
+  public render() {
     return (
       <div className='registerScreen'>
         <div className='imgWrap'>

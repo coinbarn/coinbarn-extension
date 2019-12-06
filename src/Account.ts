@@ -1,10 +1,10 @@
-import {mnemonicToSeedSync} from "bip39";
 import {Address, ErgoBox, Explorer, Serializer} from "@coinbarn/ergo-ts";
-import {fromSeed} from "bip32";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import {ITokens} from "@coinbarn/ergo-ts/dist/models/ITokens";
+import {fromSeed} from "bip32";
+import {mnemonicToSeedSync} from "bip39";
 
-interface AccountToken extends ITokens {
+interface IAccountToken extends ITokens {
   tokenInfo: ErgoBox | null
   name: string
   decimals: number
@@ -13,10 +13,26 @@ interface AccountToken extends ITokens {
 
 export default class Account {
 
-  name: string;
-  mnemonic: string;
-  address: string = '';
-  sk: string = '';
+  public static mnemonicToAddress(mnemonic: string): string {
+    const seed = mnemonicToSeedSync(mnemonic);
+    const sk = Account.seedToSk(seed);
+    return Address.fromSk(sk).address
+
+  }
+
+  public static seedToSk(seed, path = "m/44'/429'/0'/0/0") {
+    const sk = fromSeed(Buffer.from(seed)).derivePath(path).privateKey;
+    if (sk === undefined) {
+      throw new Error('Undefined sk');
+    } else {
+      return sk.toString('hex');
+    }
+  }
+
+  public name: string;
+  public mnemonic: string;
+  public address: string = '';
+  public sk: string = '';
   private boxes: ErgoBox[] | undefined = undefined;
   private tokenInfos: any = {};
   private explorer: Explorer = Explorer.mainnet;
@@ -31,23 +47,7 @@ export default class Account {
     this.refresh();
   }
 
-  static mnemonicToAddress(mnemonic: string): string {
-    const seed = mnemonicToSeedSync(mnemonic);
-    const sk = Account.seedToSk(seed);
-    return Address.fromSk(sk).address
-
-  }
-
-  static seedToSk(seed, path = "m/44'/429'/0'/0/0") {
-    const sk = fromSeed(Buffer.from(seed)).derivePath(path).privateKey;
-    if (sk === undefined) {
-      throw new Error('Undefined sk');
-    } else {
-      return sk.toString('hex');
-    }
-  }
-
-  async refresh() {
+  public async refresh() {
     // refresh boxes
     this.boxes = await this.explorer.getUnspentOutputs(new Address(this.address));
 
@@ -61,33 +61,33 @@ export default class Account {
     console.log(`refreshed balance ${this.boxes}`);
   }
 
-  balances(): AccountToken[] {
+  public balances(): IAccountToken[] {
     if (this.boxes === undefined) {
       return [];
     } else {
       const assets = ErgoBox.extractAssets(this.boxes);
-      const accountTokens: AccountToken[] = assets.map(a => {
+      const accountTokens: IAccountToken[] = assets.map(a => {
         const box = this.tokenInfos[a.tokenId];
-        const decimals = Number(Serializer.stringFromHex(box.additionalRegisters['R6'].slice(4, box.additionalRegisters['R6'].length)));
-        const name = Serializer.stringFromHex(box.additionalRegisters['R4'].slice(4, box.additionalRegisters['R4'].length));
+        const decimals = Number(Serializer.stringFromHex(box.additionalRegisters.R6.slice(4, box.additionalRegisters.R6.length)));
+        const name = Serializer.stringFromHex(box.additionalRegisters.R4.slice(4, box.additionalRegisters.R4.length));
         const factor = Math.pow(10, decimals);
         return {
-          tokenInfo: box,
-          name: name,
-          decimals: decimals,
-          amountInt: a.amount,
           amount: a.amount / factor,
-          tokenId: a.tokenId
+          amountInt: a.amount,
+          decimals: decimals,
+          name: name,
+          tokenId: a.tokenId,
+          tokenInfo: box
         }
       });
       const ergoIntAmount = this.boxes.reduce((sum, {value}) => sum + value, 0);
-      const ergToken: AccountToken = {
-        tokenInfo: null,
-        name: 'ERG',
-        decimals: 9,
-        amountInt: ergoIntAmount,
+      const ergToken: IAccountToken = {
         amount: (ergoIntAmount / unitsInOneErgo),
-        tokenId: 'ERG'
+        amountInt: ergoIntAmount,
+        decimals: 9,
+        name: 'ERG',
+        tokenId: 'ERG',
+        tokenInfo: null
       };
       accountTokens.push(ergToken);
       return accountTokens

@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "no-console": {
+      "severity": "warning"
+    },
+    "no-empty": false,
+    "no-bitwise": false,
+    "object-literal-shorthand": false
+  },
+  "jsRules": {
+    "no-console": false //Disable for javascript
+  }
+}

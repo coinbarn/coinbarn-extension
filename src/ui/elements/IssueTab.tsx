@@ -2,7 +2,7 @@ import React from 'react';
 import InputBlock from './InputBlock'
 
 export default class IssueTab extends React.Component {
-  render(){
+  public render(){
     return(
       <div className='issueTab'>
         <h3> Create your token on ERGO Platform </h3>

@@ -1,16 +1,16 @@
 import React from 'react';
 import homaImg from '../img/homa_lawn.svg';
 
-interface WelcomeProps {
+interface IWelcomeProps {
   updateState: (a: any) => void
 }
 
-export default class WelcomeScreen extends React.Component<WelcomeProps, {}> {
-  render() {
+export default class WelcomeScreen extends React.Component<IWelcomeProps, {}> {
+  public render() {
     return (
       <div className='welcomeScreen'>
         <div className='imgWrap'>
-          <img src={homaImg} />
+          <img src={homaImg} alt='Homa'/>
         </div>
         <div className='greeting'>
           Welcome!

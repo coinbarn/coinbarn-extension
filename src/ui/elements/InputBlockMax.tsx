@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface InputBlockMaxProps {
+interface IInputBlockMaxProps {
   maxValue: number
   validate: (value: number) => string
   name: string
@@ -8,38 +8,31 @@ interface InputBlockMaxProps {
   onUpdate: () => void
 }
 
-interface InputBlockMaxState {
+interface IInputBlockMaxState {
   value: number
   isValid: boolean | undefined
   error: string
 }
 
-export default class InputBlockMax extends React.Component<InputBlockMaxProps, InputBlockMaxState> {
+export default class InputBlockMax extends React.Component<IInputBlockMaxProps, IInputBlockMaxState> {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      error: '',
       isValid: undefined,
-      error: ''
+      value: 0,
     }
   }
 
-  maxClick = () => {
+  public maxClick = () => {
     this.updateValue(this.props.maxValue);
   };
 
-  handleUserInput(e) {
+  public handleUserInput(e) {
     this.updateValue(Number(e.target.value));
   }
 
-  private updateValue(value) {
-    const error = this.props.validate(value);
-    const isValid = error === '';
-    this.setState({value: value, error: error, isValid: isValid},
-      this.props.onUpdate);
-  }
-
-  render() {
+  public render() {
     let className = 'validateInputMax';
     if (this.state.isValid !== undefined) {
       if (this.state.isValid) {
@@ -62,5 +55,12 @@ export default class InputBlockMax extends React.Component<InputBlockMaxProps, I
         <div className='errorDiv'>{this.state.error}</div>
       </div>
     );
+  }
+
+  private updateValue(value) {
+    const error = this.props.validate(value);
+    const isValid = error === '';
+    this.setState({value: value, error: error, isValid: isValid},
+      this.props.onUpdate);
   }
 }

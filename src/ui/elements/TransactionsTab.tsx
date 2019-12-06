@@ -1,57 +1,55 @@
 import React from 'react';
 import Transaction from './Transaction';
 
-interface TransactionsTabProps{
-}
 
 // Arrays of transactions go here
-interface TransactionsTabState{
-  unconfirmed: Array<object>,
-  confirmed: Array<object>
+interface ITransactionsTabState{
+  unconfirmed: object[],
+  confirmed: object[]
 }
 
 // TODO: tune the function for convenient tx format
 const txToProps = (tx) => {
   return {
-    amountStr: tx.value.toString().concat(' ERGS'),
     action: tx.value > 0 ? 'Received ERGS' : 'Sent ERGS',
+    amountStr: tx.value.toString().concat(' ERGS'),
     date: tx.date.toLocaleDateString('en-US').concat(' at ').concat(tx.date.toLocaleTimeString('en-US')),
     explorerHref: '#'
   }
 };
 
-export default class TransactionsTab extends React.Component<TransactionsTabProps, TransactionsTabState> {
+export default class TransactionsTab extends React.Component<{}, ITransactionsTabState> {
   constructor(props){
     super(props);
     this.state = {
       confirmed: [
         {
-          value: 0.123,
-          date: new Date(Date())
+          date: new Date(Date()),
+          value: 0.123
         },
         {
-          value: -0.123,
-          date: new Date(Date())
+          date: new Date(Date()),
+          value: -0.123
         },
         {
+          date: new Date(Date()),
           value: -0.123,
-          date: new Date(Date())
         }
       ],
       unconfirmed: [
         {
+          date: new Date(Date()),
           value: 0.456,
-          date: new Date(Date())
         },
         {
+          date: new Date(Date()),
           value: -0.789,
-          date: new Date(Date())
         }
       ]
     };
   }
 
-  render(){
+  public render(){
     const confirmedList = this.state.confirmed.map(tx => (<Transaction confirmed={true} {...txToProps(tx)} />));
     const unconfirmedList = this.state.unconfirmed.map(tx => <Transaction confirmed={false} {...txToProps(tx)} />)
     return(

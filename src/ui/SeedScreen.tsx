@@ -1,61 +1,61 @@
-import React from 'react';
-import homaImg from '../img/homa_register.svg';
-import Account from "../Account";
 import {generateMnemonic} from "bip39";
+import React from 'react';
+import Account from "../Account";
 import CoinbarnStorage from "../CoinbarnStorage";
+import homaImg from '../img/homa_register.svg';
 
 declare const navigator;
 
-interface SeedProps {
+interface ISeedProps {
   account: Account
   updateState: (a: any) => void
   screenData: string
 }
 
-interface SeedState {
+interface ISeedState {
   mnemonic: string
   mnemonicBack: string
   seedFormValid: boolean
   repeatPhase: boolean
 }
 
-export default class SeedScreen extends React.Component<SeedProps, SeedState> {
+export default class SeedScreen extends React.Component<ISeedProps, ISeedState> {
 
   constructor(props) {
     super(props);
     this.state = {
       mnemonic: generateMnemonic(128),
       mnemonicBack: '',
-      seedFormValid: false,
-      repeatPhase: false
+      repeatPhase: false,
+      seedFormValid: false
     };
   }
 
 
-  validateSeedForm() {
+  public validateSeedForm() {
     const valid = this.state.mnemonic === this.state.mnemonicBack;
     this.setState({seedFormValid: valid});
   }
 
 
-  refreshMnemonic = () => {
+  public refreshMnemonic = () => {
     this.setState({mnemonic: generateMnemonic(128)})
   };
 
-  copyMnemonic = () => {
+  public copyMnemonic = () => {
     navigator.clipboard.writeText(this.state.mnemonic);
   };
 
-  copyAddress = () => {
+  public copyAddress = () => {
     navigator.clipboard.writeText(Account.mnemonicToAddress(this.state.mnemonic));
   };
 
-  handleSeedUserInput(e) {
+  public handleSeedUserInput(e) {
     this.setState({mnemonicBack: e.target.value}, this.validateSeedForm)
   }
 
 
-  submitSeed = async () => {
+  public submitSeed = async () => {
     if (this.state.repeatPhase === false) {
       this.setState({repeatPhase: true, seedFormValid: false});
     } else {
@@ -66,7 +66,7 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
     }
   };
 
-  onBack = async () => {
+  public onBack = async () => {
     if (!this.state.repeatPhase) {
       this.props.updateState({screen: 'register'})
     } else {
@@ -74,7 +74,7 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
     }
   };
 
-  render() {
+  public render() {
     let message;
     let textarea;
     if (!this.state.repeatPhase) {

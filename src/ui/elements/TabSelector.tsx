@@ -1,14 +1,14 @@
 import React from 'react';
 
-interface TabSelectorProps {
+interface ITabSelectorProps {
   setCurrTab(n: number): void,
 }
 
-interface TabSelectorState {
-  currTab: keyof Array<object>
+interface ITabSelectorState {
+  currTab: keyof object[]
 }
 
-export default class TabSelector extends React.Component<TabSelectorProps, TabSelectorState> {
+export default class TabSelector extends React.Component<ITabSelectorProps, ITabSelectorState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,13 +16,13 @@ export default class TabSelector extends React.Component<TabSelectorProps, TabSe
     };
   }
 
-  handleRadioSelection(e) {
+  public handleRadioSelection(e) {
     const tab = e.target.id.slice(-1); // o___o
     this.props.setCurrTab(tab);
     this.setState({currTab: tab});
   }
 
-  render() {
+  public render() {
     return (
       <div className='tabSelector'>
         <input id='tab0' type='radio' name='currTab' checked={this.state.currTab === 0}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface TransactionProps {
+interface ITransactionProps {
   confirmed: boolean,
   amountStr: string,
   action: string,
@@ -8,8 +8,8 @@ interface TransactionProps {
   explorerHref: string
 }
 
-export default class Transaction extends React.Component<TransactionProps> {
-  render(){
+export default class Transaction extends React.Component<ITransactionProps> {
+  public render(){
     return(
         <div className={'transactionDiv '.concat(this.props.confirmed ?  'txConfirmed' : 'txUnconfirmed')}>
           <div className='txColumnsDiv'>

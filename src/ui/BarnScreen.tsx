@@ -1,16 +1,16 @@
 import React from 'react';
 import barnImg from '../img/barn.svg';
 
-interface BarnProps {
+interface IBarnProps {
   updateState: (a: any) => void
 }
 
-export default class BarnScreen extends React.Component<BarnProps, {}> {
-  render() {
+export default class BarnScreen extends React.Component<IBarnProps, {}> {
+  public render() {
     return (
       <div className='registerScreen'>
         <div className='imgWrapBarn'>
-          <img src={barnImg}/>
+          <img src={barnImg} alt='Barn of the Homa'/>
         </div>
         <div className='greeting'>
           Welcome to the Barn!

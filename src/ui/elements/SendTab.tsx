@@ -1,26 +1,25 @@
-import React from 'react';
-import Dropdown from './Dropdown';
-import InputBlockMax from './InputBlockMax';
-import Account from "../../Account";
-import InputBlockF from "./InputBlockF";
 import {Address, Client, feeValue, minBoxValue} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
+import React from 'react';
+import Account from "../../Account";
+import Dropdown from './Dropdown';
+import InputBlockF from "./InputBlockF";
+import InputBlockMax from './InputBlockMax';
 
-interface SendTabProps {
-  setCurrTab(n: number): void
-
+interface ISendTabProps {
   account: Account
+  setCurrTab(n: number): void
 }
 
-interface SendTabState {
+interface ISendTabState {
   formValid: boolean
 }
 
-export default class SendTab extends React.Component<SendTabProps, SendTabState> {
+export default class SendTab extends React.Component<ISendTabProps, ISendTabState> {
 
-  tokenDropdownElement: any;
-  addressElement: any;
-  amountElement: any;
+  public tokenDropdownElement: any;
+  public addressElement: any;
+  public amountElement: any;
 
   constructor(props) {
     super(props);
@@ -33,11 +32,11 @@ export default class SendTab extends React.Component<SendTabProps, SendTabState>
     this.amountElement = React.createRef();
   }
 
-  currentTokenId(): string {
+  public currentTokenId(): string {
     return 'ERG'
   }
 
-  validateAddress = (address) => {
+  public validateAddress = (address) => {
     const add = new Address(address);
     if (!add.isValid()) {
       return 'Invalid address';
@@ -48,7 +47,7 @@ export default class SendTab extends React.Component<SendTabProps, SendTabState>
     }
   };
 
-  validateAmount = (amount) => {
+  public validateAmount = (amount) => {
     const tokenInfo = this.props.account.balances().find(t => t.tokenId === this.currentTokenId());
     if (tokenInfo === undefined) {
       return 'No such token';
@@ -73,7 +72,7 @@ export default class SendTab extends React.Component<SendTabProps, SendTabState>
   /**
    * Max amount to send for selected token
    */
-  maxAmount(): number {
+  public maxAmount(): number {
     const tokenInfo = this.props.account.balances().find(t => t.tokenId === this.currentTokenId());
     if (tokenInfo === undefined) {
       return 0;
@@ -84,7 +83,7 @@ export default class SendTab extends React.Component<SendTabProps, SendTabState>
     }
   }
 
-  onSend = async () => {
+  public onSend = async () => {
     const tokenId = this.currentTokenId();
     const amount = this.amountElement.current.state.value;
     const recipient = this.addressElement.current.state.value;
@@ -97,7 +96,7 @@ export default class SendTab extends React.Component<SendTabProps, SendTabState>
 
   };
 
-  onUpdate = () => {
+  public onUpdate = () => {
     const amountIsValid = this.amountElement.current.state.isValid;
     const recipientIsValid = this.addressElement.current.state.isValid;
     const formValid = amountIsValid && recipientIsValid;
@@ -108,7 +107,7 @@ export default class SendTab extends React.Component<SendTabProps, SendTabState>
   };
 
 
-  render() {
+  public render() {
     const tokenNames = this.props.account.balances().map(a => a.name);
 
     return (

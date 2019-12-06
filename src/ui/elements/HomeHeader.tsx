@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class HomeHeader extends React.Component {
-  render(){
+  public render(){
     return(
       <div className='homeHeader'>
         <button className='menuBtn' />

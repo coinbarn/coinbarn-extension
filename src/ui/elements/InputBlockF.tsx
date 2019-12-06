@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface InputBlockProps {
+interface IInputBlockProps {
   name: string,
   isPassword: boolean,
   large: boolean,
@@ -8,30 +8,30 @@ interface InputBlockProps {
   onUpdate: () => void
 }
 
-interface InputBlockState {
+interface IInputBlockState {
   value: string
   isValid: boolean
   error: string
 }
 
-export default class InputBlockF extends React.Component<InputBlockProps, InputBlockState> {
+export default class InputBlockF extends React.Component<IInputBlockProps, IInputBlockState> {
+
+  public static defaultProps = {
+    isPassword: false,
+    large: false,
+    name: 'name',
+    onUpdate: () => {}
+  };
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      error: 'error',
       isValid: false,
-      error: 'error'
+      value: '',
     }
   }
 
-  static defaultProps = {
-    name: 'name',
-    isPassword: false,
-    large: false,
-    onUpdate: () => {}
-  };
-
-  handleUserInput(e) {
+  public handleUserInput(e) {
     const value = e.target.value;
     const error = this.props.validate(value);
     const isValid = error === '';
@@ -40,7 +40,7 @@ export default class InputBlockF extends React.Component<InputBlockProps, InputB
   }
 
 
-  render() {
+  public render() {
     let className = this.props.large ? 'validateInputLarge' : 'validateInput';
     if (this.state.value !== '') {
       if (this.state.isValid) {

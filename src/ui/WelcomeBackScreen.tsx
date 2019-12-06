@@ -1,22 +1,22 @@
 import React from 'react';
-import Dropdown from './elements/Dropdown'
-import homaImg from '../img/homa_tea.svg';
 import Account from "../Account";
+import homaImg from '../img/homa_tea.svg';
+import Dropdown from './elements/Dropdown'
 
-interface WelcomeBackProps {
+interface IWelcomeBackProps {
   updateState: (a: any) => void
   registeredAccounts: string[]
 }
 
-export default class WelcomeBackScreen extends React.Component<WelcomeBackProps, {}> {
-  dropdownElement: any;
+export default class WelcomeBackScreen extends React.Component<IWelcomeBackProps, {}> {
+  public dropdownElement: any;
 
   constructor(props) {
     super(props);
     this.dropdownElement = React.createRef();
   }
 
-  submit = () => {
+  public submit = () => {
     const name = this.dropdownElement.current.state.currentValue;
     const newState = {
       account: new Account(name, ''),
@@ -25,11 +25,11 @@ export default class WelcomeBackScreen extends React.Component<WelcomeBackProps,
     this.props.updateState(newState);
   };
 
-  render() {
+  public render() {
     return (
       <div className='welcomeBackScreen'>
         <div className='imgWrap'>
-          <img src={homaImg}/>
+          <img src={homaImg} alt='homa'/>
         </div>
         <div className='greeting'>
           Welcome back!
