@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TabSelectorProps {
-  setCurrTab(n: keyof Array<object>): void,
+  setCurrTab(n: number): void,
 }
 
 interface TabSelectorState {

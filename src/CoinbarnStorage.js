@@ -1,6 +1,6 @@
 /*global localStorage*/
 
-import PublicAccount from "./PublicAccount";
+import Account from "./Account";
 
 export default class CoinbarnStorage {
 
@@ -20,6 +20,7 @@ export default class CoinbarnStorage {
     localStorage.setItem(name, this.arrayBufferToBase64(ct));
   }
 
+  // ptivate
   static async getMnemonic(name, password) {
     const item = localStorage.getItem(name);
     const decryptedBytes = await this.decrypt(this.base64ToArrayBuffer(item), password);
@@ -29,7 +30,7 @@ export default class CoinbarnStorage {
 
   static async getAccount(name, password) {
     const mnemonic = CoinbarnStorage.getMnemonic(name, password);
-    return PublicAccount.fromMnemonic(name, mnemonic);
+    return new Account(name, mnemonic);
   }
 
   static async encrypt(plaintext, password) {

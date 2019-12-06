@@ -5,15 +5,15 @@ import TabSelector from './elements/TabSelector';
 import SendTab from './elements/SendTab';
 import TransactionsTab from './elements/TransactionsTab';
 import IssueTab from './elements/IssueTab';
-import PublicAccount from "../PublicAccount";
+import Account from "../Account";
 
 interface HomeScreenProps {
-  account: PublicAccount
+  account: Account
   updateState: (a: any) => void
 }
 
 interface HomeScreenState {
-  account: PublicAccount
+  account: Account
   currTabIndex: keyof Array<object>
 }
 
@@ -40,7 +40,7 @@ export default class HomeScreen extends React.Component<HomeScreenProps, HomeScr
 
   componentDidMount() {
     this.refresh();
-    this.interval = setInterval(() => this.refresh(), 10000);
+    this.interval = setInterval(() => this.refresh(), 60000);
   }
 
   componentWillUnmount() {
@@ -52,7 +52,9 @@ export default class HomeScreen extends React.Component<HomeScreenProps, HomeScr
   }
 
   render() {
-    const tabs = [<SendTab account={this.state.account}/>, <TransactionsTab/>, <IssueTab/>];
+    const tabs = [<SendTab account={this.state.account} setCurrTab={this.setCurrTab.bind(this)}/>,
+      <TransactionsTab/>,
+      <IssueTab/>];
 
     return (
       <div className='homeScreen'>

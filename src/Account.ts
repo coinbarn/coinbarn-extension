@@ -11,28 +11,29 @@ interface AccountToken extends ITokens {
   amountInt: number
 }
 
-export default class PublicAccount {
+export default class Account {
 
   name: string;
-  address: string;
+  mnemonic: string;
+  address: string = '';
+  sk: string = '';
   private boxes: ErgoBox[] | undefined = undefined;
   private tokenInfos: any = {};
   private explorer: Explorer = Explorer.mainnet;
 
-  constructor(name: string, address: string) {
+  constructor(name: string, mnemonic: string) {
     this.name = name;
-    this.address = address;
+    this.mnemonic = mnemonic;
+    if (mnemonic !== '') {
+      this.sk = Account.seedToSk(mnemonicToSeedSync(mnemonic));
+      this.address = Address.fromSk(this.sk).address;
+    }
     this.refresh();
-  }
-
-  static fromMnemonic(name: string, mnemonic: string): PublicAccount {
-    const address = PublicAccount.mnemonicToAddress(mnemonic);
-    return new PublicAccount(name, address);
   }
 
   static mnemonicToAddress(mnemonic: string): string {
     const seed = mnemonicToSeedSync(mnemonic);
-    const sk = PublicAccount.seedToSk(seed);
+    const sk = Account.seedToSk(seed);
     return Address.fromSk(sk).address
 
   }
@@ -80,7 +81,6 @@ export default class PublicAccount {
         }
       });
       const ergoIntAmount = this.boxes.reduce((sum, {value}) => sum + value, 0);
-      console.log(`!! ergoIntAmount == ${ergoIntAmount}, amount = ${(ergoIntAmount / unitsInOneErgo)}`);
       const ergToken: AccountToken = {
         tokenInfo: null,
         name: 'ERG',

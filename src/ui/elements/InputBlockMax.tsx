@@ -5,6 +5,7 @@ interface InputBlockMaxProps {
   validate: (value: number) => string
   name: string
   large: boolean
+  onUpdate: () => void
 }
 
 interface InputBlockMaxState {
@@ -18,7 +19,7 @@ export default class InputBlockMax extends React.Component<InputBlockMaxProps, I
     super(props);
     this.state = {
       value: 0,
-      isValid: false,
+      isValid: undefined,
       error: ''
     }
   }
@@ -34,7 +35,8 @@ export default class InputBlockMax extends React.Component<InputBlockMaxProps, I
   private updateValue(value) {
     const error = this.props.validate(value);
     const isValid = error === '';
-    this.setState({value: value, error: error, isValid: isValid});
+    this.setState({value: value, error: error, isValid: isValid},
+      this.props.onUpdate);
   }
 
   render() {
@@ -51,7 +53,9 @@ export default class InputBlockMax extends React.Component<InputBlockMaxProps, I
       <div className={className}>
         <div className='inputLabel ffn'>{this.props.name}</div>
         <div className='inputMax'>
-          <input type='number' className={this.props.large ? 'fts inputLarge' : 'fts'} value={this.state.value}
+          <input type='number'
+                 className={this.props.large ? 'fts inputLarge' : 'fts'}
+                 value={this.state.value}
                  onChange={this.handleUserInput.bind(this)}/>
           <button className='smallBtn' onClick={this.maxClick}> MAX</button>
         </div>

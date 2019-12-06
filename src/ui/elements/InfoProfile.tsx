@@ -1,16 +1,16 @@
 import React from 'react';
 import avaSmallImg from '../../img/avatar_small.svg'
 import Dropdown from './Dropdown'
-import PublicAccount from "../../PublicAccount";
+import Account from "../../Account";
 
 declare const navigator;
 
 interface InfoProps {
-  account: PublicAccount
+  account: Account
 }
 
 interface InfoState {
-  account: PublicAccount
+  account: Account
 }
 
 export default class InfoProfile extends React.Component<InfoProps, InfoState> {

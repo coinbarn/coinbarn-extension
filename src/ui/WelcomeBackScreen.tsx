@@ -1,7 +1,7 @@
 import React from 'react';
 import Dropdown from './elements/Dropdown'
 import homaImg from '../img/homa_tea.svg';
-import PublicAccount from "../PublicAccount";
+import Account from "../Account";
 
 interface WelcomeBackProps {
   updateState: (a: any) => void
@@ -19,7 +19,7 @@ export default class WelcomeBackScreen extends React.Component<WelcomeBackProps,
   submit = () => {
     const name = this.dropdownElement.current.state.currentValue;
     const newState = {
-      account: new PublicAccount(name, ''),
+      account: new Account(name, ''),
       screen: 'password'
     };
     this.props.updateState(newState);

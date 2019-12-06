@@ -1,17 +1,17 @@
 import React from 'react';
 import avaImg from '../img/avatar.svg';
-import PublicAccount from "../PublicAccount";
+import Account from "../Account";
 import {validateMnemonic} from "bip39";
 import CoinbarnStorage from "../CoinbarnStorage";
 import InputBlockF from "./elements/InputBlockF";
 
 interface PasswordProps {
-  account: PublicAccount
+  account: Account
   updateState: (a: any) => void
 }
 
 interface PasswordState {
-  account: PublicAccount
+  account: Account
 }
 
 export default class PasswordScreen extends React.Component<PasswordProps, PasswordState> {
@@ -23,20 +23,18 @@ export default class PasswordScreen extends React.Component<PasswordProps, Passw
       account: props.account
     };
     this.passElement = React.createRef();
-
   }
 
   onSubmit = async () => {
     const pass = this.passElement.current.state.value;
     try {
-      const mnemonic = await CoinbarnStorage.getMnemonic(this.state.account.name, pass);
-      if (validateMnemonic(mnemonic)) {
-        const newAcc = PublicAccount.fromMnemonic(this.state.account.name, mnemonic);
-        this.props.updateState({account: newAcc, screen: 'start'});
-      } else {
-        this.passElement.current.setState({isValid: false, error: 'Decrypted mnemonic is incorrect'});
+      const newAcc = await CoinbarnStorage.getAccount(this.state.account.name, pass);
+      if (!validateMnemonic(newAcc.mnemonic)) {
+        // should never be here
+        this.passElement.current.setState({isValid: false, error: 'Decrypted mnemonic is incorrect, db is broken'});
         console.log("Decrypted mnemonic is incorrect");
       }
+      this.props.updateState({account: newAcc, screen: 'start'});
     } catch (e) {
       this.passElement.current.setState({isValid: false, error: 'Incorrect password'});
       console.log(`Incorrect password ${pass} for account ${this.state.account.name}: ${e}`);

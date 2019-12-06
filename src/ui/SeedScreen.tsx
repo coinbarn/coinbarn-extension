@@ -1,13 +1,13 @@
 import React from 'react';
 import homaImg from '../img/homa_register.svg';
-import PublicAccount from "../PublicAccount";
+import Account from "../Account";
 import {generateMnemonic} from "bip39";
 import CoinbarnStorage from "../CoinbarnStorage";
 
 declare const navigator;
 
 interface SeedProps {
-  account: PublicAccount
+  account: Account
   updateState: (a: any) => void
   screenData: string
 }
@@ -47,7 +47,7 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
   };
 
   copyAddress = () => {
-    navigator.clipboard.writeText(PublicAccount.mnemonicToAddress(this.state.mnemonic));
+    navigator.clipboard.writeText(Account.mnemonicToAddress(this.state.mnemonic));
   };
 
   handleSeedUserInput(e) {
@@ -59,8 +59,8 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
     if (this.state.repeatPhase === false) {
       this.setState({repeatPhase: true, seedFormValid: false});
     } else {
-      const address = PublicAccount.mnemonicToAddress(this.state.mnemonic);
-      const newAcc = new PublicAccount(this.props.account.name, address);
+      const address = Account.mnemonicToAddress(this.state.mnemonic);
+      const newAcc = new Account(this.props.account.name, address);
       await CoinbarnStorage.saveAccount(this.props.account.name, this.props.screenData, this.state.mnemonic);
       this.props.updateState({account: newAcc, screen: 'start', screenData: ''});
     }
@@ -112,7 +112,7 @@ export default class SeedScreen extends React.Component<SeedProps, SeedState> {
         <div className='addressParams'>
           <strong>Your address:</strong>
           <button className='fullAddressBtn' onClick={this.copyAddress}>
-            {PublicAccount.mnemonicToAddress(this.state.mnemonic)}
+            {Account.mnemonicToAddress(this.state.mnemonic)}
           </button>
         </div>
 

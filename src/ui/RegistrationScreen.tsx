@@ -2,7 +2,7 @@ import React from 'react';
 import regImg from '../img/homa_register.svg';
 import InputBlockF from "./elements/InputBlockF";
 import zxcvbn from 'zxcvbn';
-import PublicAccount from "../PublicAccount";
+import Account from "../Account";
 
 interface RegProps {
   updateState: (a: any) => void
@@ -67,10 +67,10 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
     const passIsValid = this.passElement.current.state.isValid;
     const passRepeatIsValid = this.pass2Element.current.state.isValid;
 
-    if (accIsValid && passIsValid && passRepeatIsValid && this.state.checkbox) {
-      this.setState({formValid: true})
-    } else if (this.state.formValid) {
-      this.setState({formValid: false})
+    const formValid = accIsValid && passIsValid && passRepeatIsValid && this.state.checkbox;
+
+    if (this.state.formValid !== formValid) {
+      this.setState({formValid: formValid})
     }
   };
 
@@ -81,7 +81,7 @@ export default class RegistrationScreen extends React.Component<RegProps, RegSta
 
   submit = () => {
     const newState = {
-      account: new PublicAccount(this.accNameElement.current.state.value, ''),
+      account: new Account(this.accNameElement.current.state.value, ''),
       screen: 'seed',
       screenData: this.passElement.current.state.value,
     };

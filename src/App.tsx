@@ -3,7 +3,7 @@ import 'css/index.css';
 import WelcomeScreen from './ui/WelcomeScreen';
 import WelcomeBackScreen from './ui/WelcomeBackScreen';
 import RegistrationScreen from "./ui/RegistrationScreen";
-import PublicAccount from "./PublicAccount";
+import Account from "./Account";
 import CoinbarnStorage from "./CoinbarnStorage";
 import PasswordScreen from "./ui/PasswordScreen";
 import SeedScreen from "./ui/SeedScreen";
@@ -14,7 +14,7 @@ interface AppProps {
 }
 
 export interface AppState {
-  account: PublicAccount
+  account: Account
   screen: string
   screenData: string
 }
@@ -24,9 +24,9 @@ export default class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      // account: new PublicAccount('', ''),
+      // account: new Account('', ''),
       // screen: 'welcome',
-      account: new PublicAccount('testa', '9ggm43XYvHgqp2DfAuqdPoFJ9UgG33Y3fDrk9ydkH9h9k15eGwK'),
+      account: new Account('testa', 'work dynamic rule sister achieve code brisk insect soccer travel medal all'),
       screen: 'home',
       screenData: ''
     };
