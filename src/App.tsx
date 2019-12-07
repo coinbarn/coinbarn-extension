@@ -21,10 +21,10 @@ export default class App extends React.Component<{}, IAppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      // account: new Account('', ''),
-      // screen: 'welcome',
-      account: new Account('testa', 'work dynamic rule sister achieve code brisk insect soccer travel medal all'),
-      screen: 'home',
+      account: new Account('', ''),
+      screen: 'welcome',
+      // account: new Account('testa', 'work dynamic rule sister achieve code brisk insect soccer travel medal all'),
+      // screen: 'home',
       screenData: ''
     };
   }

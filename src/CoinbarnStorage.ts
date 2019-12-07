@@ -1,39 +1,40 @@
-/*global localStorage*/
-
 import Account from "./Account";
+
+declare const TextDecoder;
+declare const TextEncoder;
+declare const localStorage;
+declare const window;
 
 export default class CoinbarnStorage {
 
-
-  static getAccountNames() {
-    let accs = [];
-    for (var i = 0; i < localStorage.length; i++) {
-      accs[i] = localStorage.key(i);
+  static getAccountNames(): string[] {
+    let accounts: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      accounts[i] = localStorage.key(i);
     }
-    return accs;
+    return accounts;
   }
 
-  static async saveAccount(name, password, mnemonic) {
+  static async saveAccount(name, password, mnemonic): Promise<void> {
     const enc = new TextEncoder('utf-8');
     const bytesToEncrypt = enc.encode(mnemonic);
     const ct = await this.encrypt(bytesToEncrypt, password);
     localStorage.setItem(name, this.arrayBufferToBase64(ct));
   }
 
-  // ptivate
-  static async getMnemonic(name, password) {
+  private static async getMnemonic(name, password): Promise<string> {
     const item = localStorage.getItem(name);
     const decryptedBytes = await this.decrypt(this.base64ToArrayBuffer(item), password);
     const dec = new TextDecoder('utf-8');
     return dec.decode(decryptedBytes);
   }
 
-  static async getAccount(name, password) {
-    const mnemonic = CoinbarnStorage.getMnemonic(name, password);
+  static async getAccount(name, password): Promise<Account> {
+    const mnemonic = await CoinbarnStorage.getMnemonic(name, password);
     return new Account(name, mnemonic);
   }
 
-  static async encrypt(plaintext, password) {
+  static async encrypt(plaintext, password): Promise<Buffer> {
     const salt = Buffer.from(await window.crypto.getRandomValues(new Uint8Array(12)));
     const key = await CoinbarnStorage.deriveKey(password, salt);
     const iv = Buffer.from(await window.crypto.getRandomValues(new Uint8Array(12)));
@@ -42,7 +43,7 @@ export default class CoinbarnStorage {
     return Buffer.concat([Buffer.from(salt), Buffer.from(iv), Buffer.from(cipherText)]);
   }
 
-  static async decrypt(cipherText, password) {
+  static async decrypt(cipherText, password): Promise<string> {
     const salt = Buffer.from(cipherText.slice(0, 12));
     const iv = Buffer.from(cipherText.slice(12, 24));
     const toDecrypt = Buffer.from(cipherText.slice(24));
@@ -59,7 +60,7 @@ export default class CoinbarnStorage {
     return await window.crypto.subtle.deriveKey(pbkdf2params, baseKey, aesKeyGenParams, false, ['encrypt', 'decrypt']);
   }
 
-  static arrayBufferToBase64(buffer) {
+  static arrayBufferToBase64(buffer): String {
     let binary = '';
     const bytes = new Uint8Array(buffer);
     const len = bytes.byteLength;
@@ -69,7 +70,7 @@ export default class CoinbarnStorage {
     return window.btoa(binary);
   }
 
-  static base64ToArrayBuffer(base64) {
+  static base64ToArrayBuffer(base64): ArrayBufferLike {
     const binaryString = window.atob(base64);
     const len = binaryString.length;
     const bytes = new Uint8Array(len);

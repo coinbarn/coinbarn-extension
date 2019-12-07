@@ -1,8 +1,7 @@
 import React from 'react';
-import InputBlock from './InputBlock'
 import Account from "../../Account";
-import InputBlockF from "./InputBlockF";
-import {Address, Client} from "@coinbarn/ergo-ts";
+import InputBlock from "./InputBlock";
+import {Client} from "@coinbarn/ergo-ts";
 
 interface IIssueTabProps {
   account: Account
@@ -81,7 +80,8 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     const sk = this.props.account.sk;
 
     const client = new Client();
-    const transferResult = await client.tokenIssue(sk, name, amount, decimals, description);
+    const result = await client.tokenIssue(sk, name, amount, decimals, description);
+    console.log(`Tx result = ${result}`);
     this.props.setCurrTab(1, true)
   };
 
@@ -89,24 +89,24 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     return (
       <div className='issueTab'>
         <h3> Create your token on ERGO Platform </h3>
-        <InputBlockF ref={this.nameElement}
-                     large={true}
-                     name='Asset name'
-                     validate={this.validateName}
-                     onUpdate={this.onUpdate}/>
-        <InputBlockF ref={this.amountElement}
-                     large={true}
-                     name='Net amount'
-                     type='number'
-                     validate={this.validateAmount}
-                     onUpdate={this.onUpdate}/>
+        <InputBlock ref={this.nameElement}
+                    large={true}
+                    name='Asset name'
+                    validate={this.validateName}
+                    onUpdate={this.onUpdate}/>
+        <InputBlock ref={this.amountElement}
+                    large={true}
+                    name='Net amount'
+                    type='number'
+                    validate={this.validateAmount}
+                    onUpdate={this.onUpdate}/>
         {/*TODO do not allow to input decimals*/}
-        <InputBlockF ref={this.decimalsElement}
-                     large={true}
-                     type='number'
-                     name='Decimal places'
-                     validate={this.validateDecimals}
-                     onUpdate={this.onUpdate}/>
+        <InputBlock ref={this.decimalsElement}
+                    large={true}
+                    type='number'
+                    name='Decimal places'
+                    validate={this.validateDecimals}
+                    onUpdate={this.onUpdate}/>
         <div className='inputLabel ffn'>Brief description</div>
         <textarea value={this.state.description} onChange={this.handleUserInput.bind(this)}/>
         <button className='mediumBtn' disabled={!this.state.formValid} onClick={this.onSend}>Issue</button>

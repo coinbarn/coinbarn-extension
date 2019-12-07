@@ -13,8 +13,9 @@ export default class TransactionsTab extends React.Component<ITransactionsTabPro
     const confirmed = this.props.account.confirmedTxs;
     const unconfirmed = this.props.account.unconfirmedTxs;
 
-    const confirmedList = confirmed.map(tx => (<TransactionView address={address} confirmed={true} tx={tx}/>));
-    const unconfirmedList = unconfirmed.map(tx => (<TransactionView address={address} confirmed={false} tx={tx}/>));
+    const confirmedList = confirmed.map(tx => (<TransactionView key={tx.id} address={address} confirmed={true} tx={tx}/>));
+    console.log(`unconfirmed = ${unconfirmed.map(s => s.id)}`);
+    const unconfirmedList = unconfirmed.map(tx => (<TransactionView key={tx.id} address={address} confirmed={false} tx={tx}/>));
     return (
       <div className='transactionsTab'>
         <div className='transactionsListDiv'>

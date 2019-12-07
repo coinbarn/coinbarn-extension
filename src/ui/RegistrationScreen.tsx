@@ -2,7 +2,7 @@ import React from 'react';
 import zxcvbn from 'zxcvbn';
 import Account from "../Account";
 import regImg from '../img/homa_register.svg';
-import InputBlockF from "./elements/InputBlockF";
+import InputBlock from "./elements/InputBlock";
 
 interface IRegProps {
   updateState: (a: any) => void
@@ -94,20 +94,20 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
         <div className='imgWrap'>
           <img src={regImg} alt='Homa'/>
         </div>
-        <InputBlockF ref={this.accNameElement}
-                     name='Create an account name'
-                     validate={this.validateAccName}
-                     onUpdate={this.onUpdate}/>
-        <InputBlockF name='Create a password'
-                     type='password'
-                     ref={this.passElement}
-                     validate={this.validatePass}
-                     onUpdate={this.onUpdate}/>
-        <InputBlockF name='Confirm password'
-                     type='password'
-                     ref={this.pass2Element}
-                     validate={this.validatePass2}
-                     onUpdate={this.onUpdate}/>
+        <InputBlock ref={this.accNameElement}
+                    name='Create an account name'
+                    validate={this.validateAccName}
+                    onUpdate={this.onUpdate}/>
+        <InputBlock name='Create a password'
+                    type='password'
+                    ref={this.passElement}
+                    validate={this.validatePass}
+                    onUpdate={this.onUpdate}/>
+        <InputBlock name='Confirm password'
+                    type='password'
+                    ref={this.pass2Element}
+                    validate={this.validatePass2}
+                    onUpdate={this.onUpdate}/>
         <div className='checkboxDiv'>
           <input type='checkbox' id='checkbox' onChange={this.clickCheckbox.bind(this)}/>
           <label htmlFor='checkbox'>

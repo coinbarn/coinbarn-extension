@@ -3,7 +3,7 @@ import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import React from 'react';
 import Account from "../../Account";
 import Dropdown from './Dropdown';
-import InputBlockF from "./InputBlockF";
+import InputBlock from "./InputBlock";
 import InputBlockMax from './InputBlockMax';
 
 interface ISendTabProps {
@@ -90,10 +90,9 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
     const sk = this.props.account.sk;
 
     const client = new Client();
-    const transferResult = await client.transfer(sk, recipient, amount, tokenId);
-    console.log(transferResult);
+    const result = await client.transfer(sk, recipient, amount, tokenId);
+    console.log(`Tx result = ${result}`);
     this.props.setCurrTab(1, true)
-
   };
 
   public onUpdate = () => {
@@ -106,7 +105,6 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
     }
   };
 
-
   public render() {
     const tokenNames = this.props.account.balances().map(a => a.name);
 
@@ -116,11 +114,11 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
           You send:
           <Dropdown ref={this.tokenDropdownElement} list={tokenNames}/>
         </div>
-        <InputBlockF ref={this.addressElement}
-                     large={true}
-                     name='Address'
-                     validate={this.validateAddress}
-                     onUpdate={this.onUpdate}/>
+        <InputBlock ref={this.addressElement}
+                    large={true}
+                    name='Address'
+                    validate={this.validateAddress}
+                    onUpdate={this.onUpdate}/>
         <InputBlockMax ref={this.amountElement}
                        large={true}
                        name='Amount'

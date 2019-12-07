@@ -3,7 +3,7 @@ import React from 'react';
 import Account from "../Account";
 import CoinbarnStorage from "../CoinbarnStorage";
 import avaImg from '../img/avatar.svg';
-import InputBlockF from "./elements/InputBlockF";
+import InputBlock from "./elements/InputBlock";
 
 interface IPasswordProps {
   account: Account
@@ -49,10 +49,10 @@ export default class PasswordScreen extends React.Component<IPasswordProps, IPas
         </div>
         <h1 id='accountName'> {this.state.account.name} </h1>
         <div id='requestDiv' className='ffn'> Password</div>
-        <InputBlockF name=''
-                     ref={this.passElement}
-                     type='password'
-                     validate={() => {
+        <InputBlock name=''
+                    ref={this.passElement}
+                    type='password'
+                    validate={() => {
                        return '';
                      }}/>
         <button className='largeBtn' onClick={this.onSubmit}>Continue</button>
