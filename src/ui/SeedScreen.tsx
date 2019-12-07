@@ -77,6 +77,7 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
   public render() {
     let message;
     let textarea;
+    let buttons;
     if (!this.state.repeatPhase) {
       message = <div id='descriptionDiv'>
         Be sure to save <strong>Secret Backup Phrase</strong>. <br/>
@@ -84,12 +85,17 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
         Keep it in a safe place.
       </div>;
       textarea = <textarea className='ffn' readOnly={true} value={this.state.mnemonic}/>;
+      buttons = <div id='textButtons'>
+          <button className='refreshSeedBtn' onClick={this.refreshMnemonic}/>
+          <button className='copySeedBtn' onClick={this.copyMnemonic}/>
+        </div>;
     } else {
       message = <div id='descriptionDiv'>
         Confirm the Secret Backup Phrase.<br/> Type it below in the correct order
       </div>;
       textarea =
         <textarea className='ffn' value={this.state.mnemonicBack} onChange={this.handleSeedUserInput.bind(this)}/>;
+      buttons = '';
     }
 
     return (
@@ -102,10 +108,7 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
 
         {message}
 
-        <div id='textButtons'>
-          <button className='refreshSeedBtn' onClick={this.refreshMnemonic}/>
-          <button className='copySeedBtn' onClick={this.copyMnemonic}/>
-        </div>
+        {buttons}
 
         {textarea}
 
