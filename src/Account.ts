@@ -1,4 +1,4 @@
-import {Address, ErgoBox, Explorer, Serializer} from "@coinbarn/ergo-ts";
+import {Address, ErgoBox, Explorer, Serializer, Transaction} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import {ITokens} from "@coinbarn/ergo-ts/dist/models/ITokens";
 import {fromSeed} from "bip32";
@@ -17,7 +17,6 @@ export default class Account {
     const seed = mnemonicToSeedSync(mnemonic);
     const sk = Account.seedToSk(seed);
     return Address.fromSk(sk).address
-
   }
 
   public static seedToSk(seed, path = "m/44'/429'/0'/0/0") {
@@ -33,8 +32,10 @@ export default class Account {
   public mnemonic: string;
   public address: string = '';
   public sk: string = '';
-  private boxes: ErgoBox[] | undefined = undefined;
-  private tokenInfos: any = {};
+  public confirmedTxs: Transaction[] = [];
+  public unconfirmedTxs: Transaction[] = [];
+  private boxes?: ErgoBox[];
+  private tokenInfos: Record<string, ErgoBox> = {};
   private explorer: Explorer = Explorer.mainnet;
 
   constructor(name: string, mnemonic: string) {
@@ -43,8 +44,8 @@ export default class Account {
     if (mnemonic !== '') {
       this.sk = Account.seedToSk(mnemonicToSeedSync(mnemonic));
       this.address = Address.fromSk(this.sk).address;
+      this.refresh();
     }
-    this.refresh();
   }
 
   public async refresh() {
@@ -55,10 +56,15 @@ export default class Account {
     const tokens = ErgoBox.extractAssets(this.boxes);
     tokens.forEach(a => {
       if (this.tokenInfos[a.tokenId] === undefined) {
-        this.tokenInfos[a.tokenId] = this.explorer.getTokenInfo(a.tokenId);
+        this.explorer.getTokenInfo(a.tokenId).then(e => {
+          this.tokenInfos[a.tokenId] = e;
+        });
       }
     });
-    console.log(`refreshed balance ${this.boxes}`);
+
+    // refresh confirmedTxs
+    this.unconfirmedTxs = await this.explorer.getUnconfirmed(new Address(this.address));
+    this.confirmedTxs = await this.explorer.getTransactions(new Address(this.address));
   }
 
   public balances(): IAccountToken[] {
@@ -68,8 +74,10 @@ export default class Account {
       const assets = ErgoBox.extractAssets(this.boxes);
       const accountTokens: IAccountToken[] = assets.map(a => {
         const box = this.tokenInfos[a.tokenId];
-        const decimals = Number(Serializer.stringFromHex(box.additionalRegisters.R6.slice(4, box.additionalRegisters.R6.length)));
-        const name = Serializer.stringFromHex(box.additionalRegisters.R4.slice(4, box.additionalRegisters.R4.length));
+        const r6 = 'R6';
+        const r4 = 'R4';
+        const decimals = Number(Serializer.stringFromHex(box.additionalRegisters[r6].slice(4, box.additionalRegisters[r6].length)));
+        const name = Serializer.stringFromHex(box.additionalRegisters[r4].slice(4, box.additionalRegisters[r4].length));
         const factor = Math.pow(10, decimals);
         return {
           amount: a.amount / factor,

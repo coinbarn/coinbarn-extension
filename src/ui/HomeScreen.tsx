@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
     super(props);
     this.state = {
       account: this.props.account,
-      currTabIndex: 0
+      currTabIndex: 1
     };
     this.infoProfileElement = React.createRef();
   }
@@ -53,7 +53,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
 
   public render() {
     const tabs = [<SendTab account={this.state.account} setCurrTab={this.setCurrTab.bind(this)}/>,
-      <TransactionsTab/>,
+      <TransactionsTab account={this.state.account}/>,
       <IssueTab/>];
 
     return (
