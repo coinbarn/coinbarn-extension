@@ -99,12 +99,12 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
                      validate={this.validateAccName}
                      onUpdate={this.onUpdate}/>
         <InputBlockF name='Create a password'
-                     isPassword={true}
+                     type='password'
                      ref={this.passElement}
                      validate={this.validatePass}
                      onUpdate={this.onUpdate}/>
         <InputBlockF name='Confirm password'
-                     isPassword={true}
+                     type='password'
                      ref={this.pass2Element}
                      validate={this.validatePass2}
                      onUpdate={this.onUpdate}/>

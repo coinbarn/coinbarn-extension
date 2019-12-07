@@ -44,7 +44,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
             </div>
             <div className='txRightDiv'>
               <div className='txDetails'>
-              <a href={txProps.explorerHref}> Details </a>
+              <a target="_blank" rel="noopener noreferrer" href={txProps.explorerHref}> Details </a>
               </div>
               <div className='txAmount f2'>
               {txProps.amountStr}

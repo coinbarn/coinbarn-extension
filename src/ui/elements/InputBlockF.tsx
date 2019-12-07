@@ -2,7 +2,7 @@ import React from 'react';
 
 interface IInputBlockProps {
   name: string,
-  isPassword: boolean,
+  type: string,
   large: boolean,
   validate: (value: string) => string
   onUpdate: () => void
@@ -17,7 +17,7 @@ interface IInputBlockState {
 export default class InputBlockF extends React.Component<IInputBlockProps, IInputBlockState> {
 
   public static defaultProps = {
-    isPassword: false,
+    type: 'text',
     large: false,
     name: 'name',
     onUpdate: () => {}
@@ -53,7 +53,7 @@ export default class InputBlockF extends React.Component<IInputBlockProps, IInpu
     return (
       <div className={className}>
         <div className='inputLabel ffn'>{this.props.name}</div>
-        <input type={this.props.isPassword ? 'password' : 'text'} className='fts'
+        <input type={this.props.type} className='fts'
                onChange={this.handleUserInput.bind(this)} value={this.state.value}/>
         <div className='errorDiv'>{this.state.error}</div>
       </div>

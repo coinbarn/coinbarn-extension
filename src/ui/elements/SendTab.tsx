@@ -8,7 +8,7 @@ import InputBlockMax from './InputBlockMax';
 
 interface ISendTabProps {
   account: Account
-  setCurrTab(n: number): void
+  setCurrTab(n: number, refresh?: boolean): void
 }
 
 interface ISendTabState {
@@ -92,7 +92,7 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
     const client = new Client();
     const transferResult = await client.transfer(sk, recipient, amount, tokenId);
     console.log(transferResult);
-    this.props.setCurrTab(1)
+    this.props.setCurrTab(1, true)
 
   };
 

@@ -51,7 +51,7 @@ export default class PasswordScreen extends React.Component<IPasswordProps, IPas
         <div id='requestDiv' className='ffn'> Password</div>
         <InputBlockF name=''
                      ref={this.passElement}
-                     isPassword={true}
+                     type='password'
                      validate={() => {
                        return '';
                      }}/>
