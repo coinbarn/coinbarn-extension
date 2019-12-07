@@ -34,7 +34,7 @@ export default class PasswordScreen extends React.Component<IPasswordProps, IPas
         this.passElement.current.setState({isValid: false, error: 'Decrypted mnemonic is incorrect, db is broken'});
         console.log("Decrypted mnemonic is incorrect");
       }
-      this.props.updateState({account: newAcc, screen: 'start'});
+      this.props.updateState({account: newAcc, screen: 'home'});
     } catch (e) {
       this.passElement.current.setState({isValid: false, error: 'Incorrect password'});
       console.log(`Incorrect password ${pass} for account ${this.state.account.name}: ${e}`);
