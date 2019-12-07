@@ -889,10 +889,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@coinbarn/ergo-ts@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@coinbarn/ergo-ts/-/ergo-ts-0.2.1.tgz#f4cc5df1a828cc8f96029013c0e90b81f7d46aec"
-  integrity sha512-WKmA9C1LonGjlInDZk7HU4FcEohpc27JzOIuYJ6ggS14UnZMbOEGookm9C0E2mFyhIEVVDpu/uUW+Ez9P1IWWw==
+"@coinbarn/ergo-ts@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@coinbarn/ergo-ts/-/ergo-ts-0.2.3.tgz#b6912583d72440a2e6f881c6a992a8da4ca5f8a8"
+  integrity sha512-0SNnrpK8HJdmdor5vTe+A7adezzUswbYEdtyac0fXcgcVwGPPvQqV02CcMsyOSQEtVoJR9IQkIYsndSCp0CEhA==
   dependencies:
     array.prototype.flat "^1.2.2"
     axios "0.19.0"
