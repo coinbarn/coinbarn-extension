@@ -17,7 +17,7 @@ export default class TabSelector extends React.Component<ITabSelectorProps, ITab
   }
 
   public handleRadioSelection(e) {
-    const tab = e.target.id.slice(-1); // o___o
+    const tab = +e.target.id.slice(-1); // o___o
     this.props.setCurrTab(tab);
     this.setState({currTab: tab});
   }
