@@ -97,7 +97,7 @@ export default class Account {
         tokenId: 'ERG',
         tokenInfo: null
       };
-      accountTokens.push(ergToken);
+      accountTokens.unshift(ergToken);
       return accountTokens
     }
   }
