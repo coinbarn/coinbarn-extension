@@ -43,7 +43,7 @@ export default class PasswordScreen extends React.Component<IPasswordProps, IPas
 
   public render() {
     return (
-      <div className='registerScreen'>
+      <div className='passwordScreen'>
         <div className='imgWrap'>
           <img src={avaImg} alt='Homa avatar'/>
         </div>

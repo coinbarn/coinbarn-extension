@@ -1,8 +1,3 @@
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 @font-face {
   font-family: 'Gloria Hallelujah';
   font-style: normal;
@@ -407,6 +402,14 @@ input {
   margin: 0;
   padding-left: 1em;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .validateInput.validInput input {
   background-image: url("../img/input_green.svg");
 }
@@ -519,7 +522,7 @@ textarea {
   margin: 14.5px;
 }
 .passwordScreen .largeBtn {
-  margin: 25px;
+  margin: 10px;
 }
 .checkboxDiv {
   box-sizing: border-box;

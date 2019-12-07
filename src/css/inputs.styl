@@ -13,6 +13,13 @@ input
   border: none
   margin: 0
   padding-left: 1em
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button 
+    -webkit-appearance: none
+    margin: 0
+
+  &[type=number]
+    -moz-appearance:textfield;
 
 .validateInput.validInput input
   background-image: url('../img/input_green.svg')
