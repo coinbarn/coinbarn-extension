@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
     super(props);
     this.state = {
       account: this.props.account,
-      currTabIndex: 2
+      currTabIndex: 0
     };
     this.infoProfileElement = React.createRef();
   }

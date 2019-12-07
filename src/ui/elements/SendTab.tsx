@@ -8,6 +8,7 @@ import InputBlockMax from './InputBlockMax';
 
 interface ISendTabProps {
   account: Account
+
   setCurrTab(n: number, refresh?: boolean): void
 }
 
@@ -33,7 +34,11 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
   }
 
   public currentTokenId(): string {
-    return 'ERG'
+    if (this.tokenDropdownElement.current) {
+      return this.tokenDropdownElement.current
+    } else {
+      return 'ERG'
+    }
   }
 
   public validateAddress = (address) => {
@@ -59,10 +64,11 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
         minValue = Math.pow(10, -tokenInfo.decimals);
       }
 
+      const maxAmount = this.maxAmount();
       if (amount < minValue) {
         return `Minimal amount ot send is ${minValue}`;
-      } else if (amount > this.maxAmount()) {
-        return 'Not enough balance';
+      } else if (amount > maxAmount) {
+        return `Available balances is ${maxAmount}`;
       } else {
         return '';
       }
@@ -91,7 +97,7 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
 
     const client = new Client();
     const result = await client.transfer(sk, recipient, amount, tokenId);
-    console.log(`Tx result = ${result}`);
+    console.log(`Tx result = ${JSON.stringify(result)}`);
     this.props.setCurrTab(1, true)
   };
 
@@ -106,13 +112,15 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
   };
 
   public render() {
-    const tokenNames = this.props.account.balances().map(a => a.name);
+    const balances = this.props.account.balances()
+    const tokenNames = balances.map(a => a.name);
+    const tokenKeys = balances.map(a => a.tokenId);
 
     return (
       <div className='sendTab'>
         <div className='currencyDiv f2'>
           You send:
-          <Dropdown ref={this.tokenDropdownElement} list={tokenNames}/>
+          <Dropdown ref={this.tokenDropdownElement} list={tokenNames} keys={tokenKeys}/>
         </div>
         <InputBlock ref={this.addressElement}
                     large={true}
