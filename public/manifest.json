@@ -1,6 +1,6 @@
 {
   "name": "Coinbarn Ergo wallet",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Coinbarn wallet for Ergo platform",
   "permissions": [
     "clipboardWrite",

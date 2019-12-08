@@ -81,7 +81,11 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
 
     const client = new Client();
     const result = await client.tokenIssue(sk, name, amount, decimals, description);
-    console.log(`Tx result = ${result}`);
+    if (result.data.id) {
+      console.log(`Transaction with id ${result.data.id} sent`);
+    } else {
+      console.log(`Transaction send error: ${JSON.stringify(result)}`);
+    }
     this.props.setCurrTab(1, true)
   };
 

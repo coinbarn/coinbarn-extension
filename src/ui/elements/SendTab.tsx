@@ -35,7 +35,7 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
 
   public currentTokenId(): string {
     if (this.tokenDropdownElement.current) {
-      return this.tokenDropdownElement.current
+      return this.tokenDropdownElement.current.state.currentKey;
     } else {
       return 'ERG'
     }
@@ -53,8 +53,10 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
   };
 
   public validateAmount = (amount) => {
-    const tokenInfo = this.props.account.balances().find(t => t.tokenId === this.currentTokenId());
+    const balances = this.props.account.balances();
+    const tokenInfo = balances.find(t => t.tokenId === this.currentTokenId());
     if (tokenInfo === undefined) {
+      console.log(`TokenId: ${this.currentTokenId()}, balances:${JSON.stringify(balances)}`);
       return 'No such token';
     } else {
       let minValue;
@@ -97,7 +99,11 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
 
     const client = new Client();
     const result = await client.transfer(sk, recipient, amount, tokenId);
-    console.log(`Tx result = ${JSON.stringify(result)}`);
+    if (result.data.id) {
+      console.log(`Transaction with id ${result.data.id} sent`);
+    } else {
+      console.log(`Transaction send error: ${JSON.stringify(result)}`);
+    }
     this.props.setCurrTab(1, true)
   };
 
@@ -112,7 +118,7 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
   };
 
   public render() {
-    const balances = this.props.account.balances()
+    const balances = this.props.account.balances();
     const tokenNames = balances.map(a => a.name);
     const tokenKeys = balances.map(a => a.tokenId);
 

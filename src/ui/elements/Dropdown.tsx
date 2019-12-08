@@ -16,7 +16,7 @@ export default class Dropdown extends React.Component<IDropdownProps, IDropdownS
   constructor(props) {
     super(props);
     let key = this.props.list[0];
-    if(this.props.keys) {
+    if (this.props.keys) {
       key = this.props.keys[0];
     }
     this.state = {
