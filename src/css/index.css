@@ -711,17 +711,37 @@ textarea {
   background-size: 100%;
   background-position: 0 22px;
 }
+.homeScreen .profileInfo .dd-trigger {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  background: url("../img/arrow_down_white.svg");
+  background-repeat: no-repeat;
+  background-size: 13px 8px;
+  background-position: 5.5px 8px;
+}
+.homeScreen .profileInfo .dd-list {
+  background-color: #fff;
+}
 .homeScreen .profileInfo .dd-header-expanded {
   color: #81827f;
   background-color: #fff;
+}
+.homeScreen .profileInfo .dd-header-expanded .dd-header-title {
+  color: #81827f;
+}
+.homeScreen .profileInfo .dd-header-expanded .dd-trigger {
+  width: 24px;
+  height: 24px;
+  background: url("../img/arrow_down_gray.svg");
+  background-repeat: no-repeat;
+  background-size: 13px 8px;
+  background-position: 5.5px 8px;
 }
 .homeScreen .profileInfo .dd-header-title {
   color: #fff;
   padding-top: 4px;
   padding-left: 10px;
-}
-.homeScreen .profileInfo .dd-list {
-  background-color: #fff;
 }
 .homeScreen .profileInfo .dd-list-item {
   padding-top: 4px;
@@ -729,7 +749,7 @@ textarea {
   height: 24px;
   background-image: url("../img/dd_underline_small.svg");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 124px 3px;
   background-position: 0 22px;
 }
 .homeScreen .profileInfo .avatarDiv {
@@ -780,8 +800,48 @@ textarea {
   color: #fff;
   display: flex;
 }
-.homeScreen .profileInfo .balanceDiv .dd-wrapper {
-  display: flex;
+.homeScreen .currencyDiv .dd-wrapper {
+  color: #81827f;
+  background-color: #fff;
+  width: 184px;
+  height: 24px;
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 100%;
+}
+.homeScreen .currencyDiv .dd-header,
+.homeScreen .currencyDiv .dd-header-expanded {
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  background-image: url("../img/dd_underline_medium.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 0 22px;
+}
+.homeScreen .currencyDiv .dd-trigger {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  background: url("../img/arrow_down_olive.svg");
+  background-repeat: no-repeat;
+  background-size: 13px 8px;
+  background-position: 5.5px 8px;
+}
+.homeScreen .currencyDiv .dd-header-title {
+  padding-top: 4px;
+  padding-left: 10px;
+}
+.homeScreen .currencyDiv .dd-list-item {
+  padding-top: 4px;
+  padding-left: 10px;
+  height: 24px;
+  background-image: url("../img/dd_underline_medium.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 0 22px;
 }
 .sendTab {
   position: relative;
