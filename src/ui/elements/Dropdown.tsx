@@ -15,14 +15,14 @@ interface IDropdownState {
 export default class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
   constructor(props) {
     super(props);
-    let key = this.props.list[0];
+    let key = this.props.list[0] || 'ERG';
     if (this.props.keys) {
       key = this.props.keys[0];
     }
     this.state = {
       currentIndex: 0,
       currentKey: key,
-      currentValue: this.props.list[0],
+      currentValue: this.props.list[0] || 'ERG',
       expanded: false,
     };
   }

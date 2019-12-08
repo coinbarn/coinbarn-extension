@@ -2,11 +2,12 @@ import {Client} from "@coinbarn/ergo-ts";
 import React from 'react';
 import Account from "../../Account";
 import InputBlock from "./InputBlock";
+import {IPopupStatus} from "./Popup";
 
 interface IIssueTabProps {
   account: Account
 
-  setCurrTab(n: number, refresh?: boolean): void
+  setPopup(p: IPopupStatus): void
 }
 
 interface IIssueTabState {
@@ -82,11 +83,25 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     const client = new Client();
     const result = await client.tokenIssue(sk, name, amount, decimals, description);
     if (result.data.id) {
-      console.log(`Transaction with id ${result.data.id} sent`);
+      this.props.setPopup(
+        {
+          show: true,
+          title: 'Congrats!',
+          line1: `You have successfully issued ${amount} ${name} tokens`,
+          line2: `Transaction id is ${result.data.id.replaceAll("^\"|\"$", "")}`
+        }
+      );
     } else {
-      console.log(`Transaction send error: ${JSON.stringify(result)}`);
+      const details = result.data.detail || JSON.stringify(result.data);
+      this.props.setPopup(
+        {
+          show: true,
+          title: 'Error!',
+          line1: `Transaction send error`,
+          line2: details
+        }
+      );
     }
-    this.props.setCurrTab(1, true)
   };
 
   public render() {

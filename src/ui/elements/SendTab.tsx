@@ -5,11 +5,11 @@ import Account from "../../Account";
 import Dropdown from './Dropdown';
 import InputBlock from "./InputBlock";
 import InputBlockMax from './InputBlockMax';
+import {IPopupStatus} from "./Popup";
 
 interface ISendTabProps {
   account: Account
-
-  setCurrTab(n: number, refresh?: boolean): void
+  setPopup(p: IPopupStatus): void
 }
 
 interface ISendTabState {
@@ -36,6 +36,14 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
   public currentTokenId(): string {
     if (this.tokenDropdownElement.current) {
       return this.tokenDropdownElement.current.state.currentKey;
+    } else {
+      return 'ERG'
+    }
+  }
+
+  public currentTokenName(): string {
+    if (this.tokenDropdownElement.current) {
+      return this.tokenDropdownElement.current.state.currentValue;
     } else {
       return 'ERG'
     }
@@ -100,11 +108,26 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
     const client = new Client();
     const result = await client.transfer(sk, recipient, amount, tokenId);
     if (result.data.id) {
-      console.log(`Transaction with id ${result.data.id} sent`);
+      const tokenName = this.currentTokenName();
+      this.props.setPopup(
+        {
+          show: true,
+          title: 'Congrats!',
+          line1: `You have successfully send ${amount} ${tokenName} to ${recipient}`,
+          line2: `Transaction id is ${result.data.id.replaceAll("^\"|\"$", "")}`
+        }
+      );
     } else {
-      console.log(`Transaction send error: ${JSON.stringify(result)}`);
+      const details = result.data.detail || JSON.stringify(result.data);
+      this.props.setPopup(
+        {
+          show: true,
+          title: 'Error!',
+          line1: `Transaction send error`,
+          line2: details
+        }
+      );
     }
-    this.props.setCurrTab(1, true)
   };
 
   public onUpdate = () => {
