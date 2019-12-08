@@ -6,6 +6,7 @@ import IssueTab from './elements/IssueTab';
 import SendTab from './elements/SendTab';
 import TabSelector from './elements/TabSelector';
 import TransactionsTab from './elements/TransactionsTab';
+import Overlay from "./elements/Overlay";
 
 interface IHomeScreenProps {
   account: Account

@@ -13,10 +13,11 @@
   "devDependencies": {
     "@types/react": "^16.9.15",
     "@types/react-dom": "^16.9.4",
+    "prettier": "^1.19.1",
     "react-scripts": "^3.3.0",
+    "stylus": "^0.54.7",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
-    "prettier": "^1.19.1",
     "typescript": "^3.7.2"
   },
   "scripts": {
@@ -24,6 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "buildCss": "stylus src/css/index.styl",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json --fix"
   },
