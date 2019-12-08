@@ -1,6 +1,6 @@
-import React from 'react';
 import {Transaction} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
+import React from 'react';
 
 interface ITransactionViewProps {
   address: string
@@ -9,7 +9,7 @@ interface ITransactionViewProps {
 }
 
 export default class TransactionView extends React.Component<ITransactionViewProps> {
-  txToProps(tx: Transaction) {
+  public txToProps(tx: Transaction) {
     const spent = tx.inputs.filter(i => i.address === this.props.address).reduce((sum, { value }) => sum + (value || 0), 0);
     const received = tx.outputs.filter(o => o.address.address === this.props.address).reduce((sum, { value }) => sum + value, 0);
     const delta = received - spent;

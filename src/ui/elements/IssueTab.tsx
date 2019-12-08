@@ -1,7 +1,7 @@
+import {Client} from "@coinbarn/ergo-ts";
 import React from 'react';
 import Account from "../../Account";
 import InputBlock from "./InputBlock";
-import {Client} from "@coinbarn/ergo-ts";
 
 interface IIssueTabProps {
   account: Account
@@ -23,8 +23,8 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
   constructor(props) {
     super(props);
     this.state = {
-      formValid: false,
       description: ' ',
+      formValid: false,
     };
 
     this.nameElement = React.createRef();
@@ -32,7 +32,7 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     this.amountElement = React.createRef();
   }
 
-  validateName = (name) => {
+  public validateName = (name) => {
     if (name.length > 10) {
       return 'Name is too long';
     } else {
@@ -40,7 +40,7 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     }
   };
 
-  validateAmount = (amount) => {
+  public validateAmount = (amount) => {
     if (amount > 1000000000 || amount <= 0) {
       return 'Amount should be from 0 to 1000000000';
     } else {
@@ -48,7 +48,7 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     }
   };
 
-  validateDecimals = (decimals) => {
+  public validateDecimals = (decimals) => {
     if (decimals > 9) {
       return 'Number of decimal places should be from 0 to 9';
     } else {

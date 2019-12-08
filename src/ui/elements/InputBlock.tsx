@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface IInputBlockProps {
-  name: string,
-  type: string,
   large: boolean,
-  validate: (value: string) => string
+  name: string,
   onUpdate: () => void
+  type: string
+  validate: (value: string) => string
 }
 
 interface IInputBlockState {
@@ -17,11 +17,12 @@ interface IInputBlockState {
 export default class InputBlock extends React.Component<IInputBlockProps, IInputBlockState> {
 
   public static defaultProps = {
-    type: 'text',
     large: false,
     name: 'name',
-    onUpdate: () => {}
+    onUpdate: () => {},
+    type: 'text',
   };
+
   constructor(props) {
     super(props);
     this.state = {

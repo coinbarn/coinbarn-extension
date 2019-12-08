@@ -1,6 +1,6 @@
 import React from 'react';
-import TransactionView from './TransactionView';
 import Account from "../../Account";
+import TransactionView from './TransactionView';
 
 interface ITransactionsTabProps {
   account: Account
