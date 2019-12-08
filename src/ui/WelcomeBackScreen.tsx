@@ -9,15 +9,10 @@ interface IWelcomeBackProps {
 }
 
 export default class WelcomeBackScreen extends React.Component<IWelcomeBackProps, {}> {
-  public dropdownElement: any;
-
-  constructor(props) {
-    super(props);
-    this.dropdownElement = React.createRef();
-  }
+  public dropdownElement: any = React.createRef();
 
   public submit = () => {
-    const name = this.dropdownElement.current.state.currentValue;
+    const name = this.dropdownElement.current.currentValue();
     const newState = {
       account: new Account(name, ''),
       screen: 'password'

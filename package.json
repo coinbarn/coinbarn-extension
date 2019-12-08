@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@coinbarn/ergo-ts": "^0.2.7",
+    "@coinbarn/ergo-ts": "^0.2.9",
     "bip32": "^2.0.4",
     "bip39": "^3.0.2",
     "react": "^16.12.0",

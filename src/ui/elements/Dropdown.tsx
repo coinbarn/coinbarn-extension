@@ -7,22 +7,14 @@ interface IDropdownProps {
 
 interface IDropdownState {
   expanded: boolean,
-  currentIndex: keyof string[]
-  currentKey: string
-  currentValue: string
+  currentIndex: number
 }
 
 export default class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
   constructor(props) {
     super(props);
-    let key = this.props.list[0] || 'ERG';
-    if (this.props.keys) {
-      key = this.props.keys[0];
-    }
     this.state = {
       currentIndex: 0,
-      currentKey: key,
-      currentValue: this.props.list[0] || 'ERG',
       expanded: false,
     };
   }
@@ -31,6 +23,22 @@ export default class Dropdown extends React.Component<IDropdownProps, IDropdownS
     this.setState({
       expanded: !this.state.expanded
     });
+  }
+
+  public currentValue(): string {
+    return this.props.list[this.state.currentIndex];
+  }
+
+  public currentKey(): string {
+    return this.key(this.state.currentIndex);
+  }
+
+  private key(index: number): string  {
+    let key = this.props.list[index];
+    if (this.props.keys) {
+      key = this.props.keys[index];
+    }
+    return key;
   }
 
   public render() {
@@ -45,12 +53,8 @@ export default class Dropdown extends React.Component<IDropdownProps, IDropdownS
         {
           expanded ? <ul className="dd-list">
             {list.map((item, index) => {
-              let key = item;
-              if (this.props.keys) {
-                key = this.props.keys[index]
-              }
-              return <li key={key} className="dd-list-item" onClick={() => {
-                this.setState({currentIndex: index, currentValue: item, currentKey: key});
+              return <li key={this.key(index)} className="dd-list-item" onClick={() => {
+                this.setState({currentIndex: index});
                 this.toggleList();
               }}>
                 <div className='dd-background-div'>{item}</div>

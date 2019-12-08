@@ -9,6 +9,7 @@ import {IPopupStatus} from "./Popup";
 
 interface ISendTabProps {
   account: Account
+
   setPopup(p: IPopupStatus): void
 }
 
@@ -18,45 +19,45 @@ interface ISendTabState {
 
 export default class SendTab extends React.Component<ISendTabProps, ISendTabState> {
 
-  public tokenDropdownElement: any;
-  public addressElement: any;
-  public amountElement: any;
+  public tokenDropdownElement: any = React.createRef();
+  public addressElement: any = React.createRef();
+  public amountElement: any = React.createRef();
 
   constructor(props) {
     super(props);
     this.state = {
       formValid: false
     };
-
-    this.tokenDropdownElement = React.createRef();
-    this.addressElement = React.createRef();
-    this.amountElement = React.createRef();
   }
 
   public currentTokenId(): string {
-    if (this.tokenDropdownElement.current) {
-      return this.tokenDropdownElement.current.state.currentKey;
-    } else {
+    try {
+      return this.tokenDropdownElement.current.currentKey();
+    } catch {
       return 'ERG'
     }
   }
 
   public currentTokenName(): string {
     if (this.tokenDropdownElement.current) {
-      return this.tokenDropdownElement.current.state.currentValue;
+      return this.tokenDropdownElement.current.currentValue();
     } else {
       return 'ERG'
     }
   }
 
   public validateAddress = (address) => {
-    const add = new Address(address);
-    if (!add.isValid()) {
+    try {
+      const add = new Address(address);
+      if (!add.isValid()) {
+        return 'Invalid address';
+      } else if (!add.isMainnet()) {
+        return 'Mainnet address required';
+      } else {
+        return '';
+      }
+    } catch {
       return 'Invalid address';
-    } else if (!add.isMainnet()) {
-      return 'Mainnet address required';
-    } else {
-      return '';
     }
   };
 
@@ -109,12 +110,13 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
     const result = await client.transfer(sk, recipient, amount, tokenId);
     if (result.data.id) {
       const tokenName = this.currentTokenName();
+      const id: string = result.data.id.substring(1, 65);
       this.props.setPopup(
         {
           show: true,
           title: 'Congrats!',
           line1: `You have successfully send ${amount} ${tokenName} to ${recipient}`,
-          line2: `Transaction id is ${result.data.id.replaceAll("^\"|\"$", "")}`
+          line2: `Transaction id is ${id}`
         }
       );
     } else {

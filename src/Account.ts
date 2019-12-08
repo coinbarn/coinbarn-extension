@@ -5,10 +5,10 @@ import {
   Serializer,
   Transaction
 } from "@coinbarn/ergo-ts";
-import { unitsInOneErgo } from "@coinbarn/ergo-ts/dist/constants";
-import { ITokens } from "@coinbarn/ergo-ts/dist/models/ITokens";
-import { fromSeed } from "bip32";
-import { mnemonicToSeedSync } from "bip39";
+import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
+import {ITokens} from "@coinbarn/ergo-ts/dist/models/ITokens";
+import {fromSeed} from "bip32";
+import {mnemonicToSeedSync} from "bip39";
 
 interface IAccountToken extends ITokens {
   tokenInfo: ErgoBox | null;
@@ -85,22 +85,12 @@ export default class Account {
       const assets = ErgoBox.extractAssets(this.boxes);
       const accountTokens: IAccountToken[] = assets.map(a => {
         const box = this.tokenInfos[a.tokenId];
-        const r6 = "R6";
         const r4 = "R4";
-        const decimals = Number(
-          Serializer.stringFromHex(
-            box.additionalRegisters[r6].slice(
-              4,
-              box.additionalRegisters[r6].length
-            )
-          )
-        );
-        const name = Serializer.stringFromHex(
-          box.additionalRegisters[r4].slice(
-            4,
-            box.additionalRegisters[r4].length
-          )
-        );
+        const slicedR4 = box.additionalRegisters[r4].slice(4, box.additionalRegisters[r4].length);
+        const name = Serializer.stringFromHex(slicedR4);
+        const r6 = "R6";
+        const slicedR6 = box.additionalRegisters[r6].slice(4, box.additionalRegisters[r6].length);
+        const decimals = Number(Serializer.stringFromHex(slicedR6));
         const factor = Math.pow(10, decimals);
         return {
           amount: a.amount / factor,
@@ -112,7 +102,7 @@ export default class Account {
         };
       });
       const ergoIntAmount = this.boxes.reduce(
-        (sum, { value }) => sum + value,
+        (sum, {value}) => sum + value,
         0
       );
       const ergToken: IAccountToken = {

@@ -83,12 +83,13 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     const client = new Client();
     const result = await client.tokenIssue(sk, name, amount, decimals, description);
     if (result.data.id) {
+      const id: string = result.data.id.substring(1, 65);
       this.props.setPopup(
         {
           show: true,
           title: 'Congrats!',
           line1: `You have successfully issued ${amount} ${name} tokens`,
-          line2: `Transaction id is ${result.data.id.replaceAll("^\"|\"$", "")}`
+          line2: `Transaction id is ${id}`
         }
       );
     } else {
