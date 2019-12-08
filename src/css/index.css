@@ -685,6 +685,7 @@ textarea {
   background-size: contain;
   background-repeat: no-repeat;
   padding: 16px 8px 16px 16px;
+  z-index: 2;
   display: flex;
   flex-direction: row;
 }
@@ -744,6 +745,7 @@ textarea {
   padding-left: 10px;
 }
 .homeScreen .profileInfo .dd-list-item {
+  background-color: #fff;
   padding-top: 4px;
   padding-left: 10px;
   height: 24px;
@@ -835,6 +837,7 @@ textarea {
   padding-left: 10px;
 }
 .homeScreen .currencyDiv .dd-list-item {
+  background-color: #fff;
   padding-top: 4px;
   padding-left: 10px;
   height: 24px;
@@ -845,7 +848,6 @@ textarea {
 }
 .sendTab {
   position: relative;
-  z-index: 1;
   background: url("../img/bg_tab.svg");
   background-size: cover;
   filter: drop-shadow(0 5px 3px #ccc);
@@ -989,7 +991,6 @@ textarea {
 }
 .issueTab {
   position: relative;
-  z-index: 1;
   background: url("../img/bg_tab.svg");
   background-size: cover;
   filter: drop-shadow(0 5px 3px #ccc);
