@@ -19,9 +19,7 @@ interface IAccountToken extends ITokens {
 
 export default class Account {
   public static mnemonicToAddress(mnemonic: string): string {
-    const seed = mnemonicToSeedSync(mnemonic);
-    const sk = Account.seedToSk(seed);
-    return Address.fromSk(sk).address;
+    return new Account('?', mnemonic).address
   }
 
   public static seedToSk(seed, path = "m/44'/429'/0'/0/0") {

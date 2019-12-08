@@ -1,4 +1,4 @@
-import {generateMnemonic} from "bip39";
+import {generateMnemonic, validateMnemonic} from "bip39";
 import React from 'react';
 import Account from "../Account";
 import CoinbarnStorage from "../CoinbarnStorage";
@@ -9,7 +9,8 @@ declare const navigator;
 interface ISeedProps {
   account: Account
   updateState: (a: any) => void
-  screenData: string
+  regPassword: string
+  regRecover: boolean
 }
 
 interface ISeedState {
@@ -27,13 +28,18 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
       mnemonic: generateMnemonic(128),
       mnemonicBack: '',
       repeatPhase: false,
-      seedFormValid: false
+      seedFormValid: true
     };
   }
 
 
   public validateSeedForm() {
-    const valid = this.state.mnemonic === this.state.mnemonicBack;
+    let valid;
+    if (this.props.regRecover) {
+      valid = validateMnemonic(this.state.mnemonicBack)
+    } else {
+      valid = this.state.mnemonic === this.state.mnemonicBack;
+    }
     this.setState({seedFormValid: valid});
   }
 
@@ -54,15 +60,14 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
     this.setState({mnemonicBack: e.target.value}, this.validateSeedForm)
   }
 
-
   public submitSeed = async () => {
-    if (this.state.repeatPhase === false) {
-      this.setState({repeatPhase: true, seedFormValid: false});
-    } else {
-      const address = Account.mnemonicToAddress(this.state.mnemonic);
-      const newAcc = new Account(this.props.account.name, address);
-      await CoinbarnStorage.saveAccount(this.props.account.name, this.props.screenData, this.state.mnemonic);
+    if (this.state.repeatPhase || this.props.regRecover) {
+      const address = Account.mnemonicToAddress(this.state.mnemonicBack);
+      const newAcc = new Account(this.props.account.name, this.state.mnemonicBack);
+      await CoinbarnStorage.saveAccount(this.props.account.name, this.props.regPassword, this.state.mnemonicBack);
       this.props.updateState({account: newAcc, screen: 'start', screenData: ''});
+    } else {
+      this.setState({repeatPhase: true, seedFormValid: false});
     }
   };
 
@@ -74,11 +79,32 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
     }
   };
 
+  public address() {
+    if (this.state.repeatPhase || this.props.regRecover) {
+      return Account.mnemonicToAddress(this.state.mnemonicBack)
+    } else {
+      return Account.mnemonicToAddress(this.state.mnemonic)
+    }
+  }
+
   public render() {
     let message;
     let textarea;
     let buttons;
-    if (!this.state.repeatPhase) {
+    if (this.state.repeatPhase || this.props.regRecover) {
+      if(this.props.regRecover) {
+        message = <div id='descriptionDiv'>
+          Enter your <strong>Secret Backup Phrase</strong> to access your wallet
+        </div>;
+      } else {
+        message = <div id='descriptionDiv'>
+          Confirm the Secret Backup Phrase.<br/> Type it below in the correct order
+        </div>;
+      }
+      textarea =
+        <textarea className='ffn' value={this.state.mnemonicBack} onChange={this.handleSeedUserInput.bind(this)}/>;
+      buttons = '';
+    } else {
       message = <div id='descriptionDiv'>
         Be sure to save <strong>Secret Backup Phrase</strong>. <br/>
         You can copy or write it on a piece of paper. <br/>
@@ -86,16 +112,9 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
       </div>;
       textarea = <textarea className='ffn' readOnly={true} value={this.state.mnemonic}/>;
       buttons = <div id='textButtons'>
-          <button className='refreshSeedBtn' onClick={this.refreshMnemonic}/>
-          <button className='copySeedBtn' onClick={this.copyMnemonic}/>
-        </div>;
-    } else {
-      message = <div id='descriptionDiv'>
-        Confirm the Secret Backup Phrase.<br/> Type it below in the correct order
+        <button className='refreshSeedBtn' onClick={this.refreshMnemonic}/>
+        <button className='copySeedBtn' onClick={this.copyMnemonic}/>
       </div>;
-      textarea =
-        <textarea className='ffn' value={this.state.mnemonicBack} onChange={this.handleSeedUserInput.bind(this)}/>;
-      buttons = '';
     }
 
     return (
@@ -115,12 +134,12 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
         <div className='addressParams'>
           <strong>Your address:</strong>
           <button className='fullAddressBtn' onClick={this.copyAddress}>
-            {Account.mnemonicToAddress(this.state.mnemonic)}
+            {this.address()}
           </button>
         </div>
 
         <div className='registrationControls'>
-          <button className='largeBtn' onClick={this.submitSeed}>Continue</button>
+          <button disabled={!this.state.seedFormValid} className='largeBtn' onClick={this.submitSeed}>Continue</button>
           <button className='backBtn' onClick={this.onBack}>Back</button>
         </div>
 

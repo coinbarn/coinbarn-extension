@@ -83,7 +83,7 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
     const newState = {
       account: new Account(this.accNameElement.current.state.value, ''),
       screen: 'seed',
-      screenData: this.passElement.current.state.value,
+      regPassword: this.passElement.current.state.value,
     };
     this.props.updateState(newState);
   };
