@@ -9,6 +9,7 @@ import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import {ITokens} from "@coinbarn/ergo-ts/dist/models/ITokens";
 import {fromSeed} from "bip32";
 import {mnemonicToSeedSync} from "bip39";
+import Utils from "./Utils";
 
 interface IAccountToken extends ITokens {
   tokenInfo: ErgoBox | null;
@@ -53,27 +54,45 @@ export default class Account {
 
   public async refresh() {
     // refresh boxes
-    this.boxes = await this.explorer.getUnspentOutputs(
-      new Address(this.address)
-    );
+    try {
+      this.boxes = await this.explorer.getUnspentOutputs(
+        new Address(this.address)
+      );
+    } catch (e) {
+      console.warn(`Failed to refresh unspent outputs`, e)
+    }
 
-    // refresh token infos
-    const tokens = ErgoBox.extractAssets(this.boxes);
-    tokens.forEach(a => {
-      if (this.tokenInfos[a.tokenId] === undefined) {
-        this.explorer.getTokenInfo(a.tokenId).then(e => {
-          this.tokenInfos[a.tokenId] = e;
+    try {
+      if (this.boxes !== undefined) {
+        // refresh token infos
+        const tokens = ErgoBox.extractAssets(this.boxes);
+        tokens.forEach(a => {
+          if (this.tokenInfos[a.tokenId] === undefined) {
+            this.explorer.getTokenInfo(a.tokenId).then(e => {
+              this.tokenInfos[a.tokenId] = e;
+            });
+          }
         });
       }
-    });
+    } catch (e) {
+      console.warn(`Failed to get token infos unspent outputs`, e)
+    }
 
-    // refresh confirmedTxs
-    this.unconfirmedTxs = await this.explorer.getUnconfirmed(
-      new Address(this.address)
-    );
-    this.confirmedTxs = await this.explorer.getTransactions(
-      new Address(this.address)
-    );
+    // refresh transactions
+    try {
+      this.unconfirmedTxs = await this.explorer.getUnconfirmed(
+        new Address(this.address)
+      );
+    } catch (e) {
+      console.warn(`Failed to refresh unconfirmed transactions`, e)
+    }
+    try {
+      this.confirmedTxs = await this.explorer.getTransactions(
+        new Address(this.address)
+      );
+    } catch (e) {
+      console.warn(`Failed to refresh confirmed transactions`, e)
+    }
   }
 
   public balances(): IAccountToken[] {
@@ -91,7 +110,7 @@ export default class Account {
         const decimals = Number(Serializer.stringFromHex(slicedR6));
         const factor = Math.pow(10, decimals);
         return {
-          amount: a.amount / factor,
+          amount: Utils.fixedFloat(a.amount / factor, decimals),
           amountInt: a.amount,
           decimals: decimals,
           name: name,
@@ -104,7 +123,7 @@ export default class Account {
         0
       );
       const ergToken: IAccountToken = {
-        amount: ergoIntAmount / unitsInOneErgo,
+        amount: Utils.fixedFloat(ergoIntAmount / unitsInOneErgo, 9),
         amountInt: ergoIntAmount,
         decimals: 9,
         name: "ERG",

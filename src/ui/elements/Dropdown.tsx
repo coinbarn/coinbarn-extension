@@ -3,6 +3,7 @@ import React from 'react';
 interface IDropdownProps {
   list: string[]
   keys?: string[]
+  onUpdate: () => void
 }
 
 interface IDropdownState {
@@ -11,6 +12,10 @@ interface IDropdownState {
 }
 
 export default class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
+  public static defaultProps = {
+    onUpdate: () => {}
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -54,7 +59,7 @@ export default class Dropdown extends React.Component<IDropdownProps, IDropdownS
           expanded ? <ul className="dd-list">
             {list.map((item, index) => {
               return <li key={this.key(index)} className="dd-list-item" onClick={() => {
-                this.setState({currentIndex: index});
+                this.setState({currentIndex: index}, () => this.props.onUpdate());
                 this.toggleList();
               }}>
                 <div className='dd-background-div'>{item}</div>

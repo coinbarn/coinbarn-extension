@@ -6,6 +6,7 @@ import Dropdown from './Dropdown';
 import InputBlock from "./InputBlock";
 import InputBlockMax from './InputBlockMax';
 import {IPopupStatus} from "./Popup";
+import Utils from "../../Utils";
 
 interface ISendTabProps {
   account: Account
@@ -94,7 +95,7 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
     if (tokenInfo === undefined) {
       return 0;
     } else if (this.currentTokenId() === 'ERG') {
-      return tokenInfo.amount - (feeValue / unitsInOneErgo);
+      return Utils.fixedFloat(tokenInfo.amount - (feeValue / unitsInOneErgo), 9);
     } else {
       return tokenInfo.amount;
     }
@@ -133,6 +134,7 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
   };
 
   public onUpdate = () => {
+    this.amountElement.current.setState({maxValue: this.maxAmount()});
     const amountIsValid = this.amountElement.current.state.isValid;
     const recipientIsValid = this.addressElement.current.state.isValid;
     const formValid = amountIsValid && recipientIsValid;
@@ -151,17 +153,20 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
       <div className='sendTab'>
         <div className='currencyDiv f2'>
           You send:
-          <Dropdown ref={this.tokenDropdownElement} list={tokenNames} keys={tokenKeys}/>
+          <Dropdown ref={this.tokenDropdownElement}
+                    list={tokenNames}
+                    keys={tokenKeys}
+                    onUpdate={this.onUpdate.bind(this)}/>
         </div>
         <InputBlock ref={this.addressElement}
                     large={true}
                     name='Address'
-                    validate={this.validateAddress}
+                    validate={this.validateAddress.bind(this)}
                     onUpdate={this.onUpdate}/>
         <InputBlockMax ref={this.amountElement}
                        large={true}
                        name='Amount'
-                       validate={this.validateAmount}
+                       validate={this.validateAmount.bind(this)}
                        maxValue={this.maxAmount()}
                        onUpdate={this.onUpdate}/>
         <button disabled={!this.state.formValid} className='mediumBtn' onClick={this.onSend}>Send</button>
