@@ -9,7 +9,7 @@ export interface IPopupStatus {
   show: boolean
   title?: string
   line1?: string
-  line2?: string
+  line2?: Element
 }
 
 

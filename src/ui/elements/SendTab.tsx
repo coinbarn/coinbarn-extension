@@ -91,45 +91,63 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
    * Max amount to send for selected token
    */
   public maxAmount(): number {
-    const tokenInfo = this.props.account.balances().find(t => t.tokenId === this.currentTokenId());
+    const balances = this.props.account.balances();
+    const tokenInfo = balances.find(t => t.tokenId === this.currentTokenId());
     if (tokenInfo === undefined) {
       return 0;
     } else if (this.currentTokenId() === 'ERG') {
-      return Utils.fixedFloat(tokenInfo.amount - (feeValue / unitsInOneErgo), 9);
+      let feeWithCharge = feeValue;
+      if (balances.find((e) => (e.tokenId !== 'ERG')) !== undefined) {
+        // there are tokens -> leave feeValue more to keep tokens
+        feeWithCharge += feeValue;
+      }
+      return Utils.fixedFloat(tokenInfo.amount - (feeWithCharge / unitsInOneErgo), 9);
     } else {
       return tokenInfo.amount;
     }
   }
 
   public onSend = async () => {
-    const tokenId = this.currentTokenId();
-    const amount = this.amountElement.current.state.value;
-    const recipient = this.addressElement.current.state.value;
-    const sk = this.props.account.sk;
+    try {
+      const tokenId = this.currentTokenId();
+      const amount = this.amountElement.current.state.value;
+      const recipient = this.addressElement.current.state.value;
+      const sk = this.props.account.sk;
 
-    const client = new Client();
-    const result = await client.transfer(sk, recipient, amount, tokenId);
-    if (result.data.id) {
-      const tokenName = this.currentTokenName();
-      const id: string = result.data.id.substring(1, 65);
-      this.props.setPopup(
-        {
-          show: true,
-          title: 'Congrats!',
-          line1: `You have successfully send ${amount} ${tokenName} to ${recipient}`,
-          line2: `Transaction id is ${id}`
-        }
-      );
-    } else {
-      const details = result.data.detail || JSON.stringify(result.data);
-      this.props.setPopup(
-        {
-          show: true,
-          title: 'Error!',
-          line1: `Transaction send error`,
-          line2: details
-        }
-      );
+      const client = new Client(Utils.explorerAPI);
+      const result = await client.transfer(sk, recipient, amount, tokenId);
+      if (result.data.id) {
+        const tokenName = this.currentTokenName();
+        const id: string = result.data.id.substring(1, 65);
+        const explorerHref = `${Utils.explorerURL}/en/transactions/${id}`;
+        this.props.setPopup(
+          {
+            show: true,
+            title: 'Congrats!',
+            line1: `You have send ${amount} ${tokenName} to ${recipient.slice(0, 10)}...`,
+            line2: <a target="_blank" rel="noopener noreferrer" href={explorerHref}>View transaction</a>
+          }
+        );
+      } else {
+        const details = result.data.detail || JSON.stringify(result.data);
+        this.props.setPopup(
+          {
+            show: true,
+            title: 'Error!',
+            line1: `Transaction send error`,
+            line2: details
+          }
+        );
+      }
+    } catch (e) {
+        this.props.setPopup(
+          {
+            show: true,
+            title: 'Error!',
+            line1: `Transaction send error`,
+            line2: e.message
+          }
+        );
     }
   };
 

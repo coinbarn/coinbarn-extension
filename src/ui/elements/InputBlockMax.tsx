@@ -27,7 +27,6 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
   }
 
   public maxClick = () => {
-    console.log(`Set max value ${this.state.maxValue}`);
     this.updateValue(this.state.maxValue);
   };
 

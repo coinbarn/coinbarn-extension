@@ -62,7 +62,6 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
 
   public submitSeed = async () => {
     if (this.state.repeatPhase || this.props.regRecover) {
-      const address = Account.mnemonicToAddress(this.state.mnemonicBack);
       const newAcc = new Account(this.props.account.name, this.state.mnemonicBack);
       await CoinbarnStorage.saveAccount(this.props.account.name, this.props.regPassword, this.state.mnemonicBack);
       this.props.updateState({account: newAcc, screen: 'start', screenData: ''});
