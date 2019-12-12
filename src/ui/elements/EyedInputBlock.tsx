@@ -3,7 +3,7 @@ import React from 'react';
 interface IEyedInputBlockProps {
   name: string,
   onUpdate: () => void
-  validate: (value: string) => string
+  validate: (value: string) => {score: number, error: string}
 }
 
 interface IEyedInputBlockState {
@@ -39,13 +39,22 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
 
   public handleUserInput(e) {
     const value = e.target.value;
-    const error = this.props.validate(value);
-    const isValid = error === '';
+    const validity = this.props.validate(value);
+    const isValid = (validity.score > 1);
+    let validityClass: string;
+    if(validity.score < 1) {
+      validityClass = 'invalidInput';
+    } else if (validity.score < 3){
+      validityClass = 'semivalidInput';
+    } else {
+      validityClass = 'validInput';
+    }
+
     this.setState({
       value: value, 
-      error: error, 
+      error: validity.error, 
       isValid: isValid,
-      validity: isValid ? 'validInput' : 'invalidInput'
+      validity: validityClass
     }, this.props.onUpdate);
   }
 
