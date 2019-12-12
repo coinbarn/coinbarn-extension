@@ -3,6 +3,7 @@ import zxcvbn from 'zxcvbn';
 import Account from "../Account";
 import regImg from '../img/homa_register.svg';
 import InputBlock from "./elements/InputBlock";
+import EyedInputBlock from "./elements/EyedInputBlock";
 
 interface IRegProps {
   updateState: (a: any) => void
@@ -98,12 +99,12 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
                     name='Create an account name'
                     validate={this.validateAccName}
                     onUpdate={this.onUpdate}/>
-        <InputBlock name='Create a password'
+        <EyedInputBlock name='Create a password'
                     type='password'
                     ref={this.passElement}
                     validate={this.validatePass}
                     onUpdate={this.onUpdate}/>
-        <InputBlock name='Confirm password'
+        <EyedInputBlock name='Confirm password'
                     type='password'
                     ref={this.pass2Element}
                     validate={this.validatePass2}
