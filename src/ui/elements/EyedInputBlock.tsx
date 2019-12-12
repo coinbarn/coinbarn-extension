@@ -40,7 +40,7 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
   public handleUserInput(e) {
     const value = e.target.value;
     const validity = this.props.validate(value);
-    const isValid = (validity.score > 1);
+    const isValid = (validity.score >= 1);
     let validityClass: string;
     if(validity.score < 1) {
       validityClass = 'invalidInput';
