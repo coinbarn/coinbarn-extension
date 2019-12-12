@@ -1,6 +1,7 @@
 import {Transaction} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import React from 'react';
+import Utils from "../../Utils";
 
 interface ITransactionViewProps {
   address: string
@@ -23,7 +24,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
       action: delta > 0 ? 'Received ERGS' : 'Sent ERGS',
       amountStr: (delta / unitsInOneErgo).toString().concat(' ERGS'),
       date: date.toLocaleDateString('en-US').concat(' at ').concat(date.toLocaleTimeString('en-US')),
-      explorerHref: `https://explorer.ergoplatform.com/en/transactions/${tx.id}`
+      explorerHref: `${Utils.explorerURL}/en/transactions/${tx.id}`
     }
   };
 

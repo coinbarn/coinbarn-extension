@@ -13,7 +13,8 @@ import WelcomeScreen from './ui/WelcomeScreen';
 export interface IAppState {
   account: Account
   screen: string
-  screenData: string
+  regPassword: string
+  regRecover: boolean
 }
 
 export default class App extends React.Component<{}, IAppState> {
@@ -25,7 +26,8 @@ export default class App extends React.Component<{}, IAppState> {
       screen: 'welcome',
       // account: new Account('testa', 'work dynamic rule sister achieve code brisk insect soccer travel medal all'),
       // screen: 'home',
-      screenData: ''
+      regPassword: '',
+      regRecover: false,
     };
   }
 
@@ -51,7 +53,8 @@ export default class App extends React.Component<{}, IAppState> {
         break;
       case 'seed':
         curScreen = <SeedScreen account={this.state.account}
-                                screenData={this.state.screenData}
+                                regPassword={this.state.regPassword}
+                                regRecover={this.state.regRecover}
                                 updateState={this.updateState}/>;
         break;
       case 'password':
@@ -67,11 +70,6 @@ export default class App extends React.Component<{}, IAppState> {
         break;
     }
 
-    return (
-      <div>
-        {curScreen}
-      </div>
-    )
-      ;
+    return curScreen;
   }
 }

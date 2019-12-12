@@ -2,11 +2,13 @@ import {Client} from "@coinbarn/ergo-ts";
 import React from 'react';
 import Account from "../../Account";
 import InputBlock from "./InputBlock";
+import {IPopupStatus} from "./Popup";
+import Utils from "../../Utils";
 
 interface IIssueTabProps {
   account: Account
 
-  setCurrTab(n: number, refresh?: boolean): void
+  setPopup(p: IPopupStatus): void
 }
 
 interface IIssueTabState {
@@ -30,6 +32,7 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     this.nameElement = React.createRef();
     this.decimalsElement = React.createRef();
     this.amountElement = React.createRef();
+
   }
 
   public validateName = (name) => {
@@ -79,14 +82,30 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     const description = this.state.description;
     const sk = this.props.account.sk;
 
-    const client = new Client();
+    const client = new Client(Utils.explorerAPI);
     const result = await client.tokenIssue(sk, name, amount, decimals, description);
     if (result.data.id) {
-      console.log(`Transaction with id ${result.data.id} sent`);
+      const id: string = result.data.id.substring(1, 65);
+      const explorerHref = `${Utils.explorerURL}/en/transactions/${id}`;
+      this.props.setPopup(
+        {
+          show: true,
+          title: 'Congrats!',
+          line1: `You have successfully issued ${amount} ${name} tokens`,
+          line2: <a target="_blank" rel="noopener noreferrer" href={explorerHref}>View transaction</a>
+        }
+      );
     } else {
-      console.log(`Transaction send error: ${JSON.stringify(result)}`);
+      const details = result.data.detail || JSON.stringify(result.data);
+      this.props.setPopup(
+        {
+          show: true,
+          title: 'Error!',
+          line1: `Transaction send error`,
+          line2: details
+        }
+      );
     }
-    this.props.setCurrTab(1, true)
   };
 
   public render() {

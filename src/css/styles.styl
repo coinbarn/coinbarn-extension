@@ -7,15 +7,19 @@
   box-sizing: border-box
   outline: none
 
-body 
+body
   fts()
   color: #81827F
   width: 360px
   height: 600px
   min-width: 360px
   min-height: 600px
-  position: relative
-  margin:0
+  position: absolute
+  left: 0
+  right: 0
+  margin: 0 auto
+  border: 1px solid
+  border-color: #CCCCCC
 
 a
   color: #8FB23E
@@ -37,7 +41,7 @@ screen()
   justify-content: flex-start
   margin: 0 auto
 
-shadow(dy, width, color) 
+shadow(dy, width, color)
   filter: drop-shadow(0 dy width color)
   -webkit-filter: drop-shadow(0 dy width color)
 

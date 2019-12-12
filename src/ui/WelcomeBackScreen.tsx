@@ -9,15 +9,10 @@ interface IWelcomeBackProps {
 }
 
 export default class WelcomeBackScreen extends React.Component<IWelcomeBackProps, {}> {
-  public dropdownElement: any;
-
-  constructor(props) {
-    super(props);
-    this.dropdownElement = React.createRef();
-  }
+  public dropdownElement: any = React.createRef();
 
   public submit = () => {
-    const name = this.dropdownElement.current.state.currentValue;
+    const name = this.dropdownElement.current.currentValue();
     const newState = {
       account: new Account(name, ''),
       screen: 'password'
@@ -36,8 +31,8 @@ export default class WelcomeBackScreen extends React.Component<IWelcomeBackProps
         </div>
         <Dropdown ref={this.dropdownElement} list={this.props.registeredAccounts}/>
         <button className='largeBtn' onClick={this.submit}> Continue</button>
-        <div><a href='#' onClick={() => this.props.updateState({screen: 'register'})}>Create New Account</a></div>
-        <div><a href='#'>Import Account</a></div>
+        <div><a href='#' onClick={() => this.props.updateState({screen: 'register', regRecover: false})}>Create New Account</a></div>
+        <div><a href='#' onClick={() => this.props.updateState({screen: 'register', regRecover: true})}>Import Account</a></div>
       </div>
     );
   }

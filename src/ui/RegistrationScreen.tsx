@@ -84,7 +84,7 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
     const newState = {
       account: new Account(this.accNameElement.current.state.value, ''),
       screen: 'seed',
-      screenData: this.passElement.current.state.value,
+      regPassword: this.passElement.current.state.value,
     };
     this.props.updateState(newState);
   };
@@ -112,7 +112,7 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
         <div className='checkboxDiv'>
           <input type='checkbox' id='checkbox' onChange={this.clickCheckbox.bind(this)}/>
           <label htmlFor='checkbox'>
-            I have read and agree <br/>to the <a href='https://coinhive.app/terms.html'>Terms of Use</a>
+            I have read and agree <br/>to the <a href='https://raw.githubusercontent.com/coinbarn/coinbarn-extension/master/USER_AGREEMENT.md'>Terms of Use</a>
           </label>
         </div>
         <div className='registrationControls'>

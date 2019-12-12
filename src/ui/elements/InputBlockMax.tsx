@@ -9,6 +9,7 @@ interface IInputBlockMaxProps {
 }
 
 interface IInputBlockMaxState {
+  maxValue: number
   value: number
   isValid: boolean | undefined
   error: string
@@ -20,12 +21,13 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
     this.state = {
       error: '',
       isValid: undefined,
+      maxValue: this.props.maxValue,
       value: 0,
     }
   }
 
   public maxClick = () => {
-    this.updateValue(this.props.maxValue);
+    this.updateValue(this.state.maxValue);
   };
 
   public handleUserInput(e) {
