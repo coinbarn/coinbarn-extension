@@ -1,10 +1,10 @@
 import React from 'react';
 import zxcvbn from 'zxcvbn';
 import Account from "../Account";
-import regImg from '../img/homa_register.svg';
-import InputBlock from "./elements/InputBlock";
-import EyedInputBlock from "./elements/EyedInputBlock";
 import Constants from "../Constants";
+import regImg from '../img/homa_register.svg';
+import EyedInputBlock from "./elements/EyedInputBlock";
+import InputBlock from "./elements/InputBlock";
 
 interface IRegProps {
   updateState: (a: any) => void

@@ -34,7 +34,7 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
     };
   }
 
-  toggleType() {
+  public toggleType() {
     this.setState({type: this.state.type === '' ? 'password' : ''});
   }
 

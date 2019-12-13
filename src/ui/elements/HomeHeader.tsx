@@ -10,8 +10,8 @@ interface IHomeHeaderProps {
 export default class HomeHeader extends React.Component<IHomeHeaderProps, {}> {
 
   public render() {
-    let menuBtn = this.props.aboutOn ? 'closeBtn' : 'menuBtn';
-    let settingsBtn = this.props.settingsOn ? 'closeBtn' : 'settingsBtn';
+    const menuBtn = this.props.aboutOn ? 'closeBtn' : 'menuBtn';
+    const settingsBtn = this.props.settingsOn ? 'closeBtn' : 'settingsBtn';
 
     return (
       <div className='homeHeader'>

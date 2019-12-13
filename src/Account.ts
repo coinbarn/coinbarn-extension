@@ -5,10 +5,10 @@ import {
   Serializer,
   Transaction
 } from "@coinbarn/ergo-ts";
-import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
-import {ITokens} from "@coinbarn/ergo-ts/dist/models/ITokens";
-import {fromSeed} from "bip32";
-import {mnemonicToSeedSync} from "bip39";
+import { unitsInOneErgo } from "@coinbarn/ergo-ts/dist/constants";
+import { ITokens } from "@coinbarn/ergo-ts/dist/models/ITokens";
+import { fromSeed } from "bip32";
+import { mnemonicToSeedSync } from "bip39";
 import Utils from "./Utils";
 
 interface IAccountToken extends ITokens {
@@ -20,7 +20,7 @@ interface IAccountToken extends ITokens {
 
 export default class Account {
   public static mnemonicToAddress(mnemonic: string): string {
-    return new Account('?', mnemonic).address
+    return new Account("?", mnemonic).address;
   }
 
   public static seedToSk(seed, path = "m/44'/429'/0'/0/0") {
@@ -59,7 +59,7 @@ export default class Account {
         new Address(this.address)
       );
     } catch (e) {
-      console.warn(`Failed to refresh unspent outputs`, e)
+      console.warn(`Failed to refresh unspent outputs`, e);
     }
 
     try {
@@ -75,7 +75,7 @@ export default class Account {
         });
       }
     } catch (e) {
-      console.warn(`Failed to get token infos unspent outputs`, e)
+      console.warn(`Failed to get token infos unspent outputs`, e);
     }
 
     // refresh transactions
@@ -84,14 +84,14 @@ export default class Account {
         new Address(this.address)
       );
     } catch (e) {
-      console.warn(`Failed to refresh unconfirmed transactions`, e)
+      console.warn(`Failed to refresh unconfirmed transactions`, e);
     }
     try {
       this.confirmedTxs = await this.explorer.getTransactions(
         new Address(this.address)
       );
     } catch (e) {
-      console.warn(`Failed to refresh confirmed transactions`, e)
+      console.warn(`Failed to refresh confirmed transactions`, e);
     }
   }
 
@@ -103,10 +103,16 @@ export default class Account {
       const accountTokens: IAccountToken[] = assets.map(a => {
         const box = this.tokenInfos[a.tokenId];
         const r4 = "R4";
-        const slicedR4 = box.additionalRegisters[r4].slice(4, box.additionalRegisters[r4].length);
+        const slicedR4 = box.additionalRegisters[r4].slice(
+          4,
+          box.additionalRegisters[r4].length
+        );
         const name = Serializer.stringFromHex(slicedR4);
         const r6 = "R6";
-        const slicedR6 = box.additionalRegisters[r6].slice(4, box.additionalRegisters[r6].length);
+        const slicedR6 = box.additionalRegisters[r6].slice(
+          4,
+          box.additionalRegisters[r6].length
+        );
         const decimals = Number(Serializer.stringFromHex(slicedR6));
         const factor = Math.pow(10, decimals);
         return {
@@ -119,7 +125,7 @@ export default class Account {
         };
       });
       const ergoIntAmount = this.boxes.reduce(
-        (sum, {value}) => sum + value,
+        (sum, { value }) => sum + value,
         0
       );
       const ergToken: IAccountToken = {

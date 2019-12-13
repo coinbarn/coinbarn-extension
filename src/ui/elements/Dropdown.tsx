@@ -38,14 +38,6 @@ export default class Dropdown extends React.Component<IDropdownProps, IDropdownS
     return this.key(this.state.currentIndex);
   }
 
-  private key(index: number): string  {
-    let key = this.props.list[index];
-    if (this.props.keys) {
-      key = this.props.keys[index];
-    }
-    return key;
-  }
-
   public render() {
     const list = this.props.list;
     const {expanded, currentIndex} = this.state;
@@ -69,5 +61,13 @@ export default class Dropdown extends React.Component<IDropdownProps, IDropdownS
         }
       </div>
     );
+  }
+
+  private key(index: number): string  {
+    let key = this.props.list[index];
+    if (this.props.keys) {
+      key = this.props.keys[index];
+    }
+    return key;
   }
 }

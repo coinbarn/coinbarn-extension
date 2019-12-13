@@ -1,10 +1,10 @@
 import {Client} from "@coinbarn/ergo-ts";
 import React from 'react';
 import Account from "../../Account";
+import Constants from "../../Constants";
+import Utils from "../../Utils";
 import InputBlock from "./InputBlock";
 import {IPopupStatus} from "./Popup";
-import Utils from "../../Utils";
-import Constants from "../../Constants";
 
 interface IIssueTabProps {
   account: Account

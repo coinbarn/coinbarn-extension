@@ -1,9 +1,9 @@
 import React from 'react';
+import Account from "../Account";
+import CoinbarnStorage from "../CoinbarnStorage";
 import backupImg from '../img/backup.svg';
 import deleteImg from '../img/delete.svg';
 import logoutImg from '../img/log_out.svg';
-import Account from "../Account";
-import CoinbarnStorage from "../CoinbarnStorage";
 import {IPopupStatus} from "./elements/Popup";
 
 declare const navigator;

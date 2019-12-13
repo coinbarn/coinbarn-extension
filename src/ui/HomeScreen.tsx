@@ -1,15 +1,15 @@
 import React from 'react';
 import Account from "../Account";
+import CoinbarnStorage from "../CoinbarnStorage";
+import AboutWindow from "./AboutWindow";
 import HomeHeader from './elements/HomeHeader';
 import InfoProfile from './elements/InfoProfile';
 import IssueTab from './elements/IssueTab';
+import Popup, {IPopupStatus} from "./elements/Popup";
 import SendTab from './elements/SendTab';
 import TabSelector from './elements/TabSelector';
 import TransactionsTab from './elements/TransactionsTab';
-import Popup, {IPopupStatus} from "./elements/Popup";
 import SettingsWindow from "./SettingsWindow";
-import AboutWindow from "./AboutWindow";
-import CoinbarnStorage from "../CoinbarnStorage";
 
 interface IHomeScreenProps {
   account: Account
@@ -71,13 +71,13 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
   }
 
 
-  toggleSettings() {
+  public toggleSettings() {
     const settingsOn = !this.state.settingsOn;
     const aboutOn = this.state.aboutOn && !settingsOn;
     this.setState({settingsOn: settingsOn, aboutOn: aboutOn});
   }
 
-  toggleMenuBlock() {
+  public toggleMenuBlock() {
     const aboutOn = !this.state.aboutOn;
     const settingsOn = this.state.settingsOn && !aboutOn;
     this.setState({settingsOn: settingsOn, aboutOn: aboutOn});

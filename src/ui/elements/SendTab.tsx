@@ -2,12 +2,12 @@ import {Address, Client, feeValue, minBoxValue} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import React from 'react';
 import Account from "../../Account";
+import Constants from "../../Constants";
+import Utils from "../../Utils";
 import Dropdown from './Dropdown';
 import InputBlock from "./InputBlock";
 import InputBlockMax from './InputBlockMax';
 import {IPopupStatus} from "./Popup";
-import Utils from "../../Utils";
-import Constants from "../../Constants";
 
 interface ISendTabProps {
   account: Account

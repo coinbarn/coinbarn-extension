@@ -8,10 +8,12 @@
       "severity": "warning"
     },
     "no-empty": false,
+    "object-literal-sort-keys": false,
     "no-bitwise": false,
     "object-literal-shorthand": false
   },
   "jsRules": {
-    "no-console": false //Disable for javascript
+    //Disable for javascript
+    "no-console": false
   }
 }

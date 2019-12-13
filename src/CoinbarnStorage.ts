@@ -27,7 +27,7 @@ export default class CoinbarnStorage {
 
   public static deleteAccount(name: string): void {
     console.log(`DELETE account ${name}`);
-    localStorage.removeItem(name)
+    localStorage.removeItem(name);
   }
 
   public static async saveAccount(name, password, mnemonic): Promise<void> {
@@ -50,7 +50,7 @@ export default class CoinbarnStorage {
     const iv = Buffer.from(
       await window.crypto.getRandomValues(new Uint8Array(12))
     );
-    const aesGcmParams = {name: "AES-GCM", iv: iv};
+    const aesGcmParams = { name: "AES-GCM", iv: iv };
     const cipherText = await window.crypto.subtle.encrypt(
       aesGcmParams,
       key,
@@ -68,7 +68,7 @@ export default class CoinbarnStorage {
     const iv = Buffer.from(cipherText.slice(12, 24));
     const toDecrypt = Buffer.from(cipherText.slice(24));
     const key = await CoinbarnStorage.deriveKey(password, salt);
-    const aesGcmParams = {name: "AES-GCM", iv: iv};
+    const aesGcmParams = { name: "AES-GCM", iv: iv };
     return await window.crypto.subtle.decrypt(aesGcmParams, key, toDecrypt);
   }
 
@@ -87,7 +87,7 @@ export default class CoinbarnStorage {
       false,
       ["deriveKey"]
     );
-    const aesKeyGenParams = {name: "AES-GCM", length: 256};
+    const aesKeyGenParams = { name: "AES-GCM", length: 256 };
     return await window.crypto.subtle.deriveKey(
       pbkdf2params,
       baseKey,

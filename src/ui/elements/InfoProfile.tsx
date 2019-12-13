@@ -33,7 +33,7 @@ export default class InfoProfile extends React.Component<IInfoProps, IInfoState>
     navigator.clipboard.writeText(this.state.account.address);
   };
 
-  onEditAddressClick = () => {
+  public onEditAddressClick = () => {
     this.setState({readOnlyAddress: !this.state.readOnlyAddress},
       () => {
         if( this.state.readOnlyAddress ){
@@ -44,7 +44,7 @@ export default class InfoProfile extends React.Component<IInfoProps, IInfoState>
       });
   };
 
-  onAccountRename = () => {
+  public onAccountRename = () => {
     const newName = this.accNameInput.current.value;
     if (!this.props.updateAccountName(newName)) {
       this.setState({invalidAddress: true, readOnlyAddress: false}, () => {
@@ -71,7 +71,7 @@ export default class InfoProfile extends React.Component<IInfoProps, IInfoState>
             ref={this.accNameInput}
             onBlur={this.onAccountRename}
             readOnly={this.state.readOnlyAddress} />
-            <button className='editBtn' onClick={this.onEditAddressClick}></button>
+            <button className='editBtn' onClick={this.onEditAddressClick}/>
           </div>
           <div>
             <button className='smallAddressBtn' onClick={this.copyAddress}>
