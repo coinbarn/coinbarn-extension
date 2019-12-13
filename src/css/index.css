@@ -656,6 +656,7 @@ textarea {
 .registerScreen .addressParams {
   width: 100%;
   margin-top: 20px;
+  height: 57px;
 }
 .registerScreen .greeting {
   text-align: center;
@@ -672,6 +673,8 @@ textarea {
 }
 .registerScreen h1,
 .registerScreen strong {
+  margin-top: 14px;
+  margin-bottom: 14px;
   color: #8fb23e;
 }
 .registerScreen #descriptionDiv {
@@ -1098,23 +1101,14 @@ textarea {
   background-size: 302px 190px;
   background-position: -3px 0;
   text-align: center;
+  padding: 41px 20px 26px 20px;
 }
 .popup .closeBtnSmall {
   position: absolute;
   right: 12px;
   top: 13px;
 }
-.overlay .popup {
-  padding: 41px 70px 26px 70px;
-}
-.overlay .popup .greeting {
-  margin-bottom: 15px;
-}
-.menu .popup {
-  margin-top: 55px;
-  padding: 41px 20px 26px 20px;
-}
-.menu .popup .greeting {
+.popup .greeting {
   color: #8fb23e;
   margin-bottom: 15px;
 }
@@ -1157,10 +1151,9 @@ textarea {
 }
 .menu .settingsList li {
   cursor: pointer;
-  margin: 12px -16px 12px -16px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  height: 38px;
+  margin: 14px -16px 12px -12px;
+  padding-top: 4px;
+  height: 48px;
 }
 .menu .settingsList li:hover {
   background: #a0be5b;
@@ -1197,7 +1190,7 @@ textarea {
 }
 .menu .backBtnWhite {
   margin-bottom: -24px;
-  z-index: 2;
+  z-index: 1;
   left: 32px;
   top: 20px;
 }
@@ -1228,4 +1221,8 @@ textarea {
 }
 button:active + .copiedDiv {
   display: block;
+}
+.settingsList li:active + .copiedDiv {
+  display: block;
+  margin-top: -25px;
 }
