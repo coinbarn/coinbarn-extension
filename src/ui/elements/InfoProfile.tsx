@@ -6,24 +6,53 @@ import Dropdown from './Dropdown'
 declare const navigator;
 
 interface IInfoProps {
-  account: Account
+  account: Account,
+  updateAccountName: (newName: string) => boolean
 }
 
 interface IInfoState {
-  account: Account
+  account: Account,
+  readOnlyAddress: boolean,
+  invalidAddress: boolean
 }
 
 export default class InfoProfile extends React.Component<IInfoProps, IInfoState> {
+  public accNameInput: any;
+
   constructor(props: IInfoProps) {
     super(props);
     this.state = {
-      account: this.props.account
+      account: this.props.account,
+      readOnlyAddress: true,
+      invalidAddress: false
     };
-    // todo change account
+    this.accNameInput = React.createRef();
   }
 
   public copyAddress = () => {
     navigator.clipboard.writeText(this.state.account.address);
+  };
+
+  onEditAddressClick = () => {
+    this.setState({readOnlyAddress: !this.state.readOnlyAddress}, 
+      () => {
+        if( this.state.readOnlyAddress ){
+          this.accNameInput.current.blur();
+        } else {
+          this.accNameInput.current.focus();
+        }
+      });
+  };
+
+  onAccountRename = () => {
+    const newName = this.accNameInput.current.value;
+    if (! this.props.updateAccountName(newName)){
+      this.setState({invalidAddress: true, readOnlyAddress: false}, () => {
+        this.accNameInput.current.focus();
+      });
+    } else {
+      this.setState({invalidAddress: false, readOnlyAddress: true});
+    }
   };
 
   public render() {
@@ -34,11 +63,15 @@ export default class InfoProfile extends React.Component<IInfoProps, IInfoState>
         <div className='avatarDiv'>
           <img src={avaSmallImg} alt='homa'/>
         </div>
-        <div className='accountDiv'>
+        <div className={'accountDiv'.concat(this.state.invalidAddress ? ' invalidInput' : '')}>
           <span className='nameInUseSpan'>Name is already in use</span>
           <div className='accountNameDiv'>
-            <input className='addressInputSmall f2' defaultValue={this.state.account.name}/>
-            <button className='editBtn'></button>
+            <input className='addressInputSmall f2'
+            defaultValue={this.state.account.name} 
+            ref={this.accNameInput}
+            onBlur={this.onAccountRename}
+            readOnly={this.state.readOnlyAddress} />
+            <button className='editBtn' onClick={this.onEditAddressClick}></button>
           </div>
           <div>
             <button className='smallAddressBtn' onClick={this.copyAddress}>

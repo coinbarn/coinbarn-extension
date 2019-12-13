@@ -74,7 +74,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
       [
         <div className='homeScreen'>
           <HomeHeader/>
-          <InfoProfile account={this.state.account}/>
+          <InfoProfile account={this.state.account} updateAccountName={ (x: string) => false}/>
           <TabSelector setCurrTab={this.setCurrTab.bind(this)}/>
           {tabs[this.state.currTabIndex]}
         </div>,
