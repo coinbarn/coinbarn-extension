@@ -4,6 +4,7 @@ import deleteImg from '../img/delete.svg';
 import logoutImg from '../img/log_out.svg';
 import Account from "../Account";
 import CoinbarnStorage from "../CoinbarnStorage";
+import {IPopupStatus} from "./elements/Popup";
 
 declare const navigator;
 
@@ -11,6 +12,7 @@ interface ISettingsWindowProps {
   onLogout: () => void
   toggle: () => void
   account: Account
+  setPopup(p: IPopupStatus): void
 }
 
 
@@ -24,10 +26,20 @@ export default class SettingsWindow extends React.Component<ISettingsWindowProps
     this.props.onLogout()
   };
 
-  public deleteAcc = () => {
-    // TODO request confirmation?
+  public confirmedDeleteAcc = () => {
     CoinbarnStorage.deleteAccount(this.props.account.name);
     this.props.onLogout();
+  };
+
+  public deleteAcc = () => {
+    this.props.setPopup(
+      {
+        show: true,
+        title: 'Are you sure?',
+        line1: 'Delete your account?',
+        line2: <button onClick={this.confirmedDeleteAcc.bind(this)} className='mediumBtn'>Delete</button>
+      }
+    );
   };
 
   public render() {

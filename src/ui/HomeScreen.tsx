@@ -94,6 +94,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
     } else if (this.state.settingsOn) {
       window = <SettingsWindow toggle={this.toggleSettings.bind(this)}
                                account={this.props.account}
+                               setPopup={this.setPopup.bind(this)}
                                onLogout={() => this.props.updateState({screen: 'welcome', account: new Account('', '')})}/>
     } else {
       window = [
