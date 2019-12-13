@@ -1157,10 +1157,9 @@ textarea {
 }
 .menu .settingsList li {
   cursor: pointer;
-  margin: 12px -16px 12px -16px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  height: 38px;
+  margin: 14px -16px 12px -12px;
+  padding-top: 4px;
+  height: 48px;
 }
 .menu .settingsList li:hover {
   background: #a0be5b;
