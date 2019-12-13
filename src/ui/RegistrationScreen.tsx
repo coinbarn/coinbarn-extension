@@ -4,6 +4,7 @@ import Account from "../Account";
 import regImg from '../img/homa_register.svg';
 import InputBlock from "./elements/InputBlock";
 import EyedInputBlock from "./elements/EyedInputBlock";
+import Constants from "../Constants";
 
 interface IRegProps {
   updateState: (a: any) => void
@@ -102,19 +103,19 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
                     validate={this.validateAccName}
                     onUpdate={this.onUpdate}/>
         <EyedInputBlock name='Create a password'
-                    type='password'
-                    ref={this.passElement}
-                    validate={this.validatePass}
-                    onUpdate={this.onUpdate}/>
+                        type='password'
+                        ref={this.passElement}
+                        validate={this.validatePass}
+                        onUpdate={this.onUpdate}/>
         <EyedInputBlock name='Confirm password'
-                    type='password'
-                    ref={this.pass2Element}
-                    validate={this.validatePass2}
-                    onUpdate={this.onUpdate}/>
+                        type='password'
+                        ref={this.pass2Element}
+                        validate={this.validatePass2}
+                        onUpdate={this.onUpdate}/>
         <div className='checkboxDiv'>
           <input type='checkbox' id='checkbox' onChange={this.clickCheckbox.bind(this)}/>
           <label htmlFor='checkbox'>
-            I have read and agree <br/>to the <a href='https://raw.githubusercontent.com/coinbarn/coinbarn-extension/master/USER_AGREEMENT.md'>Terms of Use</a>
+            I have read and agree <br/>to the <a target="_blank" rel="noopener noreferrer" href={Constants.termsURL}>Terms of Use</a>
           </label>
         </div>
         <div className='registrationControls'>

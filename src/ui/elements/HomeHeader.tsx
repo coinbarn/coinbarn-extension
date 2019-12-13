@@ -1,11 +1,17 @@
 import React from 'react';
 
-export default class HomeHeader extends React.Component {
-  public render(){
-    return(
+interface IHomeHeaderProps {
+  toggleSettings: () => void
+  toggleMenuBlock: () => void
+}
+
+export default class HomeHeader extends React.Component<IHomeHeaderProps, {}> {
+
+  public render() {
+    return (
       <div className='homeHeader'>
-        <button className='menuBtn' />
-        <button className='settingsBtn' />
+        <button className='menuBtn' onClick={this.props.toggleMenuBlock}/>
+        <button className='settingsBtn' onClick={this.props.toggleSettings}/>
       </div>
     );
   }

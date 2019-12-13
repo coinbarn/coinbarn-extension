@@ -4,6 +4,7 @@ import Account from "../../Account";
 import InputBlock from "./InputBlock";
 import {IPopupStatus} from "./Popup";
 import Utils from "../../Utils";
+import Constants from "../../Constants";
 
 interface IIssueTabProps {
   account: Account
@@ -82,11 +83,11 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
     const description = this.state.description;
     const sk = this.props.account.sk;
 
-    const client = new Client(Utils.explorerAPI);
+    const client = new Client(Constants.explorerAPI);
     const result = await client.tokenIssue(sk, name, amount, decimals, description);
     if (result.data.id) {
       const id: string = result.data.id.substring(1, 65);
-      const explorerHref = `${Utils.explorerURL}/en/transactions/${id}`;
+      const explorerHref = `${Constants.explorerURL}/en/transactions/${id}`;
       this.props.setPopup(
         {
           show: true,

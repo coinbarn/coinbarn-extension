@@ -7,6 +7,7 @@ import InputBlock from "./InputBlock";
 import InputBlockMax from './InputBlockMax';
 import {IPopupStatus} from "./Popup";
 import Utils from "../../Utils";
+import Constants from "../../Constants";
 
 interface ISendTabProps {
   account: Account
@@ -114,12 +115,12 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
       const recipient = this.addressElement.current.state.value;
       const sk = this.props.account.sk;
 
-      const client = new Client(Utils.explorerAPI);
+      const client = new Client(Constants.explorerAPI);
       const result = await client.transfer(sk, recipient, amount, tokenId);
       if (result.data.id) {
         const tokenName = this.currentTokenName();
         const id: string = result.data.id.substring(1, 65);
-        const explorerHref = `${Utils.explorerURL}/en/transactions/${id}`;
+        const explorerHref = `${Constants.explorerURL}/en/transactions/${id}`;
         this.props.setPopup(
           {
             show: true,
