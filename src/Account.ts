@@ -100,29 +100,34 @@ export default class Account {
       return [];
     } else {
       const assets = ErgoBox.extractAssets(this.boxes);
-      const accountTokens: IAccountToken[] = assets.map(a => {
-        const box = this.tokenInfos[a.tokenId];
-        const r4 = "R4";
-        const slicedR4 = box.additionalRegisters[r4].slice(
-          4,
-          box.additionalRegisters[r4].length
-        );
-        const name = Serializer.stringFromHex(slicedR4);
-        const r6 = "R6";
-        const slicedR6 = box.additionalRegisters[r6].slice(
-          4,
-          box.additionalRegisters[r6].length
-        );
-        const decimals = Number(Serializer.stringFromHex(slicedR6));
-        const factor = Math.pow(10, decimals);
-        return {
-          amount: Utils.fixedFloat(a.amount / factor, decimals),
-          amountInt: a.amount,
-          decimals: decimals,
-          name: name,
-          tokenId: a.tokenId,
-          tokenInfo: box
-        };
+      const accountTokens: IAccountToken[] = assets.flatMap(a => {
+        try {
+          const box = this.tokenInfos[a.tokenId];
+          const r4 = "R4";
+          const slicedR4 = box.additionalRegisters[r4].slice(
+            4,
+            box.additionalRegisters[r4].length
+          );
+          const name = Serializer.stringFromHex(slicedR4);
+          const r6 = "R6";
+          const slicedR6 = box.additionalRegisters[r6].slice(
+            4,
+            box.additionalRegisters[r6].length
+          );
+          const decimals = Number(Serializer.stringFromHex(slicedR6));
+          const factor = Math.pow(10, decimals);
+          return [{
+            amount: Utils.fixedFloat(a.amount / factor, decimals),
+            amountInt: a.amount,
+            decimals: decimals,
+            name: name,
+            tokenId: a.tokenId,
+            tokenInfo: box
+          }];
+        } catch (e) {
+          console.warn(`Failed to get token info for ${a}: ${e.message}`);
+          return [];
+        }
       });
       const ergoIntAmount = this.boxes.reduce(
         (sum, { value }) => sum + value,
