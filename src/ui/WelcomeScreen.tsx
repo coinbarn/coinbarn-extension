@@ -16,7 +16,7 @@ export default class WelcomeScreen extends React.Component<IWelcomeProps, {}> {
           Welcome!
         </div>
         <button className='largeBtn' onClick={() => this.props.updateState({screen: 'register'})}>Create Account</button>
-        <button className='wiredBtn'>Import Account</button>
+        <button className='wiredBtn' onClick={() => this.props.updateState({screen: 'register', regRecover: true})}>Import Account</button>
       </div>
     );
   }
