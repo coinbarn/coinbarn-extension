@@ -10,6 +10,9 @@ import SeedScreen from "./ui/SeedScreen";
 import WelcomeBackScreen from './ui/WelcomeBackScreen';
 import WelcomeScreen from './ui/WelcomeScreen';
 
+declare const chrome;
+const autoLogoutTime = 10000;
+
 export interface IAppState {
   account: Account
   screen: string
@@ -19,20 +22,34 @@ export interface IAppState {
 
 export default class App extends React.Component<{}, IAppState> {
 
+  backgroundPort: object;
+
   constructor(props: {}) {
     super(props);
-    this.state = {
-      account: new Account('', ''),
-      screen: 'welcome',
-      // account: new Account('testa', 'work dynamic rule sister achieve code brisk insect soccer travel medal all'),
-      // screen: 'home',
-      regPassword: '',
-      regRecover: false,
-    };
+    const bg = chrome.extension.getBackgroundPage();
+    const currState = bg.appState;
+    if(!currState) {
+      this.state = {
+        account: new Account('', ''),
+        screen: 'welcome',
+        // account: new Account('testa', 'work dynamic rule sister achieve code brisk insect soccer travel medal all'),
+        // screen: 'home',
+        regPassword: '',
+        regRecover: false,
+      };
+    } else {
+      this.state = currState;
+    }
+    bg.logoutTime = autoLogoutTime;
+    bg.clearLogoutTimer();
+    this.backgroundPort = chrome.runtime.connect({name: 'bgWatchdog'});
   }
 
   public updateState = (s: IAppState) => {
-    this.setState(s)
+    this.setState(s, () => {
+      const bg = chrome.extension.getBackgroundPage();
+      bg.appState = this.state;
+    });
   };
 
   public render() {
