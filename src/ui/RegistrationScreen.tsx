@@ -47,24 +47,28 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
   public validatePass = pass => {
     const strength = zxcvbn(pass);
     let errorMsg: string = '';
-    // todo strength.score < 4 for production
-    // todo change validity of pass2 ?
     if (strength.score < 1) {
       errorMsg = 'Password is too weak';
     } else if (strength.score < 3) {
       errorMsg = 'Insecure password';
     }
+    const pass2Value = this.pass2Element.current.state.value;
+    const passComparison = this.comparePasswords(pass, pass2Value);
+    this.pass2Element.current.updateValidity(passComparison, pass2Value);
     return {score: strength.score, error: errorMsg};
   };
 
   public validatePass2 = pass2 => {
-    const pass = this.passElement.current.state.value;
-    if (pass !== pass2) {
+    return this.comparePasswords(this.passElement.current.state.value, pass2);
+  };
+
+  public comparePasswords(pass1, pass2) {
+    if (pass1 !== pass2) {
       return {score: 0, error: 'Passwords do not match'};
     } else {
       return {score: 5, error: ''};
     }
-  };
+  }
 
   public onUpdate = () => {
     const accIsValid = this.accNameElement.current.state.isValid;
