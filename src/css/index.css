@@ -656,6 +656,7 @@ textarea {
 .registerScreen .addressParams {
   width: 100%;
   margin-top: 20px;
+  height: 57px;
 }
 .registerScreen .greeting {
   text-align: center;
@@ -672,6 +673,8 @@ textarea {
 }
 .registerScreen h1,
 .registerScreen strong {
+  margin-top: 14px;
+  margin-bottom: 14px;
   color: #8fb23e;
 }
 .registerScreen #descriptionDiv {
