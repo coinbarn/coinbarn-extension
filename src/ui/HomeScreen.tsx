@@ -98,10 +98,10 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
                                onLogout={() => this.props.updateState({screen: 'welcome', account: new Account('', '')})}/>
     } else {
       window = [
-        <InfoProfile account={this.state.account}/>,
+        <InfoProfile account={this.state.account} updateAccountName={ (x: string) => false}/>,
         <TabSelector setCurrTab={this.setCurrTab.bind(this)}/>,
         tabs[this.state.currTabIndex]
-      ]
+      ];
     }
 
     return (
