@@ -9,6 +9,7 @@ import TransactionsTab from './elements/TransactionsTab';
 import Popup, {IPopupStatus} from "./elements/Popup";
 import SettingsWindow from "./SettingsWindow";
 import AboutWindow from "./AboutWindow";
+import CoinbarnStorage from "../CoinbarnStorage";
 
 interface IHomeScreenProps {
   account: Account
@@ -82,6 +83,10 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
     this.setState({settingsOn: settingsOn, aboutOn: aboutOn});
   }
 
+  public updateAccountName(newName: string): boolean {
+    return CoinbarnStorage.renameAccount(this.props.account.name, newName);
+  }
+
   public render() {
     const tabs = [<SendTab account={this.state.account}
                            setPopup={this.setPopup.bind(this)}/>,
@@ -98,7 +103,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
                                onLogout={() => this.props.updateState({screen: 'welcome', account: new Account('', '')})}/>
     } else {
       window = [
-        <InfoProfile account={this.state.account} updateAccountName={ (x: string) => false}/>,
+        <InfoProfile account={this.state.account} updateAccountName={name => this.updateAccountName(name)}/>,
         <TabSelector setCurrTab={this.setCurrTab.bind(this)}/>,
         tabs[this.state.currTabIndex]
       ];

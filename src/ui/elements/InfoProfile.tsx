@@ -34,7 +34,7 @@ export default class InfoProfile extends React.Component<IInfoProps, IInfoState>
   };
 
   onEditAddressClick = () => {
-    this.setState({readOnlyAddress: !this.state.readOnlyAddress}, 
+    this.setState({readOnlyAddress: !this.state.readOnlyAddress},
       () => {
         if( this.state.readOnlyAddress ){
           this.accNameInput.current.blur();
@@ -46,7 +46,7 @@ export default class InfoProfile extends React.Component<IInfoProps, IInfoState>
 
   onAccountRename = () => {
     const newName = this.accNameInput.current.value;
-    if (! this.props.updateAccountName(newName)){
+    if (!this.props.updateAccountName(newName)) {
       this.setState({invalidAddress: true, readOnlyAddress: false}, () => {
         this.accNameInput.current.focus();
       });
@@ -67,7 +67,7 @@ export default class InfoProfile extends React.Component<IInfoProps, IInfoState>
           <span className='nameInUseSpan'>Name is already in use</span>
           <div className='accountNameDiv'>
             <input className='addressInputSmall f2'
-            defaultValue={this.state.account.name} 
+            defaultValue={this.state.account.name}
             ref={this.accNameInput}
             onBlur={this.onAccountRename}
             readOnly={this.state.readOnlyAddress} />
