@@ -7,4 +7,5 @@ export default class Constants {
   // TODO write privacy policy
   public static privacyURL: string =
     "https://github.com/coinbarn/coinbarn-extension/blob/master/PRIVACY.md";
+  public static secretPath = "m/44'/429'/0'/0/0";
 }
