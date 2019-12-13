@@ -84,7 +84,12 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
   }
 
   public updateAccountName(newName: string): boolean {
-    return CoinbarnStorage.renameAccount(this.props.account.name, newName);
+    const renamed = CoinbarnStorage.renameAccount(this.props.account.name, newName);
+    if (renamed) {
+      const newAcc = new Account(newName, this.props.account.mnemonic);
+      this.props.updateState({account: newAcc})
+    }
+    return renamed;
   }
 
   public render() {

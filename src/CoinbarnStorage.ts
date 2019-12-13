@@ -16,12 +16,13 @@ export default class CoinbarnStorage {
 
   public static renameAccount(oldName: string, newName: string): boolean {
     const currentAccData = localStorage.getItem(oldName);
-    if (localStorage.getItem(newName) === null && currentAccData !== null) {
+    const newNameData = localStorage.getItem(newName);
+    if (newNameData === null && currentAccData !== null) {
       localStorage.setItem(newName, currentAccData);
       this.deleteAccount(oldName);
       return true;
     } else {
-      return false;
+      return oldName === newName;
     }
   }
 
