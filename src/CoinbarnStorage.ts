@@ -9,7 +9,7 @@ export default class CoinbarnStorage {
   public static getAccountNames(): string[] {
     const accounts: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
-      accounts[i] = localStorage.key(i);
+      accounts.unshift(localStorage.key(i));
     }
     return accounts;
   }
