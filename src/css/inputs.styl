@@ -14,7 +14,7 @@ input
   margin: 0
   padding-left: 1em
   &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button 
+  &::-webkit-inner-spin-button
     -webkit-appearance: none
     margin: 0
 
@@ -23,11 +23,14 @@ input
 
 .validateInput.validInput input
   background-image: url('../img/input_green.svg')
-  
+
 input[type=password]
   font-size: 16px
 
 .errorDiv
+  visibility: hidden
+
+.warningDiv
   visibility: hidden
 
 .validateInputLarge input, .inputMax input
@@ -54,6 +57,9 @@ input[type=password]
 .invalidInput .errorDiv
   visibility: visible
 
+.semivalidInput .warningDiv
+  visibility: visible
+
 .validateInput, .validateInputLarge, .validateInputMax
   width: 100%
 
@@ -63,6 +69,10 @@ input[type=password]
 .errorDiv
   text-align: right
   color: #E17373
+
+.warningDiv
+  text-align: right
+  color: #FFDC82
 
 textarea
   border: 0

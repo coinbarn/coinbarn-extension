@@ -446,6 +446,9 @@ input[type=password] {
 .errorDiv {
   visibility: hidden;
 }
+.warningDiv {
+  visibility: hidden;
+}
 .validateInputLarge input,
 .inputMax input {
   padding-left: 16px;
@@ -473,6 +476,9 @@ input[type=password] {
 .invalidInput .errorDiv {
   visibility: visible;
 }
+.semivalidInput .warningDiv {
+  visibility: visible;
+}
 .validateInput,
 .validateInputLarge,
 .validateInputMax {
@@ -484,6 +490,10 @@ input[type=password] {
 .errorDiv {
   text-align: right;
   color: #e17373;
+}
+.warningDiv {
+  text-align: right;
+  color: #ffdc82;
 }
 textarea {
   border: 0;
