@@ -116,12 +116,13 @@ a {
   background-position: center;
 }
 .dd-header-expanded .dd-trigger {
+  content: ' ';
   transform: rotateX(180deg);
   transition: 0.2s;
+  background: url("../img/arrow_down_gray.svg");
   background-size: 13px 7px;
   background-repeat: no-repeat;
   background-position: center;
-  background: url("../img/arrow_down_gray.svg");
 }
 .dd-header-title {
   box-sizing: border-box;
