@@ -3,7 +3,7 @@ import React from 'react';
 interface IEyedInputBlockProps {
   name: string,
   onUpdate: () => void
-  validate: (value: string) => {score: number, error: string}
+  validate: (value: string) => { score: number, error: string }
 }
 
 interface IEyedInputBlockState {
@@ -18,7 +18,8 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
 
   public static defaultProps = {
     name: 'name',
-    onUpdate: () => {},
+    onUpdate: () => {
+    },
     type: 'password',
   };
 
@@ -34,7 +35,7 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
   }
 
   toggleType() {
-    this.setState({type: this.state.type==='' ? 'password' : ''});
+    this.setState({type: this.state.type === '' ? 'password' : ''});
   }
 
   public handleUserInput(e) {
@@ -42,17 +43,17 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
     const validity = this.props.validate(value);
     const isValid = (validity.score >= 1);
     let validityClass: string;
-    if(validity.score < 1) {
+    if (validity.score < 1) {
       validityClass = 'invalidInput';
-    } else if (validity.score < 3){
+    } else if (validity.score < 3) {
       validityClass = 'semivalidInput';
     } else {
       validityClass = 'validInput';
     }
 
     this.setState({
-      value: value, 
-      error: validity.error, 
+      value: value,
+      error: validity.error,
       isValid: isValid,
       validity: validityClass
     }, this.props.onUpdate);
@@ -63,6 +64,10 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
     if (this.state.value !== '') {
       className = className.concat(' ').concat(this.state.validity);
     }
+    let messageClass = 'errorDiv';
+    if (this.state.validity === 'semivalidInput') {
+      messageClass = 'warningDiv';
+    }
 
     return (
       <div className={className}>
@@ -70,7 +75,7 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
         <input type={this.state.type} className='fts'
                onChange={this.handleUserInput.bind(this)} value={this.state.value}/>
         <button className='eyeButton' onClick={this.toggleType.bind(this)}></button>
-        <div className='errorDiv'>{this.state.error ? this.state.error : '\xa0'}</div>
+        <div className={messageClass}>{this.state.error ? this.state.error : '\xa0'}</div>
       </div>
     );
   }

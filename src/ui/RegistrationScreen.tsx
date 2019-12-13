@@ -46,13 +46,13 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
 
   public validatePass = pass => {
     const strength = zxcvbn(pass);
-    let errorMsg: string;
+    let errorMsg: string = '';
     // todo strength.score < 4 for production
     // todo change validity of pass2 ?
     if (strength.score < 1) {
       errorMsg = 'Password is too weak';
-    } else {
-      errorMsg = '';
+    } else if (strength.score < 3) {
+      errorMsg = 'Insecure password';
     }
     return {score: strength.score, error: errorMsg};
   };

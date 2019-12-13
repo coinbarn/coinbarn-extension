@@ -108,7 +108,9 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
       [
         <div className='homeScreen'>
           <HomeHeader toggleSettings={this.toggleSettings.bind(this)}
-                      toggleMenuBlock={this.toggleMenuBlock.bind(this)}/>
+                      toggleMenuBlock={this.toggleMenuBlock.bind(this)}
+                      settingsOn={this.state.settingsOn}
+                      aboutOn={this.state.aboutOn}/>
           {window}
         </div>,
         <Popup status={this.state.popupStatus} onClose={() => this.setPopup({show: false})}/>
