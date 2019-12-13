@@ -135,6 +135,9 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
           <button className='fullAddressBtn' onClick={this.copyAddress}>
             {this.address()}
           </button>
+          <div className='copiedDiv'>
+            <span className='copiedSpan'>Copied</span>
+          </div>
         </div>
 
         <div className='registrationControls'>

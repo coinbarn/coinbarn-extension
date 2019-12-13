@@ -40,10 +40,14 @@ export default class InfoProfile extends React.Component<IInfoProps, IInfoState>
             <input className='addressInputSmall f2' defaultValue={this.state.account.name}/>
             <button className='editBtn'></button>
           </div>
-          <button className='smallAddressBtn' onClick={this.copyAddress}>
-            {this.props.account.address}
-          </button>
-          <span className='copiedSpan'>Copied</span>
+          <div>
+            <button className='smallAddressBtn' onClick={this.copyAddress}>
+              {this.props.account.address}
+            </button>
+            <div className='copiedDiv'>
+              <span className='copiedSpan'>Copied</span>
+            </div>
+          </div>
         </div>
         <div className='spacerDiv'>
         </div>

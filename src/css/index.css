@@ -116,12 +116,13 @@ a {
   background-position: center;
 }
 .dd-header-expanded .dd-trigger {
+  content: ' ';
   transform: rotateX(180deg);
   transition: 0.2s;
+  background: url("../img/arrow_down_gray.svg");
   background-size: 13px 7px;
   background-repeat: no-repeat;
   background-position: center;
-  background: url("../img/arrow_down_gray.svg");
 }
 .dd-header-title {
   box-sizing: border-box;
@@ -667,21 +668,6 @@ textarea {
   flex-grow: 1;
   width: 101%;
 }
-.copiedSpan {
-  display: none;
-}
-.smallAddressBtn:active + .copiedSpan {
-  display: block;
-  position: absolute;
-  color: #4d4f4e;
-  font-size: 10px;
-  width: 88px;
-  height: 16px;
-  top: 60px;
-  background: #bcd18b;
-  line-height: 16px;
-  text-align: center;
-}
 .homeScreen {
   padding-left: 64px;
   padding-right: 64px;
@@ -1204,4 +1190,32 @@ textarea {
   position: absolute;
   left: 32px;
   top: 20px;
+}
+.copiedSpan {
+  display: block;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: #4d4f4e;
+  font-size: 10px;
+  width: 88px;
+  height: 16px;
+  background: #bcd18b;
+  line-height: 16px;
+  text-align: center;
+}
+.copiedDiv {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding-top: 7px;
+}
+.profileInfo .copiedDiv {
+  left: -97px;
+}
+button:active + .copiedDiv {
+  display: block;
 }
