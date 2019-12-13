@@ -14,6 +14,11 @@ export default class CoinbarnStorage {
     return accounts;
   }
 
+  public static deleteAccount(name: string): void {
+    console.log(`DELETE account ${name}`);
+    localStorage.removeItem(name)
+  }
+
   public static async saveAccount(name, password, mnemonic): Promise<void> {
     const enc = new TextEncoder("utf-8");
     const bytesToEncrypt = enc.encode(mnemonic);

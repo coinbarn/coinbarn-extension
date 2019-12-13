@@ -92,7 +92,9 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
     if (this.state.aboutOn) {
       window = <AboutWindow toggle={this.toggleMenuBlock.bind(this)}/>
     } else if (this.state.settingsOn) {
-      window = <SettingsWindow toggle={this.toggleSettings.bind(this)}/>
+      window = <SettingsWindow toggle={this.toggleSettings.bind(this)}
+                               account={this.props.account}
+                               onLogout={() => this.props.updateState({screen: 'welcome', account: new Account('', '')})}/>
     } else {
       window = [
         <InfoProfile account={this.state.account}/>,
