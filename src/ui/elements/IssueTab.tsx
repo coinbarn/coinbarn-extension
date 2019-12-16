@@ -1,8 +1,7 @@
-import {Client} from "@coinbarn/ergo-ts";
 import React from 'react';
 import Account from "../../Account";
+import CoinbarnClient from "../../CoinbarnClient";
 import Constants from "../../Constants";
-import Utils from "../../Utils";
 import InputBlock from "./InputBlock";
 import {IPopupStatus} from "./Popup";
 
@@ -88,10 +87,9 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
       const decimals = this.decimalsElement.current.state.value;
       const name = this.nameElement.current.state.value;
       const description = this.state.description;
-      const sk = this.props.account.sk;
 
-      const client = new Client(Constants.explorerAPI);
-      const result = await client.tokenIssue(sk, name, amount, decimals, description);
+      const client = new CoinbarnClient();
+      const result = await client.issue(this.props.account, name, amount, decimals, description);
       if (result.data.id) {
         const id: string = result.data.id.substring(1, 65);
         const explorerHref = `${Constants.explorerURL}/en/transactions/${id}`;

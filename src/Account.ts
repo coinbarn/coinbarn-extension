@@ -1,15 +1,22 @@
-import {Address, ErgoBox, Explorer, Input, Serializer, Transaction} from "@coinbarn/ergo-ts";
-import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
-import {ITokens} from "@coinbarn/ergo-ts/dist/models/ITokens";
-import {fromSeed} from "bip32";
-import {mnemonicToSeedSync} from "bip39";
-import Utils from "./Utils";
-import * as ec from 'elliptic';
-import * as blake from 'blakejs';
-import * as bs58 from 'bs58';
+import {
+  Address,
+  ErgoBox,
+  Explorer,
+  Input,
+  Serializer,
+  Transaction
+} from "@coinbarn/ergo-ts";
+import { unitsInOneErgo } from "@coinbarn/ergo-ts/dist/constants";
+import { ITokens } from "@coinbarn/ergo-ts/dist/models/ITokens";
+import { fromSeed } from "bip32";
+import { mnemonicToSeedSync } from "bip39";
+import * as blake from "blakejs";
+import * as bs58 from "bs58";
+import * as ec from "elliptic";
 import Constants from "./Constants";
+import Utils from "./Utils";
 
-const {curve} = ec.ec('secp256k1');
+const { curve } = ec.ec("secp256k1");
 
 interface IAccountToken extends ITokens {
   tokenInfo: ErgoBox | null;
@@ -19,7 +26,54 @@ interface IAccountToken extends ITokens {
 }
 
 export default class Account {
-  public static readonly empty: Account = new Account('', '', false);
+  public static readonly empty: Account = new Account("", "", false);
+
+  public static decode(content: string): Account {
+    const json = JSON.parse(content);
+    return new Account(json.name, json.mnemonic, json.minerAcc);
+  }
+
+  private static mnemonicToSk(mnemonic: string, minerAcc: boolean): string {
+    if (minerAcc) {
+      const seed = mnemonicToSeedSync(mnemonic);
+      const sk = fromSeed(Buffer.from(seed)).privateKey;
+      if (sk === undefined) {
+        console.warn("Failed to get miner sk");
+        return "";
+      } else {
+        return sk.toString("hex");
+      }
+    } else {
+      const seed = mnemonicToSeedSync(mnemonic);
+      const sk = fromSeed(seed).derivePath(Constants.secretPath).privateKey;
+      if (sk === undefined) {
+        throw new Error("Undefined sk");
+      } else {
+        return sk.toString("hex");
+      }
+    }
+  }
+
+  private static skToAddress(sk: string, minerAcc: boolean): Address {
+    if (minerAcc) {
+      const pk = Buffer.from(curve.g.mul(sk).encodeCompressed()).toString(
+        "HEX"
+      );
+      const prefix = Buffer.from("03100204a00b08cd", "hex");
+      const postfix = Buffer.from("ea02d192a39a8cc7a70173007301", "hex");
+      const contentBytes = Buffer.from(pk, "hex");
+
+      const content = Buffer.concat([prefix, contentBytes, postfix]);
+      const checksum = Buffer.from(
+        blake.blake2b(content, null, 32),
+        "hex"
+      ).slice(0, 4);
+      const address = Buffer.concat([content, checksum]);
+      return new Address(bs58.encode(address));
+    } else {
+      return Address.fromSk(sk);
+    }
+  }
 
   public minerAcc: boolean;
   public name: string;
@@ -28,7 +82,7 @@ export default class Account {
   public sk: string = "";
   public confirmedTxs: Transaction[] = [];
   public unconfirmedTxs: Transaction[] = [];
-  private boxes?: ErgoBox[];
+  public boxes?: ErgoBox[];
   private tokenInfos: Record<string, ErgoBox> = {};
   private explorer: Explorer = Explorer.mainnet;
 
@@ -156,18 +210,22 @@ export default class Account {
     }
   }
 
-  public static decode(content: string): Account {
-    const json = JSON.parse(content);
-    return new Account(json.name, json.mnemonic, json.minerAcc)
-  }
-
   public encode(): string {
     const obj = {
       name: this.name,
       mnemonic: this.mnemonic,
-      minerAcc: this.minerAcc,
+      minerAcc: this.minerAcc
     };
     return JSON.stringify(obj);
+  }
+
+  // todo extract to separate class
+  public tokenDecimalsFactor(tokenId: string) {
+    const tokenInfo = this.tokenInfos[tokenId];
+    const r6 = "R6";
+    const R6: string = tokenInfo.additionalRegisters[r6];
+    const decimals = Number(Serializer.stringFromHex(R6.slice(4, R6.length)));
+    return Math.pow(10, decimals);
   }
 
   private async loadBoxes(): Promise<ErgoBox[]> {
@@ -178,45 +236,7 @@ export default class Account {
       const maxHeight = height - 720;
       return allBoxes.filter(b => b.creationHeight < maxHeight);
     } else {
-      return allBoxes
+      return allBoxes;
     }
   }
-
-  private static mnemonicToSk(mnemonic: string, minerAcc: boolean): string {
-    if (minerAcc) {
-      const seed = mnemonicToSeedSync(mnemonic);
-      const sk = fromSeed(Buffer.from(seed)).privateKey;
-      if (sk === undefined) {
-        console.warn('Failed to get miner sk');
-        return '';
-      } else {
-        return sk.toString('hex');
-      }
-    } else {
-      const seed = mnemonicToSeedSync(mnemonic);
-      const sk = fromSeed(seed).derivePath(Constants.secretPath).privateKey;
-      if (sk === undefined) {
-        throw new Error("Undefined sk");
-      } else {
-        return sk.toString("hex");
-      }
-    }
-  }
-
-  private static skToAddress(sk: string, minerAcc: boolean): Address {
-    if (minerAcc) {
-      const pk = Buffer.from(curve.g.mul(sk).encodeCompressed()).toString('HEX');
-      const prefix = Buffer.from('03100204a00b08cd', 'hex');
-      const postfix = Buffer.from('ea02d192a39a8cc7a70173007301', 'hex');
-      const contentBytes = Buffer.from(pk, 'hex');
-
-      const content = Buffer.concat([prefix, contentBytes, postfix]);
-      const checksum = Buffer.from(blake.blake2b(content, null, 32), 'hex').slice(0, 4);
-      const address = Buffer.concat([content, checksum]);
-      return new Address(bs58.encode(address));
-    } else {
-      return Address.fromSk(sk);
-    }
-  }
-
 }

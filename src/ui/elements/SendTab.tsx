@@ -1,7 +1,8 @@
-import {Address, Client, feeValue, minBoxValue} from "@coinbarn/ergo-ts";
+import {Address, feeValue, minBoxValue} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import React from 'react';
 import Account from "../../Account";
+import CoinbarnClient from "../../CoinbarnClient";
 import Constants from "../../Constants";
 import Utils from "../../Utils";
 import Dropdown from './Dropdown';
@@ -113,10 +114,8 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
       const tokenId = this.currentTokenId();
       const amount = this.amountElement.current.state.value;
       const recipient = this.addressElement.current.state.value;
-      const sk = this.props.account.sk;
-
-      const client = new Client(Constants.explorerAPI);
-      const result = await client.transfer(sk, recipient, amount, tokenId);
+      const client = new CoinbarnClient();
+      const result = await client.transfer(this.props.account, recipient, amount, tokenId);
       if (result.data.id) {
         const tokenName = this.currentTokenName();
         const id: string = result.data.id.substring(1, 65);

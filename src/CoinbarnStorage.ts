@@ -32,7 +32,10 @@ export default class CoinbarnStorage {
     localStorage.removeItem(name);
   }
 
-  public static async saveAccount(account: Account, password: string): Promise<void> {
+  public static async saveAccount(
+    account: Account,
+    password: string
+  ): Promise<void> {
     const enc = new TextEncoder("utf-8");
     const bytesToEncrypt = enc.encode(account.encode());
     const ct = await this.encrypt(bytesToEncrypt, password);
@@ -124,5 +127,4 @@ export default class CoinbarnStorage {
     }
     return bytes.buffer;
   }
-
 }
