@@ -37,7 +37,7 @@ export default class SettingsWindow extends React.Component<ISettingsWindowProps
         show: true,
         title: 'Are you sure?',
         line1: 'Delete your account?',
-        line2: <button onClick={this.confirmedDeleteAcc.bind(this)} className='mediumBtn'>Delete</button>
+        line2: <button onClick={this.confirmedDeleteAcc.bind(this)} className='redBtn'>Delete</button>
       }
     );
   };

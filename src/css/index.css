@@ -150,7 +150,8 @@ button {
 .largeBtn,
 .mediumBtn,
 .wiredBtn,
-.backBtn {
+.backBtn,
+.redBtn {
   height: 40px;
   font-family: Nunito;
   font-style: normal;
@@ -160,13 +161,15 @@ button {
 }
 .largeBtn,
 .mediumBtn,
-.smallBtn {
+.smallBtn,
+.redBtn {
   color: #fff;
 }
 .largeBtn:hover,
 .mediumBtn:hover,
 .fullAddressBtn:hover,
-.wiredBtn:hover {
+.wiredBtn:hover,
+.redBtn:hover {
   filter: drop-shadow(0 5px 5px #b5b5b5);
   -webkit-filter: drop-shadow(0 5px 5px #b5b5b5);
 }
@@ -193,6 +196,10 @@ button {
   background: url("../img/btn_160_40_light_green.svg");
   filter: none;
   -webkit-filter: none;
+}
+.redBtn {
+  width: 160px;
+  background: url("../img/btn_160_40_red.svg");
 }
 .wiredBtn {
   color: #8fb23e;
