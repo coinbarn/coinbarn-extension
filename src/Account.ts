@@ -2,6 +2,7 @@ import {
   Address,
   ErgoBox,
   Explorer,
+  Input,
   Serializer,
   Transaction
 } from "@coinbarn/ergo-ts";
@@ -99,42 +100,48 @@ export default class Account {
     if (this.boxes === undefined) {
       return [];
     } else {
-      const assets = ErgoBox.extractAssets(this.boxes);
-      const accountTokens: IAccountToken[] = assets.flatMap(a => {
-        try {
-          const box = this.tokenInfos[a.tokenId];
-          const r4 = "R4";
-          const slicedR4 = box.additionalRegisters[r4].slice(
-            4,
-            box.additionalRegisters[r4].length
-          );
-          const name = Serializer.stringFromHex(slicedR4);
-          const r6 = "R6";
-          const slicedR6 = box.additionalRegisters[r6].slice(
-            4,
-            box.additionalRegisters[r6].length
-          );
-          const decimals = Number(Serializer.stringFromHex(slicedR6));
-          const factor = Math.pow(10, decimals);
-          return [
-            {
-              amount: Utils.fixedFloat(a.amount / factor, decimals),
-              amountInt: a.amount,
-              decimals: decimals,
-              name: name,
-              tokenId: a.tokenId,
-              tokenInfo: box
-            }
-          ];
-        } catch (e) {
-          console.warn(`Failed to get token info for ${a}: ${e.message}`);
-          return [];
-        }
-      });
-      const ergoIntAmount = this.boxes.reduce(
-        (sum, { value }) => sum + value,
-        0
-      );
+      return this.boxesToBalances(this.boxes);
+    }
+  }
+
+  public boxesToBalances(
+    boxes: ErgoBox[],
+    addErgs: boolean = true
+  ): IAccountToken[] {
+    const assets = ErgoBox.extractAssets(boxes);
+    const accountTokens: IAccountToken[] = assets.flatMap(a => {
+      try {
+        const box = this.tokenInfos[a.tokenId];
+        const r4 = "R4";
+        const slicedR4 = box.additionalRegisters[r4].slice(
+          4,
+          box.additionalRegisters[r4].length
+        );
+        const name = Serializer.stringFromHex(slicedR4);
+        const r6 = "R6";
+        const slicedR6 = box.additionalRegisters[r6].slice(
+          4,
+          box.additionalRegisters[r6].length
+        );
+        const decimals = Number(Serializer.stringFromHex(slicedR6));
+        const factor = Math.pow(10, decimals);
+        return [
+          {
+            amount: Utils.fixedFloat(a.amount / factor, decimals),
+            amountInt: a.amount,
+            decimals: decimals,
+            name: name,
+            tokenId: a.tokenId,
+            tokenInfo: box
+          }
+        ];
+      } catch (e) {
+        console.warn(`Failed to get token info for ${a}: ${e.message}`);
+        return [];
+      }
+    });
+    if (addErgs) {
+      const ergoIntAmount = boxes.reduce((sum, { value }) => sum + value, 0);
       const ergToken: IAccountToken = {
         amount: Utils.fixedFloat(ergoIntAmount / unitsInOneErgo, 9),
         amountInt: ergoIntAmount,
@@ -144,7 +151,20 @@ export default class Account {
         tokenInfo: null
       };
       accountTokens.unshift(ergToken);
-      return accountTokens;
+    }
+    return accountTokens;
+  }
+
+  public isMine(box: Input | ErgoBox): boolean {
+    if (box instanceof ErgoBox) {
+      return box.address.address === this.address;
+    } else if (this.boxes !== undefined) {
+      return (
+        box.address === this.address ||
+        this.boxes.find(b => b.id === box.boxId) !== undefined
+      );
+    } else {
+      return false;
     }
   }
 }

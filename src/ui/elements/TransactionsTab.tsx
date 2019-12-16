@@ -9,12 +9,12 @@ interface ITransactionsTabProps {
 export default class TransactionsTab extends React.Component<ITransactionsTabProps, {}> {
 
   public render() {
-    const address = this.props.account.address;
-    const confirmed = this.props.account.confirmedTxs;
-    const unconfirmed = this.props.account.unconfirmedTxs;
+    const acc  = this.props.account;
+    const confirmed = acc.confirmedTxs;
+    const unconfirmed = acc.unconfirmedTxs;
 
-    const confirmedList = confirmed.map(tx => (<TransactionView key={tx.id} address={address} confirmed={true} tx={tx}/>));
-    const unconfirmedList = unconfirmed.map(tx => (<TransactionView key={tx.id} address={address} confirmed={false} tx={tx}/>));
+    const confirmedList = confirmed.map(tx => (<TransactionView key={tx.id} account={acc} confirmed={true} tx={tx}/>));
+    const unconfirmedList = unconfirmed.map(tx => (<TransactionView key={tx.id} account={acc} confirmed={false} tx={tx}/>));
     return (
       <div className='transactionsTab'>
         <div className='transactionsListDiv'>
