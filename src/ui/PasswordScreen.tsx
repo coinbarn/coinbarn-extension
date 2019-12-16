@@ -38,6 +38,7 @@ export default class PasswordScreen extends React.Component<IPasswordProps, IPas
     } catch (e) {
       this.passElement.current.setState({isValid: false, error: 'Incorrect password'});
       console.log(`Incorrect password ${pass} for account ${this.state.account.name}: ${e}`);
+      throw e;
     }
   };
 
