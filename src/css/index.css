@@ -68,6 +68,7 @@ body {
   min-height: 600px;
   position: relative;
   margin: 0;
+  border: 1px solid;
 }
 a {
   color: #8fb23e;
@@ -249,7 +250,7 @@ button {
   cursor: pointer;
   width: 60px;
   height: 19px;
-  margin-bottom: 64px;
+  margin-bottom: 26px;
   margin-top: 0;
   padding: 0;
   text-align: right;
@@ -587,8 +588,7 @@ textarea {
 .checkboxDiv {
   box-sizing: border-box;
   width: 232px;
-  margin: 24px;
-  flex-grow: 1;
+  margin: 0;
 }
 .checkboxDiv input[type="checkbox"] {
   opacity: 0;
@@ -599,16 +599,19 @@ textarea {
 .checkboxDiv label {
   cursor: pointer;
   position: relative;
-  display: inline-block;
+  display: table-cell;
+  vertical-align: middle;
   padding-left: 40px;
+  min-height: 24px;
 }
 .checkboxDiv label::before {
   cursor: pointer;
   content: '';
-  height: 24px;
   width: 24px;
+  height: 24px;
   background: url("../img/checkbox_unchecked.svg");
   position: absolute;
+  top: calc(50% - 12px);
   left: 0;
 }
 .checkboxDiv input[type="checkbox"]:checked + label::before {
@@ -631,12 +634,14 @@ textarea {
 }
 .welcomeScreen .greeting {
   margin: 32px;
+  flex-grow: 1;
 }
 .welcomeScreen .largeBtn {
   margin: 18px;
 }
 .welcomeScreen .wiredBtn {
-  margin: 7px;
+  margin-top: 7px;
+  margin-bottom: 64px;
 }
 .registerScreen {
   padding-left: 64px;
@@ -674,9 +679,14 @@ textarea {
   width: 100%;
   margin-top: 20px;
   height: 57px;
+  margin-bottom: 46px;
 }
 .registerScreen .greeting {
   text-align: center;
+  flex-grow: 1;
+}
+.registerScreen .termsDiv {
+  margin-top: 1em;
   flex-grow: 1;
 }
 .registerScreen #textButtons {
@@ -911,18 +921,19 @@ textarea {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  flex-grow: 1;
 }
 .sendTab .currencyDiv .dd-wrapper {
   width: 184px;
   margin-top: 46px;
+  margin-bottom: 35px;
 }
 .sendTab .mediumBtn {
-  margin-bottom: 69px;
+  margin-bottom: 32px;
 }
 .sendTab .validateInputMax {
   margin-bottom: 22px;
   margin-top: 20px;
+  flex-grow: 1;
 }
 .transactionsTab {
   background: url("../img/bg_tab.svg");
