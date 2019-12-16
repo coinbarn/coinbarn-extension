@@ -113,6 +113,9 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
       buttons = <div id='textButtons'>
         <button className='refreshSeedBtn' onClick={this.refreshMnemonic}/>
         <button className='copySeedBtn' onClick={this.copyMnemonic}/>
+        <div className='copiedDiv'>
+          <span className='copiedSpan'>Copied</span>
+        </div>
       </div>;
     }
 

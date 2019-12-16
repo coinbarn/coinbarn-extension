@@ -117,9 +117,15 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
                         validate={this.validatePass2}
                         onUpdate={this.onUpdate}/>
         <div className='checkboxDiv'>
-          <input type='checkbox' id='checkbox' onChange={this.clickCheckbox.bind(this)}/>
-          <label htmlFor='checkbox'>
+          <input type='checkbox' id='agreeCheckbox' onChange={this.clickCheckbox.bind(this)}/>
+          <label htmlFor='agreeCheckbox'>
             I have read and agree <br/>to the <a target="_blank" rel="noopener noreferrer" href={Constants.termsURL}>Terms of Use</a>
+          </label>
+        </div>
+        <div className='checkboxDiv'>
+          <input type='checkbox' id='minerCheckbox'/>
+          <label htmlFor='minerCheckbox'>
+            Miner address
           </label>
         </div>
         <div className='registrationControls'>
