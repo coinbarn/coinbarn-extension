@@ -12,8 +12,9 @@ interface IRegProps {
 }
 
 interface IRegState {
-  checkbox: boolean
+  termsAccepted: boolean
   formValid: boolean
+  minerAcc: boolean
 }
 
 export default class RegistrationScreen extends React.Component<IRegProps, IRegState> {
@@ -25,8 +26,9 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
   constructor(props) {
     super(props);
     this.state = {
-      checkbox: false,
-      formValid: false
+      termsAccepted: false,
+      formValid: false,
+      minerAcc: false
     };
     this.accNameElement = React.createRef();
     this.passElement = React.createRef();
@@ -75,21 +77,25 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
     const passIsValid = this.passElement.current.state.isValid;
     const passRepeatIsValid = this.pass2Element.current.state.isValid;
 
-    const formValid = accIsValid && passIsValid && passRepeatIsValid && this.state.checkbox;
+    const formValid = accIsValid && passIsValid && passRepeatIsValid && this.state.termsAccepted;
 
     if (this.state.formValid !== formValid) {
       this.setState({formValid: formValid})
     }
   };
 
-  public clickCheckbox(e) {
-    const value = e.target.checked;
-    this.setState({checkbox: value}, this.onUpdate);
+  public clickMinerAcc(e) {
+    this.setState({minerAcc: e.target.checked}, this.onUpdate);
+  }
+
+  public clickAcceptTerms(e) {
+    this.setState({termsAccepted: e.target.checked}, this.onUpdate);
   }
 
   public submit = () => {
+    const newAcc = new Account(this.accNameElement.current.state.value, '', this.state.minerAcc);
     const newState = {
-      account: new Account(this.accNameElement.current.state.value, ''),
+      account: newAcc,
       screen: 'seed',
       regPassword: this.passElement.current.state.value,
     };
@@ -118,13 +124,13 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
                         onUpdate={this.onUpdate}/>
         <div className='termsDiv'>
           <div className='checkboxDiv'>
-            <input type='checkbox' id='agreeCheckbox' onChange={this.clickCheckbox.bind(this)}/>
+            <input type='checkbox' id='agreeCheckbox' onChange={this.clickAcceptTerms.bind(this)}/>
             <label htmlFor='agreeCheckbox'>
               I have read and agree <br/>to the <a target="_blank" rel="noopener noreferrer" href={Constants.termsURL}>Terms of Use</a>
             </label>
           </div>
           <div className='checkboxDiv'>
-            <input type='checkbox' id='minerCheckbox'/>
+            <input type='checkbox' id='minerCheckbox'  onChange={this.clickMinerAcc.bind(this)}/>
             <label htmlFor='minerCheckbox'>
               Miner address
             </label>

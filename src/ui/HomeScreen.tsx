@@ -86,7 +86,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
   public updateAccountName(newName: string): boolean {
     const renamed = CoinbarnStorage.renameAccount(this.props.account.name, newName);
     if (renamed) {
-      const newAcc = new Account(newName, this.props.account.mnemonic);
+      const newAcc = new Account(newName, this.props.account.mnemonic, this.props.account.minerAcc);
       this.props.updateState({account: newAcc})
     }
     return renamed;
@@ -105,7 +105,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
       window = <SettingsWindow toggle={this.toggleSettings.bind(this)}
                                account={this.props.account}
                                setPopup={this.setPopup.bind(this)}
-                               onLogout={() => this.props.updateState({screen: 'welcome', account: new Account('', '')})}/>
+                               onLogout={() => this.props.updateState({screen: 'welcome', account: Account.empty})}/>
     } else {
       window = [
         <InfoProfile account={this.state.account} updateAccountName={name => this.updateAccountName(name)}/>,

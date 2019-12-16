@@ -35,7 +35,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
       fee = '';
       // incoming transaction
       const ergsReceived = myOutputs.reduce((sum, {value}) => sum + value, 0);
-      if (ergsReceived > feeValue || tokensReceived.length == 0) {
+      if (ergsReceived > feeValue || tokensReceived.length === 0) {
         // ERG transfer transaction
         action = 'Received ERG';
         amountStr = (ergsReceived / unitsInOneErgo).toString().concat(' ERG');
@@ -62,7 +62,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
           // Only fee output is present - transfer to self
           action = 'Self transfer';
           amountStr = '';
-        } else if (tokensSent.length == 0) {
+        } else if (tokensSent.length === 0) {
           // ERG transfer transaction
           action = 'Sent ERG';
           amountStr = `-${((ergsSent - feeValue) / unitsInOneErgo)} ERG`;

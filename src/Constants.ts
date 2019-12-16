@@ -11,4 +11,5 @@ export default class Constants {
   public static autoLogoutTime: number = 10000;
   public static minTokenNameLength: number = 2;
   public static maxTokenNameLength: number = 8;
+  public static secretPath = "m/44'/429'/0'/0/0";
 }

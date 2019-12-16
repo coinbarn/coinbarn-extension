@@ -28,7 +28,7 @@ export default class App extends React.Component<{}, IAppState> {
     const currState = this.bg.getState();
     if (!currState) {
       this.state = {
-        account: new Account('', ''),
+        account: Account.empty,
         screen: 'welcome',
         // account: new Account('testa', 'work dynamic rule sister achieve code brisk insect soccer travel medal all'),
         // screen: 'home',

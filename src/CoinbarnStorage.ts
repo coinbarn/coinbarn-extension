@@ -7,6 +7,7 @@ declare const window;
 
 export default class CoinbarnStorage {
   public static getAccountNames(): string[] {
+    // localStorage.clear();
     const accounts: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       accounts.unshift(localStorage.key(i));
@@ -31,16 +32,25 @@ export default class CoinbarnStorage {
     localStorage.removeItem(name);
   }
 
-  public static async saveAccount(name, password, mnemonic): Promise<void> {
+  public static async saveAccount(
+    account: Account,
+    password: string
+  ): Promise<void> {
     const enc = new TextEncoder("utf-8");
-    const bytesToEncrypt = enc.encode(mnemonic);
+    const bytesToEncrypt = enc.encode(account.encode());
     const ct = await this.encrypt(bytesToEncrypt, password);
-    localStorage.setItem(name, this.arrayBufferToBase64(ct));
+    localStorage.setItem(account.name, this.arrayBufferToBase64(ct));
   }
 
   public static async getAccount(name, password): Promise<Account> {
-    const mnemonic = await CoinbarnStorage.getMnemonic(name, password);
-    return new Account(name, mnemonic);
+    const item = localStorage.getItem(name);
+    const decryptedBytes = await this.decrypt(
+      this.base64ToArrayBuffer(item),
+      password
+    );
+    const dec = new TextDecoder("utf-8");
+    const content = dec.decode(decryptedBytes);
+    return Account.decode(content);
   }
 
   public static async encrypt(plaintext, password): Promise<Buffer> {
@@ -116,15 +126,5 @@ export default class CoinbarnStorage {
       bytes[i] = binaryString.charCodeAt(i);
     }
     return bytes.buffer;
-  }
-
-  private static async getMnemonic(name, password): Promise<string> {
-    const item = localStorage.getItem(name);
-    const decryptedBytes = await this.decrypt(
-      this.base64ToArrayBuffer(item),
-      password
-    );
-    const dec = new TextDecoder("utf-8");
-    return dec.decode(decryptedBytes);
   }
 }
