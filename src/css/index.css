@@ -428,6 +428,7 @@ input {
   border: none;
   margin: 0;
   padding-left: 1em;
+  padding-right: 1em;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -452,6 +453,7 @@ input[type=password] {
 .validateInputLarge input,
 .inputMax input {
   padding-left: 16px;
+  padding-right: 16px;
   background-image: url("../img/input_large_gray.svg");
 }
 .validateInputLarge.validInput input,
