@@ -73,14 +73,14 @@ export default class Account {
         new Address(this.address)
       );
     } catch (e) {
-      console.warn(`Failed to refresh unconfirmed transactions: ${JSON.stringify(e)}`);
+      console.warn(`Failed to refresh unconfirmed transactions: ${e.message}`);
     }
     try {
       this.confirmedTxs = await this.explorer.getTransactions(
         new Address(this.address)
       );
     } catch (e) {
-      console.warn(`Failed to refresh confirmed transactions: ${JSON.stringify(e)}`);
+      console.warn(`Failed to refresh confirmed transactions: ${e.message}`);
     }
   }
 
