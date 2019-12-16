@@ -44,25 +44,6 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
     this.updateValidity(validity, value);
   }
 
-  private updateValidity(validity, value) {
-    const isValid = (validity.score >= 1);
-    let validityClass: string;
-    if (validity.score < 1) {
-      validityClass = 'invalidInput';
-    } else if (validity.score < 3) {
-      validityClass = 'semivalidInput';
-    } else {
-      validityClass = 'validInput';
-    }
-
-    this.setState({
-      value: value,
-      error: validity.error,
-      isValid: isValid,
-      validity: validityClass
-    }, this.props.onUpdate);
-  }
-
   public render() {
     let className = 'validateInput';
     if (this.state.value !== '') {
@@ -82,5 +63,24 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
         <div className={messageClass}>{this.state.error ? this.state.error : '\xa0'}</div>
       </div>
     );
+  }
+
+  private updateValidity(validity, value) {
+    const isValid = (validity.score >= 1);
+    let validityClass: string;
+    if (validity.score < 1) {
+      validityClass = 'invalidInput';
+    } else if (validity.score < 3) {
+      validityClass = 'semivalidInput';
+    } else {
+      validityClass = 'validInput';
+    }
+
+    this.setState({
+      value: value,
+      error: validity.error,
+      isValid: isValid,
+      validity: validityClass
+    }, this.props.onUpdate);
   }
 }

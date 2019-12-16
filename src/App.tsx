@@ -1,6 +1,7 @@
 import 'css/index.css';
 import React from 'react';
 import Account from "./Account";
+import Background from "./Background";
 import CoinbarnStorage from "./CoinbarnStorage";
 import BarnScreen from "./ui/BarnScreen";
 import HomeScreen from "./ui/HomeScreen";
@@ -10,8 +11,6 @@ import SeedScreen from "./ui/SeedScreen";
 import WelcomeBackScreen from './ui/WelcomeBackScreen';
 import WelcomeScreen from './ui/WelcomeScreen';
 
-declare const chrome;
-const autoLogoutTime = 10000;
 
 export interface IAppState {
   account: Account
@@ -22,13 +21,12 @@ export interface IAppState {
 
 export default class App extends React.Component<{}, IAppState> {
 
-  backgroundPort: object;
+  private bg: Background = new Background();
 
   constructor(props: {}) {
     super(props);
-    const bg = chrome.extension.getBackgroundPage();
-    const currState = bg.appState;
-    if(!currState) {
+    const currState = this.bg.getState();
+    if (!currState) {
       this.state = {
         account: new Account('', ''),
         screen: 'welcome',
@@ -40,15 +38,11 @@ export default class App extends React.Component<{}, IAppState> {
     } else {
       this.state = currState;
     }
-    bg.logoutTime = autoLogoutTime;
-    bg.clearLogoutTimer();
-    this.backgroundPort = chrome.runtime.connect({name: 'bgWatchdog'});
   }
 
   public updateState = (s: IAppState) => {
     this.setState(s, () => {
-      const bg = chrome.extension.getBackgroundPage();
-      bg.appState = this.state;
+      this.bg.setState(this.state)
     });
   };
 

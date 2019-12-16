@@ -7,4 +7,6 @@ export default class Constants {
   // TODO write privacy policy
   public static privacyURL: string =
     "https://github.com/coinbarn/coinbarn-extension/blob/master/PRIVACY.md";
+  // Logout time in milliseconds
+  public static autoLogoutTime: number = 10000;
 }

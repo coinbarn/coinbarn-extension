@@ -116,14 +116,16 @@ export default class Account {
           );
           const decimals = Number(Serializer.stringFromHex(slicedR6));
           const factor = Math.pow(10, decimals);
-          return [{
-            amount: Utils.fixedFloat(a.amount / factor, decimals),
-            amountInt: a.amount,
-            decimals: decimals,
-            name: name,
-            tokenId: a.tokenId,
-            tokenInfo: box
-          }];
+          return [
+            {
+              amount: Utils.fixedFloat(a.amount / factor, decimals),
+              amountInt: a.amount,
+              decimals: decimals,
+              name: name,
+              tokenId: a.tokenId,
+              tokenInfo: box
+            }
+          ];
         } catch (e) {
           console.warn(`Failed to get token info for ${a}: ${e.message}`);
           return [];
