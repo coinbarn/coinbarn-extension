@@ -1,14 +1,14 @@
-let appState = null;
-let logoutTime = 0;
+var appState = null;
+var logoutTime = 0;
 let timeoutHandle = null;
 
-let clearLogoutTimer = () => {
+var clearLogoutTimer = () => {
   if (timeoutHandle) {
     window.clearTimeout(timeoutHandle);
   }
 };
 
-let setLogoutTimer = time => {
+var setLogoutTimer = time => {
   clearLogoutTimer();
   timeoutHandle = window.setTimeout(() => {
     appState = null;
