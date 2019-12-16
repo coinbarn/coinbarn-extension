@@ -24,7 +24,7 @@ export default class AboutWindow extends React.Component<IAboutWindowProps> {
         <div className='footer'>
           <ul>
             <li><h3><a href="mailto:coinbarn@protonmail.com?subject=coinbarn support">Support</a></h3></li>
-            <li><h3><a target="_blank" rel="noopener noreferrer" href={Constants.siteURL}>Site</a></h3></li>
+            <li><h3><a target="_blank" rel="noopener noreferrer" href={Constants.siteURL}>Website</a></h3></li>
             <li><h3><a href="mailto:coinbarn@protonmail.com?subject=coinbarn idea">Email us!</a></h3></li>
           </ul>
         </div>
