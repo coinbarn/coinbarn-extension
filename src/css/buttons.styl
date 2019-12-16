@@ -18,14 +18,14 @@ button
 .hrefBtn:hover
   color: #759A21
 
-.largeBtn, .mediumBtn, .wiredBtn, .backBtn 
+.largeBtn, .mediumBtn, .wiredBtn, .backBtn, .redBtn
   height: 40px
   fb()
 
-.largeBtn, .mediumBtn, .smallBtn
+.largeBtn, .mediumBtn, .smallBtn, .redBtn
   color: #ffffff
 
-.largeBtn, .mediumBtn, .fullAddressBtn, .wiredBtn
+.largeBtn, .mediumBtn, .fullAddressBtn, .wiredBtn, .redBtn
   &:hover
     shadow(5px, 5px, #B5B5B5)
 
@@ -46,6 +46,10 @@ button
   &:disabled
     background: url('../img/btn_160_40_light_green.svg')
     noshadow()
+
+.redBtn
+  width: 160px
+  background: url('../img/btn_160_40_red.svg')
 
 .wiredBtn
   color: #8FB23E
@@ -86,7 +90,7 @@ button
   cursor: pointer
   width: 60px
   height: 19px
-  margin-bottom: 64px
+  margin-bottom: 26px
   margin-top: 0
   padding: 0
   text-align: right

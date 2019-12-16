@@ -122,17 +122,19 @@ export default class RegistrationScreen extends React.Component<IRegProps, IRegS
                         ref={this.pass2Element}
                         validate={this.validatePass2}
                         onUpdate={this.onUpdate}/>
-        <div className='checkboxDiv'>
-          <input type='checkbox' id='agreeCheckbox' onChange={this.clickAcceptTerms.bind(this)}/>
-          <label htmlFor='agreeCheckbox'>
-            I have read and agree <br/>to the <a target="_blank" rel="noopener noreferrer" href={Constants.termsURL}>Terms of Use</a>
-          </label>
-        </div>
-        <div className='checkboxDiv'>
-          <input type='checkbox' id='minerCheckbox'  onChange={this.clickMinerAcc.bind(this)}/>
-          <label htmlFor='minerCheckbox'>
-            Miner address
-          </label>
+        <div className='termsDiv'>
+          <div className='checkboxDiv'>
+            <input type='checkbox' id='agreeCheckbox' onChange={this.clickAcceptTerms.bind(this)}/>
+            <label htmlFor='agreeCheckbox'>
+              I have read and agree <br/>to the <a target="_blank" rel="noopener noreferrer" href={Constants.termsURL}>Terms of Use</a>
+            </label>
+          </div>
+          <div className='checkboxDiv'>
+            <input type='checkbox' id='minerCheckbox'  onChange={this.clickMinerAcc.bind(this)}/>
+            <label htmlFor='minerCheckbox'>
+              Miner address
+            </label>
+          </div>
         </div>
         <div className='registrationControls'>
           <button disabled={!this.state.formValid} className='largeBtn' onClick={this.submit}>Continue</button>
