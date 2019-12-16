@@ -14,7 +14,7 @@ export default class WelcomeBackScreen extends React.Component<IWelcomeBackProps
   public submit = () => {
     const name = this.dropdownElement.current.currentValue();
     const newState = {
-      account: new Account(name, ''),
+      account: new Account(name, '', false),
       screen: 'password'
     };
     this.props.updateState(newState);

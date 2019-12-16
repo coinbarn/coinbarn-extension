@@ -53,7 +53,7 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
   };
 
   public copyAddress = () => {
-    navigator.clipboard.writeText(Account.mnemonicToAddress(this.state.mnemonic));
+    navigator.clipboard.writeText(this.address());
   };
 
   public handleSeedUserInput(e) {
@@ -62,8 +62,8 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
 
   public submitSeed = async () => {
     if (this.state.repeatPhase || this.props.regRecover) {
-      const newAcc = new Account(this.props.account.name, this.state.mnemonicBack);
-      await CoinbarnStorage.saveAccount(this.props.account.name, this.props.regPassword, this.state.mnemonicBack);
+      const newAcc = new Account(this.props.account.name, this.state.mnemonicBack, this.props.account.minerAcc);
+      await CoinbarnStorage.saveAccount(newAcc, this.props.regPassword);
       this.props.updateState({account: newAcc, screen: 'start', screenData: ''});
     } else {
       this.setState({repeatPhase: true, seedFormValid: false});
@@ -78,11 +78,11 @@ export default class SeedScreen extends React.Component<ISeedProps, ISeedState> 
     }
   };
 
-  public address() {
+  public address(): string {
     if (this.state.repeatPhase || this.props.regRecover) {
-      return Account.mnemonicToAddress(this.state.mnemonicBack)
+      return new Account("?", this.state.mnemonicBack, this.props.account.minerAcc).address;
     } else {
-      return Account.mnemonicToAddress(this.state.mnemonic)
+      return new Account("?", this.state.mnemonic, this.props.account.minerAcc).address;
     }
   }
 

@@ -19,11 +19,9 @@ interface IAccountToken extends ITokens {
 }
 
 export default class Account {
-  public static mnemonicToAddress(mnemonic: string, minerAcc: boolean = false): string {
-    return new Account("?", mnemonic, minerAcc).address;
-  }
+  public static readonly empty: Account = new Account('', '', false);
 
-  public minerAcc: boolean = false;
+  public minerAcc: boolean;
   public name: string;
   public mnemonic: string;
   public address: string = "";
@@ -34,11 +32,11 @@ export default class Account {
   private tokenInfos: Record<string, ErgoBox> = {};
   private explorer: Explorer = Explorer.mainnet;
 
-  constructor(name: string, mnemonic: string, minerAcc: boolean = false) {
+  constructor(name: string, mnemonic: string, minerAcc: boolean) {
     this.name = name;
     this.mnemonic = mnemonic;
+    this.minerAcc = minerAcc;
     if (mnemonic !== "") {
-      this.minerAcc = minerAcc;
       this.sk = Account.mnemonicToSk(mnemonic, minerAcc);
       this.address = Account.skToAddress(this.sk, minerAcc).address;
       this.refresh();
@@ -50,7 +48,7 @@ export default class Account {
     try {
       this.boxes = await this.loadBoxes();
     } catch (e) {
-      console.warn(`Failed to refresh unspent outputs`, e);
+      console.warn(`Failed to refresh unspent outputs: ${e.message}`);
     }
 
     try {
@@ -66,7 +64,7 @@ export default class Account {
         });
       }
     } catch (e) {
-      console.warn(`Failed to get token infos unspent outputs`, e);
+      console.warn(`Failed to get token infos: ${e.message}`);
     }
 
     // refresh transactions
@@ -75,14 +73,14 @@ export default class Account {
         new Address(this.address)
       );
     } catch (e) {
-      console.warn(`Failed to refresh unconfirmed transactions`, e);
+      console.warn(`Failed to refresh unconfirmed transactions: ${JSON.stringify(e)}`);
     }
     try {
       this.confirmedTxs = await this.explorer.getTransactions(
         new Address(this.address)
       );
     } catch (e) {
-      console.warn(`Failed to refresh confirmed transactions`, e);
+      console.warn(`Failed to refresh confirmed transactions: ${JSON.stringify(e)}`);
     }
   }
 
@@ -156,6 +154,20 @@ export default class Account {
     } else {
       return false;
     }
+  }
+
+  public static decode(content: string): Account {
+    const json = JSON.parse(content);
+    return new Account(json.name, json.mnemonic, json.minerAcc)
+  }
+
+  public encode(): string {
+    const obj = {
+      name: this.name,
+      mnemonic: this.mnemonic,
+      minerAcc: this.minerAcc,
+    };
+    return JSON.stringify(obj);
   }
 
   private async loadBoxes(): Promise<ErgoBox[]> {
