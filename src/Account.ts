@@ -178,7 +178,7 @@ export default class Account {
           }
         ];
       } catch (e) {
-        console.warn(`Failed to get token info for ${a}: ${e.message}`);
+        console.warn(`Failed to get token info for ${a.tokenId}: ${e.message}`);
         return [];
       }
     });
