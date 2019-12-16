@@ -27,30 +27,29 @@ export default class TransactionView extends React.Component<ITransactionViewPro
     }
     const myInputs = tx.inputs.filter(i => this.props.account.isMine(i));
     const myOutputs = tx.outputs.filter(i => this.props.account.isMine(i));
-    let action: string = '???';
-    let amountStr: string = '???';
-    let fee: string = '???';
+    let action: string;
+    let amountStr: string;
+    let fee: string;
+    const tokensReceived = this.props.account.boxesToBalances(myOutputs, false);
     if (myInputs.length === 0) {
       fee = '';
       // incoming transaction
       const ergsReceived = myOutputs.reduce((sum, {value}) => sum + value, 0);
-      const tokensReceived = this.props.account.boxesToBalances(myOutputs, false);
       if (ergsReceived > feeValue || tokensReceived.length == 0) {
         // ERG transfer transaction
         action = 'Received ERG';
         amountStr = (ergsReceived / unitsInOneErgo).toString().concat(' ERG');
       } else {
-        // Custom transfer transaction - extract the first one
+        // Custom token transfer transaction - extract the first one
         const token = tokensReceived[0];
         action = `Received ${token.name}`;
         amountStr = `${token.amount} ${token.name}`;
       }
     } else {
       // outcoming transaction
-      const tokensReceived = this.props.account.boxesToBalances(myOutputs, false);
       const issuedToken = tokensReceived.find(tr => tx.inputs.find(inp => inp.boxId === tr.tokenId) !== undefined);
+      fee = '0.001 ERG';
       if (issuedToken !== undefined) {
-        fee = '0.001 ERG';
         // Token issue transaction
         action = `Issued ${issuedToken.name}`;
         amountStr = `${issuedToken.amount} ${issuedToken.name}`;
@@ -59,9 +58,12 @@ export default class TransactionView extends React.Component<ITransactionViewPro
         const foreignOutputs = tx.outputs.filter(i => !this.props.account.isMine(i));
         const ergsSent = foreignOutputs.reduce((sum, {value}) => sum + value, 0);
         const tokensSent = this.props.account.boxesToBalances(foreignOutputs, false);
-        if (tokensSent.length == 0) {
+        if (foreignOutputs.length === 1) {
+          // Only fee output is present - transfer to self
+          action = 'Self transfer';
+          amountStr = '';
+        } else if (tokensSent.length == 0) {
           // ERG transfer transaction
-          fee = '0.001 ERG';
           action = 'Sent ERG';
           amountStr = ((ergsSent - feeValue) / unitsInOneErgo).toString().concat(' ERG');
         } else {
@@ -79,8 +81,6 @@ export default class TransactionView extends React.Component<ITransactionViewPro
       action: action,
       amountStr: amountStr,
       fee: fee,
-      // action: delta > 0 ? 'Received ERGS' : 'Sent ERGS',
-      // amountStr: (delta / unitsInOneErgo).toString().concat(' ERGS'),
       date: date.toLocaleDateString('en-US').concat(' at ').concat(date.toLocaleTimeString('en-US')),
       explorerHref: `${Constants.explorerURL}/en/transactions/${tx.id}`
     }
