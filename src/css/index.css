@@ -134,15 +134,23 @@ button {
   cursor: pointer;
   border: 0;
   outline: none;
+  text-align: center;
   background: none;
   box-sizing: border-box;
   background-repeat: no-repeat;
+}
+.hrefBtn {
+  color: #8fb23e;
+  margin: 4px;
+  height: 1.5em;
+}
+.hrefBtn:hover {
+  color: #759a21;
 }
 .largeBtn,
 .mediumBtn,
 .wiredBtn,
 .backBtn {
-  text-align: center;
   height: 40px;
   font-family: Nunito;
   font-style: normal;
@@ -397,7 +405,7 @@ button {
 .welcomeBackScreen .dd-background-div:hover {
   background-color: rgba(143,178,62,0.2);
 }
-.welcomeBackScreen button {
+.welcomeBackScreen .largeBtn {
   margin-top: 32px;
   margin-bottom: 79px;
 }
