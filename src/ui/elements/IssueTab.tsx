@@ -83,33 +83,44 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
   }
 
   public onSend = async () => {
-    const amount = this.amountElement.current.state.value;
-    const decimals = this.decimalsElement.current.state.value;
-    const name = this.nameElement.current.state.value;
-    const description = this.state.description;
-    const sk = this.props.account.sk;
+    try {
+      const amount = this.amountElement.current.state.value;
+      const decimals = this.decimalsElement.current.state.value;
+      const name = this.nameElement.current.state.value;
+      const description = this.state.description;
+      const sk = this.props.account.sk;
 
-    const client = new Client(Constants.explorerAPI);
-    const result = await client.tokenIssue(sk, name, amount, decimals, description);
-    if (result.data.id) {
-      const id: string = result.data.id.substring(1, 65);
-      const explorerHref = `${Constants.explorerURL}/en/transactions/${id}`;
-      this.props.setPopup(
-        {
-          show: true,
-          title: 'Congrats!',
-          line1: `You have successfully issued ${amount} ${name} tokens`,
-          line2: <a target="_blank" rel="noopener noreferrer" href={explorerHref}>View transaction</a>
-        }
-      );
-    } else {
-      const details = result.data.detail || JSON.stringify(result.data);
+      const client = new Client(Constants.explorerAPI);
+      const result = await client.tokenIssue(sk, name, amount, decimals, description);
+      if (result.data.id) {
+        const id: string = result.data.id.substring(1, 65);
+        const explorerHref = `${Constants.explorerURL}/en/transactions/${id}`;
+        this.props.setPopup(
+          {
+            show: true,
+            title: 'Congrats!',
+            line1: `You have successfully issued ${amount} ${name} tokens`,
+            line2: <a target="_blank" rel="noopener noreferrer" href={explorerHref}>View transaction</a>
+          }
+        );
+      } else {
+        const details = result.data.detail || JSON.stringify(result.data);
+        this.props.setPopup(
+          {
+            show: true,
+            title: 'Error!',
+            line1: `Transaction send error`,
+            line2: details
+          }
+        );
+      }
+    } catch (e) {
       this.props.setPopup(
         {
           show: true,
           title: 'Error!',
           line1: `Transaction send error`,
-          line2: details
+          line2: e.message
         }
       );
     }
