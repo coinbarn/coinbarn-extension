@@ -65,13 +65,13 @@ export default class TransactionView extends React.Component<ITransactionViewPro
         } else if (tokensSent.length == 0) {
           // ERG transfer transaction
           action = 'Sent ERG';
-          amountStr = ((ergsSent - feeValue) / unitsInOneErgo).toString().concat(' ERG');
+          amountStr = `-${((ergsSent - feeValue) / unitsInOneErgo)} ERG`;
         } else {
           // Custom transfer transaction - extract the first one
           const token = tokensSent[0];
           fee = '0.0011 ERG';
           action = `Sent ${token.name}`;
-          amountStr = `${token.amount} ${token.name}`;
+          amountStr = `-${token.amount} ${token.name}`;
         }
       }
     }
