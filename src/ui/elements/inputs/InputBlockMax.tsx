@@ -1,4 +1,5 @@
 import React from 'react'
+import InputMessages from './InputMessages';
 
 interface IInputBlockMaxProps {
   maxValue: number
@@ -54,7 +55,7 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
                  onChange={this.handleUserInput.bind(this)}/>
           <button className='smallBtn' onClick={this.maxClick}> MAX</button>
         </div>
-        <div className='errorDiv'>{this.state.error ? this.state.error : '\xa0'}</div>
+        <InputMessages msg='FEE: 0.001 ERG' errorMsg={this.state.error} />
       </div>
     );
   }

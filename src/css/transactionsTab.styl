@@ -57,7 +57,6 @@
   flex-direction: columns
   justify-content: space-between
 
-
 .txDate, .txDetails a, .txFeeDiv
   ffnm()
   text-decoration: none
@@ -70,9 +69,6 @@
 .txType
   color: #8FB23E
 
-.txAmount, .txDetails
-  text-align: right
-
 .txLeftDiv
   &::after
     ftt()
@@ -82,6 +78,11 @@
     display: inline-block;
     width: 88px
     height: 16px
+
+.txRightDiv
+  display: flex
+  flex-direction: column
+  align-items: flex-end
 
 .txConfirmed .txLeftDiv::after
   content: 'Confirmed'

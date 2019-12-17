@@ -470,12 +470,6 @@ input[type=number] {
 input[type=password] {
   font-size: 16px;
 }
-.errorDiv {
-  visibility: hidden;
-}
-.warningDiv {
-  visibility: hidden;
-}
 .validateInputLarge input,
 .inputMax input {
   padding-left: 16px;
@@ -504,7 +498,8 @@ input[type=password] {
 .invalidInput .errorDiv {
   visibility: visible;
 }
-.semivalidInput .warningDiv {
+.semivalidInput .errorDiv {
+  color: #ffdc82;
   visibility: visible;
 }
 .validateInput,
@@ -515,13 +510,19 @@ input[type=password] {
 .inputLabel {
   color: #8fb23e;
 }
+.inputMessagesDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 0.3em;
+}
+.inputMessageLeft {
+  color: #8fb23e;
+}
 .errorDiv {
+  visibility: hidden;
   text-align: right;
   color: #e17373;
-}
-.warningDiv {
-  text-align: right;
-  color: #ffdc82;
 }
 textarea {
   border: 0;
@@ -1047,6 +1048,11 @@ textarea {
   display: inline-block;
   width: 88px;
   height: 16px;
+}
+.txRightDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 .txConfirmed .txLeftDiv::after {
   content: 'Confirmed';

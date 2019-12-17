@@ -1,4 +1,5 @@
 import React from 'react';
+import InputMessages from './InputMessages';
 
 interface IEyedInputBlockProps {
   name: string,
@@ -49,10 +50,6 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
     if (this.state.value !== '') {
       className = className.concat(' ').concat(this.state.validity);
     }
-    let messageClass = 'errorDiv';
-    if (this.state.validity === 'semivalidInput') {
-      messageClass = 'warningDiv';
-    }
 
     return (
       <div className={className}>
@@ -60,7 +57,7 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
         <input type={this.state.type} className='fts'
                onChange={this.handleUserInput.bind(this)} value={this.state.value}/>
         <button className='eyeButton' onClick={this.toggleType.bind(this)}></button>
-        <div className={messageClass}>{this.state.error ? this.state.error : '\xa0'}</div>
+        <InputMessages msg='' errorMsg={this.state.error} />
       </div>
     );
   }

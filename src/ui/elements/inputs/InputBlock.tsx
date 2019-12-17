@@ -1,4 +1,5 @@
 import React from 'react';
+import InputMessages from './InputMessages';
 
 interface IInputBlockProps {
   large: boolean,
@@ -56,7 +57,7 @@ export default class InputBlock extends React.Component<IInputBlockProps, IInput
         <div className='inputLabel ffn'>{this.props.name}</div>
         <input type={this.props.type} className='fts'
                onChange={this.handleUserInput.bind(this)} value={this.state.value}/>
-               <div className='errorDiv'>{this.state.error ? this.state.error : '\xa0'}</div>
+        <InputMessages msg='' errorMsg={this.state.error} />
       </div>
     );
   }

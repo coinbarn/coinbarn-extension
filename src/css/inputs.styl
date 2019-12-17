@@ -28,12 +28,6 @@ input
 input[type=password]
   font-size: 16px
 
-.errorDiv
-  visibility: hidden
-
-.warningDiv
-  visibility: hidden
-
 .validateInputLarge input, .inputMax input
   padding-left: 16px
   padding-right: 16px
@@ -59,7 +53,8 @@ input[type=password]
 .invalidInput .errorDiv
   visibility: visible
 
-.semivalidInput .warningDiv
+.semivalidInput .errorDiv
+  color: #FFDC82
   visibility: visible
 
 .validateInput, .validateInputLarge, .validateInputMax
@@ -68,13 +63,19 @@ input[type=password]
 .inputLabel
   color: #8FB23E
 
+.inputMessagesDiv
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  margin-top: .3em
+
+.inputMessageLeft
+  color: #8FB23E
+
 .errorDiv
+  visibility: hidden
   text-align: right
   color: #E17373
-
-.warningDiv
-  text-align: right
-  color: #FFDC82
 
 textarea
   border: 0

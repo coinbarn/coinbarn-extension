@@ -3,7 +3,7 @@ import React from 'react';
 import Account from "../Account";
 import CoinbarnStorage from "../CoinbarnStorage";
 import avaImg from '../img/avatar.svg';
-import InputBlock from "./elements/InputBlock";
+import InputBlock from "./elements/inputs/InputBlock";
 
 interface IPasswordProps {
   account: Account

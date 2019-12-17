@@ -3,8 +3,8 @@ import zxcvbn from 'zxcvbn';
 import Account from "../Account";
 import Constants from "../Constants";
 import regImg from '../img/homa_register.svg';
-import EyedInputBlock from "./elements/EyedInputBlock";
-import InputBlock from "./elements/InputBlock";
+import EyedInputBlock from "./elements/inputs/EyedInputBlock";
+import InputBlock from "./elements/inputs/InputBlock";
 
 interface IRegProps {
   updateState: (a: any) => void

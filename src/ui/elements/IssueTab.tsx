@@ -2,7 +2,7 @@ import React from 'react';
 import Account from "../../Account";
 import CoinbarnClient from "../../CoinbarnClient";
 import Constants from "../../Constants";
-import InputBlock from "./InputBlock";
+import InputBlock from "./inputs/InputBlock";
 import {IPopupStatus} from "./Popup";
 
 interface IIssueTabProps {

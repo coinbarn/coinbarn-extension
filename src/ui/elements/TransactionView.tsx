@@ -106,7 +106,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
               <a target="_blank" rel="noopener noreferrer" href={txProps.explorerHref}> Details </a>
             </div>
             <div className='txAmount f2'>
-              {txProps.amountStr}
+              {txProps.amountStr ? txProps.amountStr : '\xa0'}
             </div>
             <div className='txFeeDiv'>
             {txProps.fee ? 'FEE: '.concat(txProps.fee) : '' }

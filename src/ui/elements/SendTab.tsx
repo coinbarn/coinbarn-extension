@@ -6,8 +6,8 @@ import CoinbarnClient from "../../CoinbarnClient";
 import Constants from "../../Constants";
 import Utils from "../../Utils";
 import Dropdown from './Dropdown';
-import InputBlock from "./InputBlock";
-import InputBlockMax from './InputBlockMax';
+import InputBlock from "./inputs/InputBlock";
+import InputBlockMax from './inputs/InputBlockMax';
 import {IPopupStatus} from "./Popup";
 
 interface ISendTabProps {
