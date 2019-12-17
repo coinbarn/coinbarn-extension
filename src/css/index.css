@@ -98,6 +98,17 @@ a {
   padding: 0;
   margin: 0;
   list-style-type: none;
+  max-height: 200px;
+  overflow: auto;
+}
+.dd-list::-webkit-scrollbar {
+  width: 2px;
+}
+.dd-list::-webkit-scrollbar-track {
+  background: #ececea;
+}
+.dd-list::-webkit-scrollbar-thumb {
+  background: #8fb23e;
 }
 .dd-list-item {
   position: relative;
