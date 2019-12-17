@@ -346,22 +346,22 @@ button {
   right: 0;
 }
 .validInput input+.eyeButton {
-  background: url("../img/eye_closed_green.svg");
-}
-.invalidInput input+.eyeButton {
-  background: url("../img/eye_closed_red.svg");
-}
-.semivalidInput input+.eyeButton {
-  background: url("../img/eye_closed_yellow.svg");
-}
-.validInput input[type=password]+.eyeButton {
   background: url("../img/eye_open_green.svg");
 }
-.invalidInput input[type=password]+.eyeButton {
+.invalidInput input+.eyeButton {
   background: url("../img/eye_open_red.svg");
 }
-.semivalidInput input[type=password]+.eyeButton {
+.semivalidInput input+.eyeButton {
   background: url("../img/eye_open_yellow.svg");
+}
+.validInput input[type=password]+.eyeButton {
+  background: url("../img/eye_closed_green.svg");
+}
+.invalidInput input[type=password]+.eyeButton {
+  background: url("../img/eye_closed_red.svg");
+}
+.semivalidInput input[type=password]+.eyeButton {
+  background: url("../img/eye_closed_yellow.svg");
 }
 .welcomeBackScreen {
   padding-left: 64px;
@@ -1031,10 +1031,6 @@ textarea {
 }
 .txType {
   color: #8fb23e;
-}
-.txAmount,
-.txDetails {
-  text-align: right;
 }
 .txLeftDiv::after {
   font-family: Roboto;
