@@ -1,6 +1,6 @@
 import React from 'react';
 
-let InputMessages = (props) => {
+const InputMessages = (props) => {
     return (
       <div className='inputMessagesDiv'>
         <div className='inputMessageLeft'>{props.msg}</div>

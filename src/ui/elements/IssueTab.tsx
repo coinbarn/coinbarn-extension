@@ -36,7 +36,7 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
   }
 
   public validateName = (name) => {
-    const format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const format = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/;
 
     if (name.length < Constants.minTokenNameLength) {
       return 'Name is too short';

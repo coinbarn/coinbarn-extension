@@ -1,0 +1,20 @@
+---
+
+language: node_js
+node_js:
+  - node
+
+addons:
+  artifacts:
+    paths:
+      - $HOME/coinbarn.zip
+
+install:
+  - yarn
+
+script:
+  - yarn install
+  - yarn build
+
+after_success:
+  - zip -r coinbarn.zip build/
