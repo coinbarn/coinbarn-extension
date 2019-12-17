@@ -11,7 +11,7 @@ interface IInputBlockMaxProps {
 
 interface IInputBlockMaxState {
   maxValue: number
-  value: number
+  value: string
   isValid: boolean | undefined
   error: string
 }
@@ -23,7 +23,7 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
       error: '',
       isValid: undefined,
       maxValue: this.props.maxValue,
-      value: 0,
+      value: ' ',
     }
   }
 
@@ -32,7 +32,7 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
   };
 
   public handleUserInput(e) {
-    this.updateValue(Number(e.target.value));
+    this.updateValue(e.target.value);
   }
 
   public render() {

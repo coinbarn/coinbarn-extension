@@ -65,6 +65,9 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
   };
 
   public validateAmount = (amount) => {
+    if (amount === '') {
+      return ''
+    }
     const balances = this.props.account.balances();
     const tokenInfo = balances.find(t => t.tokenId === this.currentTokenId());
     if (tokenInfo === undefined) {
