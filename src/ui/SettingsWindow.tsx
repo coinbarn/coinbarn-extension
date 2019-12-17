@@ -48,12 +48,12 @@ export default class SettingsWindow extends React.Component<ISettingsWindowProps
         <button className='backBtnWhite' onClick={this.props.toggle} />
         <div className='greeting'>Settings</div>
         <ul className='settingsList'>
-          <li onClick={this.copyMnemonic}><h1><img src={backupImg}/>Backup</h1></li>
+          <li onClick={this.copyMnemonic}><h1><img src={backupImg} alt='backup'/>Backup</h1></li>
           <div className='copiedDiv'>
             <span className='copiedSpan'>Copied</span>
           </div>
-          <li onClick={this.deleteAcc}><h1><img src={deleteImg}/>Delete account</h1></li>
-          <li onClick={this.logout}><h1><img src={logoutImg}/>Log out</h1></li>
+          <li onClick={this.deleteAcc}><h1><img src={deleteImg} alt='delete'/>Delete account</h1></li>
+          <li onClick={this.logout}><h1><img src={logoutImg} alt='logout'/>Log out</h1></li>
         </ul>
       </div>
     );

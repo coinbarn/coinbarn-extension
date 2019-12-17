@@ -1,4 +1,4 @@
-import {ErgoBox, feeValue, Transaction} from "@coinbarn/ergo-ts";
+import { feeValue, Transaction} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import React from 'react';
 import Account from "../../Account";
