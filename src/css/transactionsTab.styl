@@ -58,7 +58,7 @@
   justify-content: space-between
 
 
-.txDate, .txDetails a
+.txDate, .txDetails a, .txFeeDiv
   ffnm()
   text-decoration: none
   color: #81827F
@@ -73,7 +73,7 @@
 .txAmount, .txDetails
   text-align: right
 
-.txConfirmed, .txUnconfirmed
+.txLeftDiv
   &::after
     ftt()
     text-align: center
@@ -83,13 +83,13 @@
     width: 88px
     height: 16px
 
-.txConfirmed::after
+.txConfirmed .txLeftDiv::after
   content: 'Confirmed'
   color: #6AAFCD
   background: url('../img/tx_confirmed.svg')
   background-repeat: no-repeat
 
-.txUnconfirmed::after
+.txUnconfirmed .txLeftDiv::after
   content: 'Unconfirmed'
   color: #F3BE35
   background: url('../img/tx_unconfirmed.svg')

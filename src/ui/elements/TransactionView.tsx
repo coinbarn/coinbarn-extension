@@ -108,6 +108,9 @@ export default class TransactionView extends React.Component<ITransactionViewPro
             <div className='txAmount f2'>
               {txProps.amountStr}
             </div>
+            <div className='txFeeDiv'>
+            {txProps.fee ? 'FEE: '.concat(txProps.fee) : '' }
+            </div>
           </div>
         </div>
       </div>

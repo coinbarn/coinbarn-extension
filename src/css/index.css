@@ -1002,7 +1002,8 @@ textarea {
   justify-content: space-between;
 }
 .txDate,
-.txDetails a {
+.txDetails a,
+.txFeeDiv {
   font-family: Nunito;
   font-style: normal;
   font-weight: bold;
@@ -1023,8 +1024,7 @@ textarea {
 .txDetails {
   text-align: right;
 }
-.txConfirmed::after,
-.txUnconfirmed::after {
+.txLeftDiv::after {
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
@@ -1037,13 +1037,13 @@ textarea {
   width: 88px;
   height: 16px;
 }
-.txConfirmed::after {
+.txConfirmed .txLeftDiv::after {
   content: 'Confirmed';
   color: #6aafcd;
   background: url("../img/tx_confirmed.svg");
   background-repeat: no-repeat;
 }
-.txUnconfirmed::after {
+.txUnconfirmed .txLeftDiv::after {
   content: 'Unconfirmed';
   color: #f3be35;
   background: url("../img/tx_unconfirmed.svg");
