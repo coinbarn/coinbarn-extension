@@ -13,7 +13,6 @@ import Utils from "./Utils";
 const { curve } = ec.ec("secp256k1");
 
 interface IAccountToken extends ITokens {
-  tokenInfo: ErgoBox | null;
   name: string;
   decimals: number;
   amountInt: number;
@@ -101,7 +100,7 @@ export default class Account {
     addErgs: boolean = true
   ): IAccountToken[] {
     const assets = ErgoBox.extractAssets(boxes);
-    const accountTokens: IAccountToken[] = assets.flatMap(a => {
+    const accountTokens: IAccountToken[] = assets.map(a => {
       try {
         const box = this.accountData.tokenInfos[a.tokenId];
         const r4 = "R4";
@@ -117,19 +116,22 @@ export default class Account {
         );
         const decimals = Number(Serializer.stringFromHex(slicedR6));
         const factor = Math.pow(10, decimals);
-        return [
-          {
-            amount: Utils.fixedFloat(a.amount / factor, decimals),
-            amountInt: a.amount,
-            decimals: decimals,
-            name: name,
-            tokenId: a.tokenId,
-            tokenInfo: box
-          }
-        ];
+        return {
+          amount: Utils.fixedFloat(a.amount / factor, decimals),
+          amountInt: a.amount,
+          decimals: decimals,
+          name: name,
+          tokenId: a.tokenId
+        };
       } catch (e) {
         console.warn(`Failed to get token info for ${a.tokenId}: ${e.message}`);
-        return [];
+        return {
+          amount: a.amount,
+          amountInt: a.amount,
+          decimals: 0,
+          name: 'unknown',
+          tokenId: a.tokenId
+        };
       }
     });
     if (addErgs) {
@@ -139,8 +141,7 @@ export default class Account {
         amountInt: ergoIntAmount,
         decimals: 9,
         name: "ERG",
-        tokenId: "ERG",
-        tokenInfo: null
+        tokenId: "ERG"
       };
       accountTokens.unshift(ergToken);
     }

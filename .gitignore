@@ -10,6 +10,7 @@
 
 # production
 /build
+coinbarn.zip
 
 # misc
 .DS_Store
