@@ -151,6 +151,11 @@ button {
   background-repeat: no-repeat;
 }
 .hrefBtn {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
   color: #8fb23e;
   margin: 4px;
   height: 1.5em;
