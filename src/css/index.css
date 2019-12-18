@@ -151,6 +151,11 @@ button {
   background-repeat: no-repeat;
 }
 .hrefBtn {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
   color: #8fb23e;
   margin: 4px;
   height: 1.5em;
@@ -960,6 +965,16 @@ textarea {
   display: flex;
   flex-direction: column;
 }
+.transactionsTab .txDate,
+.transactionsTab .txDetails a,
+.transactionsTab .txFeeDiv {
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  color: #81827f;
+}
 .transactionsListTop {
   content: '';
   height: 42px;
@@ -1012,17 +1027,6 @@ textarea {
   display: flex;
   flex-direction: columns;
   justify-content: space-between;
-}
-.txDate,
-.txDetails a,
-.txFeeDiv {
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 16px;
-  text-decoration: none;
-  color: #81827f;
 }
 .txType,
 .txAmount {
