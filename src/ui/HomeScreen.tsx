@@ -43,7 +43,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
   }
 
   public refresh() {
-    this.state.account.refresh().then(
+    this.state.account.accountData.refresh().then(
       e => {
         this.setState({account: this.state.account});
       }

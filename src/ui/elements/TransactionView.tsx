@@ -1,4 +1,4 @@
-import { feeValue, Transaction} from "@coinbarn/ergo-ts";
+import { Transaction} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import React from 'react';
 import Account from "../../Account";
@@ -25,8 +25,8 @@ export default class TransactionView extends React.Component<ITransactionViewPro
     if (tx.timestamp) {
       date.setTime(tx.timestamp);
     }
-    const myInputs = tx.inputs.filter(i => this.props.account.isMine(i));
-    const myOutputs = tx.outputs.filter(i => this.props.account.isMine(i));
+    const myInputs = tx.inputs.filter(i => this.props.account.accountData.isMine(i));
+    const myOutputs = tx.outputs.filter(i => this.props.account.accountData.isMine(i));
     let action: string;
     let amountStr: string;
     let fee: string;
@@ -35,7 +35,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
       fee = '';
       // incoming transaction
       const ergsReceived = myOutputs.reduce((sum, {value}) => sum + value, 0);
-      if (ergsReceived > feeValue || tokensReceived.length === 0) {
+      if (ergsReceived > Constants.fee || tokensReceived.length === 0) {
         // ERG transfer transaction
         action = 'Received ERG';
         amountStr = (ergsReceived / unitsInOneErgo).toString().concat(' ERG');
@@ -48,14 +48,14 @@ export default class TransactionView extends React.Component<ITransactionViewPro
     } else {
       // outcoming transaction
       const issuedToken = tokensReceived.find(tr => tx.inputs.find(inp => inp.boxId === tr.tokenId) !== undefined);
-      fee = '0.001 ERG';
+      fee = '0.0011 ERG';
       if (issuedToken !== undefined) {
         // Token issue transaction
         action = `Issued ${issuedToken.name}`;
         amountStr = `${issuedToken.amount} ${issuedToken.name}`;
       } else {
         // Send transactions
-        const foreignOutputs = tx.outputs.filter(i => !this.props.account.isMine(i));
+        const foreignOutputs = tx.outputs.filter(i => !this.props.account.accountData.isMine(i));
         const ergsSent = foreignOutputs.reduce((sum, {value}) => sum + value, 0);
         const tokensSent = this.props.account.boxesToBalances(foreignOutputs, false);
         if (foreignOutputs.length === 1) {
@@ -65,11 +65,10 @@ export default class TransactionView extends React.Component<ITransactionViewPro
         } else if (tokensSent.length === 0) {
           // ERG transfer transaction
           action = 'Sent ERG';
-          amountStr = `-${((ergsSent - feeValue) / unitsInOneErgo)} ERG`;
+          amountStr = `-${((ergsSent - Constants.fee) / unitsInOneErgo)} ERG`;
         } else {
           // Custom transfer transaction - extract the first one
           const token = tokensSent[0];
-          fee = '0.0011 ERG';
           action = `Sent ${token.name}`;
           amountStr = `-${token.amount} ${token.name}`;
         }
