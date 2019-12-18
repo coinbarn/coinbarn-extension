@@ -36,14 +36,14 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
   }
 
   public validateName = (name) => {
-    const format = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/;
+    const format = /[! @#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/;
 
     if (name.length < Constants.minTokenNameLength) {
       return 'Name is too short';
     } else if (name.length > Constants.maxTokenNameLength) {
       return 'Name is too long';
     } else if (format.test(name)) {
-      return 'Name should not contain special characters';
+      return 'Name should not contain special characters or spaces';
     } else {
       return '';
     }
