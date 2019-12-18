@@ -36,7 +36,13 @@ export default class App extends React.Component<{}, IAppState> {
         regRecover: false,
       };
     } else {
-      this.state = currState;
+      const acc = new Account(currState.account.name, currState.account.mnemonic, currState.account.minerAcc);
+      this.state = {
+        account: acc,
+        screen: currState.screen,
+        regPassword: currState.regPassword,
+        regRecover: currState.regRecover
+      }
     }
   }
 

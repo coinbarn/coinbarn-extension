@@ -43,21 +43,25 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
     this.infoProfileElement = React.createRef();
   }
 
-  public refresh() {
-    this.state.account.accountData.refresh().then(
-      e => {
-        this.setState({account: this.state.account});
-      }
-    )
+  public async refresh() {
+    await this.state.account.accountData.refresh();
+    this.setState({account: this.state.account});
+  }
+
+  public refreshLoop() {
+    this.refresh();
+    this.interval = setTimeout( async () => {
+      this.refreshLoop();
+    }, Constants.refreshInterval);
+
   }
 
   public componentDidMount() {
-    this.refresh();
-    this.interval = setInterval(() => this.refresh(), Constants.refreshInterval);
+    this.refreshLoop();
   }
 
   public componentWillUnmount() {
-    clearInterval(this.interval);
+    clearTimeout(this.interval);
   }
 
   public setCurrTab(currTabIndex: number, refresh: boolean = false) {

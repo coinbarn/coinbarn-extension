@@ -19,7 +19,7 @@ export default class AccountData {
     this.address = address;
   }
 
-  public async refresh() {
+  public async refresh(): Promise<void> {
     // refresh boxes
     try {
       this.boxes = await this.loadBoxes();
