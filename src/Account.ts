@@ -21,9 +21,9 @@ interface IAccountToken extends ITokens {
 export default class Account {
   public static readonly empty: Account = new Account("", "", false);
 
-  public static decode(content: string): Account {
+  public static decode(name: string, content: string): Account {
     const json = JSON.parse(content);
-    return new Account(json.name, json.mnemonic, json.minerAcc);
+    return new Account(name, json.mnemonic, json.minerAcc);
   }
 
   private static mnemonicToSk(mnemonic: string, minerAcc: boolean): string {
@@ -150,7 +150,6 @@ export default class Account {
 
   public encode(): string {
     const obj = {
-      name: this.name,
       mnemonic: this.mnemonic,
       minerAcc: this.minerAcc
     };

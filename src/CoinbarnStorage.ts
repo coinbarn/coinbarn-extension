@@ -50,7 +50,7 @@ export default class CoinbarnStorage {
     );
     const dec = new TextDecoder("utf-8");
     const content = dec.decode(decryptedBytes);
-    return Account.decode(content);
+    return Account.decode(name, content);
   }
 
   public static async encrypt(plaintext, password): Promise<Buffer> {
