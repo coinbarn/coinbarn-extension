@@ -8,7 +8,7 @@ export default class Constants {
   public static privacyURL: string =
     "https://github.com/coinbarn/coinbarn-extension/blob/master/PRIVACY.md";
   // Logout time in milliseconds
-  public static autoLogoutTime: number = 120000;
+  public static autoLogoutTime: number = 30000;
   public static refreshInterval: number = 10000;
   public static minTokenNameLength: number = 2;
   public static maxTokenNameLength: number = 8;
