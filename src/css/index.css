@@ -421,7 +421,7 @@ button {
   background-color: rgba(143,178,62,0.2);
 }
 .welcomeBackScreen .largeBtn {
-  margin-top: 32px;
+  margin-top: 35.5px;
   margin-bottom: 79px;
 }
 .welcomeBackScreen a {
@@ -967,6 +967,9 @@ textarea {
   line-height: 16px;
   color: #81827f;
 }
+.transactionsTab a:hover {
+  color: #8fb23e;
+}
 .transactionsListTop {
   content: '';
   height: 42px;
@@ -995,6 +998,7 @@ textarea {
   padding-top: 12px;
   height: 98px;
   width: 296px;
+  max-width: 296px;
   background: url("../img/tx_separator.svg");
   background-repeat: no-repeat;
   background-size: contain;
@@ -1017,7 +1021,7 @@ textarea {
 }
 .txColumnsDiv {
   display: flex;
-  flex-direction: columns;
+  flex-direction: row;
   justify-content: space-between;
 }
 .txType,
