@@ -16,13 +16,13 @@ export default class CoinbarnClient {
     decimals: number,
     description: string
   ) {
-    if (acc.boxes === undefined) {
+    if (acc.accountData.boxes === undefined) {
       throw new Error("Balances are not synchronized yet");
     }
     const amountInt = amount * Math.pow(10, decimals);
     const height = await this.explorer.getCurrentHeight();
     const sender: Address = new Address(acc.address);
-    const myBoxes = acc.boxes;
+    const myBoxes = acc.accountData.boxes;
     const basePayloadOuts = [
       new ErgoBox("", this.ergTransferFee, height - heightDelta, sender)
     ];
@@ -68,7 +68,7 @@ export default class CoinbarnClient {
   ) {
     let factor = unitsInOneErgo;
     if (tokenId !== "ERG") {
-      factor = await acc.tokenDecimalsFactor(tokenId);
+      factor = await acc.accountData.tokenDecimalsFactor(tokenId);
     }
     return this.transferInt(acc, recipient, amount * factor, tokenId);
   }
@@ -91,11 +91,11 @@ export default class CoinbarnClient {
     recipient: string,
     amountInt: number
   ) {
-    if (acc.boxes === undefined) {
+    if (acc.accountData.boxes === undefined) {
       throw new Error("Balances are not synchronized yet");
     }
     const height = await this.explorer.getCurrentHeight();
-    const myBoxes = acc.boxes;
+    const myBoxes = acc.accountData.boxes;
     const payloadOuts = [
       new ErgoBox("", amountInt, height - heightDelta, new Address(recipient))
     ];
@@ -119,7 +119,7 @@ export default class CoinbarnClient {
     tokenId: string,
     amountInt: number
   ) {
-    if (acc.boxes === undefined) {
+    if (acc.accountData.boxes === undefined) {
       throw new Error("Balances are not synchronized yet");
     }
     const height = await this.explorer.getCurrentHeight();
@@ -138,7 +138,7 @@ export default class CoinbarnClient {
         tokens
       )
     ];
-    const myBoxes = acc.boxes;
+    const myBoxes = acc.accountData.boxes;
     const boxesToSpend = ErgoBox.getSolvingBoxes(
       myBoxes,
       payloadOuts,

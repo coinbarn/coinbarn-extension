@@ -25,8 +25,8 @@ export default class TransactionView extends React.Component<ITransactionViewPro
     if (tx.timestamp) {
       date.setTime(tx.timestamp);
     }
-    const myInputs = tx.inputs.filter(i => this.props.account.isMine(i));
-    const myOutputs = tx.outputs.filter(i => this.props.account.isMine(i));
+    const myInputs = tx.inputs.filter(i => this.props.account.accountData.isMine(i));
+    const myOutputs = tx.outputs.filter(i => this.props.account.accountData.isMine(i));
     let action: string;
     let amountStr: string;
     let fee: string;
@@ -55,7 +55,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
         amountStr = `${issuedToken.amount} ${issuedToken.name}`;
       } else {
         // Send transactions
-        const foreignOutputs = tx.outputs.filter(i => !this.props.account.isMine(i));
+        const foreignOutputs = tx.outputs.filter(i => !this.props.account.accountData.isMine(i));
         const ergsSent = foreignOutputs.reduce((sum, {value}) => sum + value, 0);
         const tokensSent = this.props.account.boxesToBalances(foreignOutputs, false);
         if (foreignOutputs.length === 1) {
