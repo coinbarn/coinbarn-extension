@@ -14,6 +14,8 @@
   .txDate, .txDetails a, .txFeeDiv
     ffnm()
     color: #81827F
+  a:hover
+    color: #8FB23E
 
 .transactionsListTop
   content: ''
@@ -39,6 +41,7 @@
   padding-top: 12px
   height: 98px
   width: 296px
+  max-width: 296px
   background: url('../img/tx_separator.svg')
   background-repeat: no-repeat
   background-size: contain
@@ -57,7 +60,7 @@
 
 .txColumnsDiv
   display: flex
-  flex-direction: columns
+  flex-direction: row
   justify-content: space-between
 
 .txType, .txAmount
