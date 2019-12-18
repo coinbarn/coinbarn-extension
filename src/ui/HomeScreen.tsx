@@ -1,6 +1,7 @@
 import React from 'react';
 import Account from "../Account";
 import CoinbarnStorage from "../CoinbarnStorage";
+import Constants from "../Constants";
 import AboutWindow from "./AboutWindow";
 import HomeHeader from './elements/HomeHeader';
 import InfoProfile from './elements/InfoProfile';
@@ -52,7 +53,7 @@ export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeS
 
   public componentDidMount() {
     this.refresh();
-    this.interval = setInterval(() => this.refresh(), 60000);
+    this.interval = setInterval(() => this.refresh(), Constants.refreshInterval);
   }
 
   public componentWillUnmount() {

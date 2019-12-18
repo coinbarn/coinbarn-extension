@@ -55,16 +55,6 @@ export default class AccountData {
     }
   }
 
-  public async refreshUnconfirmed() {
-    try {
-      this.unconfirmedTxs = await this.explorer.getUnconfirmed(
-        new Address(this.address)
-      );
-    } catch (e) {
-      console.warn(`Failed to refresh unconfirmed transactions: ${e.message}`);
-    }
-  }
-
   public tokenDecimalsFactor(tokenId: string) {
     const tokenInfo = this.tokenInfos[tokenId];
     const r6 = "R6";
@@ -83,6 +73,16 @@ export default class AccountData {
       );
     } else {
       return false;
+    }
+  }
+
+  private async refreshUnconfirmed() {
+    try {
+      this.unconfirmedTxs = await this.explorer.getUnconfirmed(
+        new Address(this.address)
+      );
+    } catch (e) {
+      console.warn(`Failed to refresh unconfirmed transactions: ${e.message}`);
     }
   }
 
