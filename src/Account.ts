@@ -127,15 +127,16 @@ export default class Account {
       const myBoxes = txs.flatMap(b => b.outputs).filter(b => this.isMine(b));
       // refresh token infos
       const tokens = ErgoBox.extractAssets(myBoxes);
-      for (let a of tokens) {
+      for (const a of tokens) {
         if (this.tokenInfos[a.tokenId] === undefined) {
-          this.tokenInfos[a.tokenId] = await this.explorer.getTokenInfo(a.tokenId)
+          this.tokenInfos[a.tokenId] = await this.explorer.getTokenInfo(
+            a.tokenId
+          );
         }
       }
     } catch (e) {
       console.warn(`Failed to get token infos: ${e.message}`);
     }
-
   }
 
   public balances(): IAccountToken[] {

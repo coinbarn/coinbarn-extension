@@ -1,4 +1,4 @@
-import {Address, feeValue, minBoxValue} from "@coinbarn/ergo-ts";
+import {Address, minBoxValue} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import React from 'react';
 import Account from "../../Account";
@@ -101,10 +101,10 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
     if (tokenInfo === undefined) {
       return 0;
     } else if (this.currentTokenId() === 'ERG') {
-      let feeWithCharge = feeValue;
+      let feeWithCharge = Constants.fee;
       if (balances.find((e) => (e.tokenId !== 'ERG')) !== undefined) {
-        // there are tokens -> leave feeValue more to keep tokens
-        feeWithCharge += feeValue;
+        // there are tokens -> leave fee more to keep tokens
+        feeWithCharge += Constants.fee;
       }
       return Utils.fixedFloat(tokenInfo.amount - (feeWithCharge / unitsInOneErgo), 9);
     } else {

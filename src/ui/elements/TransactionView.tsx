@@ -1,4 +1,4 @@
-import { feeValue, Transaction} from "@coinbarn/ergo-ts";
+import { Transaction} from "@coinbarn/ergo-ts";
 import {unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import React from 'react';
 import Account from "../../Account";
@@ -35,7 +35,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
       fee = '';
       // incoming transaction
       const ergsReceived = myOutputs.reduce((sum, {value}) => sum + value, 0);
-      if (ergsReceived > feeValue || tokensReceived.length === 0) {
+      if (ergsReceived > Constants.fee || tokensReceived.length === 0) {
         // ERG transfer transaction
         action = 'Received ERG';
         amountStr = (ergsReceived / unitsInOneErgo).toString().concat(' ERG');
@@ -65,7 +65,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
         } else if (tokensSent.length === 0) {
           // ERG transfer transaction
           action = 'Sent ERG';
-          amountStr = `-${((ergsSent - feeValue) / unitsInOneErgo)} ERG`;
+          amountStr = `-${((ergsSent - Constants.fee) / unitsInOneErgo)} ERG`;
         } else {
           // Custom transfer transaction - extract the first one
           const token = tokensSent[0];

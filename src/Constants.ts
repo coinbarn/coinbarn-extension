@@ -12,5 +12,5 @@ export default class Constants {
   public static minTokenNameLength: number = 2;
   public static maxTokenNameLength: number = 8;
   public static secretPath = "m/44'/429'/0'/0/0";
-
+  public static fee: number = 1100000;
 }
