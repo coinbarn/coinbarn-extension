@@ -48,7 +48,7 @@ export default class TransactionView extends React.Component<ITransactionViewPro
     } else {
       // outcoming transaction
       const issuedToken = tokensReceived.find(tr => tx.inputs.find(inp => inp.boxId === tr.tokenId) !== undefined);
-      fee = '0.001 ERG';
+      fee = '0.0011 ERG';
       if (issuedToken !== undefined) {
         // Token issue transaction
         action = `Issued ${issuedToken.name}`;
@@ -69,7 +69,6 @@ export default class TransactionView extends React.Component<ITransactionViewPro
         } else {
           // Custom transfer transaction - extract the first one
           const token = tokensSent[0];
-          fee = '0.0011 ERG';
           action = `Sent ${token.name}`;
           amountStr = `-${token.amount} ${token.name}`;
         }

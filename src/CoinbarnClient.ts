@@ -6,12 +6,14 @@ import {
   minBoxValue,
   Transaction
 } from "@coinbarn/ergo-ts";
-import { heightDelta, unitsInOneErgo } from "@coinbarn/ergo-ts/dist/constants";
+import {heightDelta, unitsInOneErgo} from "@coinbarn/ergo-ts/dist/constants";
 import Account from "./Account";
 import Constants from "./Constants";
 
 export default class CoinbarnClient {
   public explorer: Explorer = new Explorer(Constants.explorerAPI);
+  private ergTransferFee: number = 1100000;
+  private tokenTransferFee: number = feeValue;
 
   public async issue(
     acc: Account,
@@ -53,7 +55,8 @@ export default class CoinbarnClient {
     ];
     const unsignedTx = Transaction.fromOutputs(
       boxesToSpend,
-      payloadOutsWithTokens
+      payloadOutsWithTokens,
+      this.ergTransferFee
     );
     const signedTx = unsignedTx.sign(acc.sk);
     return await this.explorer.broadcastTx(signedTx);
@@ -99,7 +102,7 @@ export default class CoinbarnClient {
       new ErgoBox("", amountInt, height - heightDelta, new Address(recipient))
     ];
     const boxesToSpend = ErgoBox.getSolvingBoxes(myBoxes, payloadOuts);
-    const unsignedTx = Transaction.fromOutputs(boxesToSpend, payloadOuts);
+    const unsignedTx = Transaction.fromOutputs(boxesToSpend, payloadOuts, this.ergTransferFee);
     const signedTx = unsignedTx.sign(acc.sk);
     return await this.explorer.broadcastTx(signedTx);
   }
@@ -131,7 +134,7 @@ export default class CoinbarnClient {
     ];
     const myBoxes = acc.boxes;
     const boxesToSpend = ErgoBox.getSolvingBoxes(myBoxes, payloadOuts);
-    const unsignedTx = Transaction.fromOutputs(boxesToSpend, payloadOuts);
+    const unsignedTx = Transaction.fromOutputs(boxesToSpend, payloadOuts, this.tokenTransferFee);
     const signedTx = unsignedTx.sign(acc.sk);
     return await this.explorer.broadcastTx(signedTx);
   }

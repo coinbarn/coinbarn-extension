@@ -55,7 +55,7 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
                  onChange={this.handleUserInput.bind(this)}/>
           <button className='smallBtn' onClick={this.maxClick}> MAX</button>
         </div>
-        <InputMessages msg='FEE: 0.001 ERG' errorMsg={this.state.error} />
+        <InputMessages msg='FEE: 0.0011 ERG' errorMsg={this.state.error} />
       </div>
     );
   }
