@@ -24,7 +24,7 @@ export default class CoinbarnClient {
     const sender: Address = new Address(acc.address);
     const myBoxes = acc.accountData.boxes;
     const basePayloadOuts = [
-      new ErgoBox("", this.ergTransferFee, height - heightDelta, sender)
+      new ErgoBox("", this.tokenBoxValue, height - heightDelta, sender)
     ];
     const boxesToSpend = ErgoBox.getSolvingBoxes(
       myBoxes,
@@ -51,6 +51,8 @@ export default class CoinbarnClient {
         registers
       )
     ];
+    // fill this token info to show in unconfirmed transactions
+    acc.accountData.tokenInfos[token.tokenId] = payloadOutsWithTokens[0];
     const unsignedTx = Transaction.fromOutputs(
       boxesToSpend,
       payloadOutsWithTokens,
