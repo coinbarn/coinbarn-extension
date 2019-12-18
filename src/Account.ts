@@ -105,22 +105,6 @@ export default class Account {
       console.warn(`Failed to refresh unspent outputs: ${e.message}`);
     }
 
-    try {
-      if (this.boxes !== undefined) {
-        // refresh token infos
-        const tokens = ErgoBox.extractAssets(this.boxes);
-        tokens.forEach(a => {
-          if (this.tokenInfos[a.tokenId] === undefined) {
-            this.explorer.getTokenInfo(a.tokenId).then(e => {
-              this.tokenInfos[a.tokenId] = e;
-            });
-          }
-        });
-      }
-    } catch (e) {
-      console.warn(`Failed to get token infos: ${e.message}`);
-    }
-
     // refresh transactions
     try {
       this.unconfirmedTxs = await this.explorer.getUnconfirmed(
@@ -136,6 +120,24 @@ export default class Account {
     } catch (e) {
       console.warn(`Failed to refresh confirmed transactions: ${e.message}`);
     }
+
+    // token infos
+    try {
+      const txs = this.confirmedTxs.concat(this.unconfirmedTxs);
+      const myBoxes = txs.flatMap(b => b.outputs).filter(b => this.isMine(b));
+      // refresh token infos
+      const tokens = ErgoBox.extractAssets(myBoxes);
+      tokens.forEach(a => {
+        if (this.tokenInfos[a.tokenId] === undefined) {
+          this.explorer.getTokenInfo(a.tokenId).then(e => {
+            this.tokenInfos[a.tokenId] = e;
+          });
+        }
+      });
+    } catch (e) {
+      console.warn(`Failed to get token infos: ${e.message}`);
+    }
+
   }
 
   public balances(): IAccountToken[] {
