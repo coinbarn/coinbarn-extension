@@ -566,6 +566,7 @@ textarea {
   padding: 0;
   height: 18px;
   background: none;
+  width: calc(100% - 16px);
 }
 .invalidInput .addressInputSmall {
   color: #a73132;
@@ -845,7 +846,6 @@ textarea {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
   padding-right: 8px;
   margin-bottom: 3px;
 }
