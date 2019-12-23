@@ -142,6 +142,9 @@ button {
   box-sizing: border-box;
   background-repeat: no-repeat;
 }
+button::-moz-focus-inner {
+  border: 0;
+}
 .hrefBtn {
   font-family: Nunito;
   font-style: normal;
