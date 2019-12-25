@@ -29,7 +29,7 @@
   "main": "public/electron.js",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && zip -r coinbarn.zip build/",
+    "build": "stylus src/css/index.styl && react-scripts build && zip -r coinbarn.zip build/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "buildCss": "stylus src/css/index.styl",
