@@ -83,7 +83,7 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
 
       const maxAmount = this.maxAmount();
       if (amount < minValue) {
-        return `Minimal amount ot send is ${minValue}`;
+        return `Minimal amount to send is ${minValue}`;
       } else if (amount > maxAmount) {
         return `Available balances is ${maxAmount}`;
       } else {
