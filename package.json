@@ -2,10 +2,12 @@
   "name": "coinbarn-extension",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@coinbarn/ergo-ts": "^0.2.18",
     "bip32": "^2.0.4",
     "bip39": "^3.0.2",
+    "electron-is-dev": "^1.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "zxcvbn": "^4.4.2"
@@ -13,13 +15,18 @@
   "devDependencies": {
     "@types/react": "^16.9.15",
     "@types/react-dom": "^16.9.4",
+    "concurrently": "^5.0.2",
+    "electron": "^7.1.7",
+    "electron-builder": "^21.2.0",
     "prettier": "^1.19.1",
     "react-scripts": "^3.3.0",
     "stylus": "^0.54.7",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "wait-on": "^3.3.0"
   },
+  "main": "public/electron.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && zip -r coinbarn.zip build/",
@@ -27,10 +34,22 @@
     "eject": "react-scripts eject",
     "buildCss": "stylus src/css/index.styl",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\" \"public/**/*.js\"",
-    "lint": "tslint -p tsconfig.json --fix"
+    "lint": "tslint -p tsconfig.json --fix",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
+    "electron-pack": "build --em.main=build/electron.js"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "build": {
+    "appId": "org.coinbarn.coinbarn-extension",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "browserslist": {
     "production": [
