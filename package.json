@@ -47,10 +47,17 @@
       "build/**/*",
       "node_modules/**/*"
     ],
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
     "directories": {
       "buildResources": "assets"
     }
   },
+  "author": "Coinbarn <coinbarn@protonmail.com>",
   "browserslist": {
     "production": [
       ">0.2%",
