@@ -36,7 +36,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\" \"public/**/*.js\"",
     "lint": "tslint -p tsconfig.json --fix",
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
-    "electron-pack": "build --em.main=build/electron.js"
+    "electron-pack": "yarn build && yarn electron-builder"
   },
   "eslintConfig": {
     "extends": "react-app"
