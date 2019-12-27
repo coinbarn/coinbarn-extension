@@ -136,13 +136,13 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
         <InputBlock ref={this.amountElement}
                     large={true}
                     name='Net amount'
-                    type='number'
+                    regexp={/^[0-9]*\.?[0-9]*$/}
                     validate={this.validateAmount}
                     onUpdate={this.onUpdate}/>
         {/*TODO do not allow to input decimals*/}
         <InputBlock ref={this.decimalsElement}
                     large={true}
-                    type='number'
+                    regexp={/^[0-9]?$/}
                     name='Decimal places'
                     validate={this.validateDecimals}
                     onUpdate={this.onUpdate}/>

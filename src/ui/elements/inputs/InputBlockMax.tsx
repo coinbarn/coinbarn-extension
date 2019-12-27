@@ -23,7 +23,7 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
       error: '',
       isValid: undefined,
       maxValue: this.props.maxValue,
-      value: ' ',
+      value: '',
     }
   }
 
@@ -32,7 +32,10 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
   };
 
   public handleUserInput(e) {
-    this.updateValue(e.target.value);
+    const re = /^[0-9]*\.?[0-9]*$/;
+    if (re.test(e.target.value)) {
+      this.updateValue(e.target.value);
+    }
   }
 
   public render() {
@@ -49,8 +52,7 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
       <div className={className}>
         <div className='inputLabel ffn'>{this.props.name}</div>
         <div className='inputMax'>
-          <input type='number'
-                 className={this.props.large ? 'fts inputLarge' : 'fts'}
+          <input className={this.props.large ? 'fts inputLarge' : 'fts'}
                  value={this.state.value}
                  onChange={this.handleUserInput.bind(this)}/>
           <button className='smallBtn' onClick={this.maxClick}> MAX</button>

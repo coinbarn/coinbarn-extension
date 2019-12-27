@@ -5,8 +5,9 @@ interface IInputBlockProps {
   large: boolean,
   name: string,
   onUpdate: () => void
-  type: string
-  validate: (value: string) => string
+  regexp: RegExp,
+  validate: (value: string) => string,
+  password: boolean
 }
 
 interface IInputBlockState {
@@ -19,9 +20,10 @@ export default class InputBlock extends React.Component<IInputBlockProps, IInput
 
   public static defaultProps = {
     large: false,
+    password: false,
     name: 'name',
     onUpdate: () => {},
-    type: 'text',
+    regexp: /.*/
   };
 
   constructor(props) {
@@ -34,11 +36,16 @@ export default class InputBlock extends React.Component<IInputBlockProps, IInput
   }
 
   public handleUserInput(e) {
-    const value = e.target.value;
+    if (this.props.regexp.test(e.target.value)) {
+      this.updateValue(e.target.value);
+    }
+  }
+
+  private updateValue(value) {
     const error = this.props.validate(value);
     const isValid = error === '';
     this.setState({value: value, error: error, isValid: isValid},
-      this.props.onUpdate);
+                  this.props.onUpdate);
   }
 
 
@@ -55,7 +62,7 @@ export default class InputBlock extends React.Component<IInputBlockProps, IInput
     return (
       <div className={className}>
         <div className='inputLabel ffn'>{this.props.name}</div>
-        <input type={this.props.type} className='fts'
+        <input className='fts' type={this.props.password? 'password' :''}
                onChange={this.handleUserInput.bind(this)} value={this.state.value}/>
         <InputMessages msg='' errorMsg={this.state.error} />
       </div>
