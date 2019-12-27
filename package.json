@@ -1,5 +1,6 @@
 {
   "name": "coinbarn-wallet",
+  "description": "Coinbarn wallet for Ergo platform",
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
@@ -48,6 +49,7 @@
       "node_modules/**/*"
     ],
     "linux": {
+      "category": "Finance",
       "target": [
         "AppImage",
         "deb"
