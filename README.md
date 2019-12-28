@@ -1,6 +1,6 @@
-## Coinbarn browser extension
+## Coinbarn wallet
 
-Coinbarn is an application designed to interact with [Ergo platform](https://ergoplatform.org) blockchain via a regular browser.
+Coinbarn is an application designed to interact with [Ergo platform](https://ergoplatform.org) blockchain.
 
 With Coinbarn, you can manage multiple Ergo accounts, send, receive, and issue assets on Ergo blockchain, also view the corresponding activity logs.
 
@@ -11,7 +11,8 @@ Sensitive information like your backup phrase and private keys are never stored 
 - Install [Node.js](https://nodejs.org)
 - Install [Yarn](https://yarnpkg.com/en/docs/install)
 - Install dependencies: `yarn install`
-- Build the project to the `./build/` folder with `yarn build`.
+- Build the project as browser extension to the `./build/` folder with `yarn build`.
+- In order to build the project as standalone executable in `./dist/` folder, run `yarn electron-pack`
 - Optionally, to start a development build (e.g. with logging and file watching) run `yarn start` instead.
 
 ## Running developer build in Chrome browser
