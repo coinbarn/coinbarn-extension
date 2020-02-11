@@ -53,6 +53,7 @@ export default class App extends React.Component<{}, IAppState> {
   };
 
   public render() {
+
     const registeredAccounts = CoinbarnStorage.getAccountNames();
     let curScreen = <div>Unknown screen {this.state.screen}</div>;
     switch (this.state.screen) {

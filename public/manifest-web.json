@@ -10,7 +10,7 @@
     "default_popup": "index.html",
     "default_title": "Coinbarn"
   },
-  "content_security_policy": "script-src 'self' 'sha256-X801sDQwGmffMaQfjsOEBFpRYK8Vhboaqd71QxqstJY='; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'sha256-10UMLSeYCFiPsZY4PWL12XSgjx7j1LCAYLrgHvOGw9Q='; object-src 'self'",
   "icons": [
     {
       "src": "img/logos/fav_clear.png",

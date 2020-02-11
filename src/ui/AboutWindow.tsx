@@ -14,7 +14,7 @@ export default class AboutWindow extends React.Component<IAboutWindowProps> {
         <div className='greeting'>About</div>
         <h1>CoinBarn Version</h1>
         {/*TODO: get version automatically*/}
-        <h1>0.1.0</h1>
+        <h1>0.1.1</h1>
         <h1 className='documents'>Documents</h1>
         <ul>
           <li><h3><a target="_blank" rel="noopener noreferrer" href={Constants.privacyURL}>Privacy policy</a></h3></li>
