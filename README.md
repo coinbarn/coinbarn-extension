@@ -8,6 +8,10 @@ Sensitive information like your backup phrase and private keys are never stored 
 
 ## Install
 
+You can install stable release from [Chrome store](https://chrome.google.com/webstore/detail/coinbarn-wallet/pachdpadffdgjhmmgpdjkpnlhkdhbfgf).
+
+You can also build Coinbarn from sources and add it to your browser:
+
 - [How to add custom build to Chrome](./docs/add-to-chrome.md)
 - [How to add custom build to Firefox](./docs/add-to-firefox.md)
 - [How install desktop release](./docs/add-desktop.md)
