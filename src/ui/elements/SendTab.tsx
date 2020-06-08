@@ -121,7 +121,7 @@ export default class SendTab extends React.Component<ISendTabProps, ISendTabStat
       const result = await client.transfer(this.props.account, recipient, amount, tokenId);
       if (result.data.id) {
         const tokenName = this.currentTokenName();
-        const id: string = result.data.id.substring(0, 65);
+        const id: string = result.data.id;
         const explorerHref = `${Constants.explorerURL}/en/transactions/${id}`;
         this.props.setPopup(
           {

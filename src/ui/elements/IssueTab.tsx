@@ -91,7 +91,7 @@ export default class IssueTab extends React.Component<IIssueTabProps, IIssueTabS
       const client = new CoinbarnClient();
       const result = await client.issue(this.props.account, name, amount, decimals, description);
       if (result.data.id) {
-        const id: string = result.data.id.substring(1, 65);
+        const id: string = result.data.id;
         const explorerHref = `${Constants.explorerURL}/en/transactions/${id}`;
         this.props.setPopup(
           {
